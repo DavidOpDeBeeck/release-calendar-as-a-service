@@ -1,4 +1,5 @@
 import {QueryClient, useMutation, useQueryClient} from "@tanstack/react-query";
+import {resolvePath} from "./PathUtils";
 
 interface MutationInput {
     key: unknown[];
@@ -11,7 +12,7 @@ export const useHttpMutation = <INPUT, OUTPUT>({key, path, method, onSuccess}: M
     const queryClient = useQueryClient()
 
     return useMutation<OUTPUT, unknown, INPUT>(key, async (input: INPUT) => {
-        const response = await fetch(`/api/v1${path}`, {
+        const response = await fetch(resolvePath(`/api/v1${path}`), {
             method: method || 'POST',
             headers: {
                 'Accept': 'application/json',
