@@ -91,7 +91,7 @@ class ProjectAcceptanceTest {
 
     private String createProject(CreateProjectTO createProjectTO) {
         return requireNonNull(client.post()
-            .uri("/projects")
+            .uri("/api/v1/projects")
             .body(just(createProjectTO), CreateProjectTO.class)
             .exchange()
             .expectStatus().isCreated()
@@ -103,7 +103,7 @@ class ProjectAcceptanceTest {
 
     private void updateProject(String projectId, UpdateProjectTO updateProjectTO) {
         client.put()
-            .uri(format("/projects/%s", projectId))
+            .uri(format("/api/v1/projects/%s", projectId))
             .body(just(updateProjectTO), CreateProjectTO.class)
             .exchange()
             .expectStatus().isOk();
@@ -111,7 +111,7 @@ class ProjectAcceptanceTest {
 
     private ProjectTO findProject(String projectId) {
         return client.get()
-            .uri(format("/projects/%s", projectId))
+            .uri(format("/api/v1/projects/%s", projectId))
             .exchange()
             .expectStatus().isOk()
             .expectBody(ProjectTO.class)
@@ -121,7 +121,7 @@ class ProjectAcceptanceTest {
 
     private CalendarTO findProjectCalendar(String projectId, YearMonth yearMonth) {
         return client.get()
-            .uri(format("/projects/%s/calendar?yearMonth=%s", projectId, yearMonth.format(ofPattern("yyyy-MM"))))
+            .uri(format("/api/v1/projects/%s/calendar?yearMonth=%s", projectId, yearMonth.format(ofPattern("yyyy-MM"))))
             .exchange()
             .expectStatus().isOk()
             .expectBody(CalendarTO.class)
