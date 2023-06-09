@@ -37,4 +37,4 @@ jobs:
           --request POST \
           --header "X-Auth-Token: ${{ secrets.DOCKER_TOKEN }}" \
           "https://api.scaleway.com/containers/v1beta1/regions/nl-ams/containers/$container_id/deploy" \
-          -d "{}"
+          -d "{}" -v
