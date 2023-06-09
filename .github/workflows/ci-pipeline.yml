@@ -28,3 +28,10 @@ jobs:
         --header "X-Auth-Token: ${{ secrets.DOCKER_SECRET }}" \
         "https://api.scaleway.com/containers/v1beta1/regions/nl-ams/containers/29a7fd74-c1d8-4290-a7f7-01554bee7cf7/deploy" \
         -d "{}"
+    - name: update Rcaas Api container with new image version
+      run: | 
+        curl \
+        --request POST \
+        --header "X-Auth-Token: ${{ secrets.DOCKER_SECRET }}" \
+        "https://api.scaleway.com/containers/v1beta1/regions/nl-ams/containers/f6fc8e6a-8367-4693-8822-3b9a9c26f9e3/deploy" \
+        -d "{}"
