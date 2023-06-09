@@ -14,15 +14,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Build docker image
-        run: docker build $APP_NAME --file $APP_NAME/Dockerfile --tag ${{ secrets.DOCKER_REGISTRY }}/$APP_NAME
+        run: docker build $APP_NAME --file $APP_NAME/Dockerfile --tag ${{ secrets.SCW_DOCKER_REGISTRY }}/$APP_NAME
       - name: Docker login
         uses: docker/login-action@v2
         with:
-          registry: ${{ secrets.DOCKER_REGISTRY }}
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_TOKEN }}
+          registry: ${{ secrets.SCW_DOCKER_REGISTRY }}
+          username: ${{ secrets.SCW_DOCKER_USERNAME }}
+          password: ${{ secrets.SCW_SECRET_KEY }}
       - name: Docker push
-        run: docker push ${{ secrets.DOCKER_REGISTRY }}/$APP_NAME
+        run: docker push ${{ secrets.SCW_DOCKER_REGISTRY }}/$APP_NAME
   deploy:
     needs: [ build ]
     runs-on: ubuntu-latest
@@ -31,11 +31,11 @@ jobs:
         run: |
           CONTAINER_ID=`curl -s \
             --request GET \
-            --header "X-Auth-Token: ${{ secrets.DOCKER_TOKEN }}" \
+            --header "X-Auth-Token: ${{ secrets.SCW_SECRET_KEY }}" \
             "https://api.scaleway.com/containers/v1beta1/regions/nl-ams/containers" \
             -d "{}" | jq -r --arg APP_NAME "$APP_NAME" '.containers[] | select(.name==$APP_NAME) | .id'`
-          curl \
+          curl -s \
             --request POST \
-            --header "X-Auth-Token: ${{ secrets.DOCKER_TOKEN }}" \
+            --header "X-Auth-Token: ${{ secrets.SCW_SECRET_KEY }}" \
             "https://api.scaleway.com/containers/v1beta1/regions/nl-ams/containers/$CONTAINER_ID/deploy" \
-            -d "{}" -v
+            -d "{}"

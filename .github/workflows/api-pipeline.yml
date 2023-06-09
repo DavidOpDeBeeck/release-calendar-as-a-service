@@ -5,29 +5,37 @@ on:
     paths:
       - rcaas-api/**
   workflow_dispatch:
+env:
+  APP_NAME: rcaas-api
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Build Docker Image
-        run: docker build rcaas-api --file rcaas-api/Dockerfile --tag ${{ secrets.DOCKER_REGISTRY }}/rcaas-api
-      - name: Docker Login
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Build docker image
+        run: docker build $APP_NAME --file $APP_NAME/Dockerfile --tag ${{ secrets.SCW_DOCKER_REGISTRY }}/$APP_NAME
+      - name: Docker login
         uses: docker/login-action@v2
         with:
-          registry: ${{ secrets.DOCKER_REGISTRY }}
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_TOKEN }}
-      - name: Docker Push Image
-        run: docker push ${{ secrets.DOCKER_REGISTRY }}/rcaas-api
+          registry: ${{ secrets.SCW_DOCKER_REGISTRY }}
+          username: ${{ secrets.SCW_DOCKER_USERNAME }}
+          password: ${{ secrets.SCW_SECRET_KEY }}
+      - name: Docker push
+        run: docker push ${{ secrets.SCW_DOCKER_REGISTRY }}/$APP_NAME
   deploy:
     needs: [ build ]
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy container with new image version
+      - name: Deploy container
         run: |
-          curl \
-          --request POST \
-          --header "X-Auth-Token: ${{ secrets.DOCKER_TOKEN }}" \
-          "https://api.scaleway.com/containers/v1beta1/regions/nl-ams/containers/29a7fd74-c1d8-4290-a7f7-01554bee7cf7/deploy" \
-          -d "{}"
+          CONTAINER_ID=`curl -s \
+            --request GET \
+            --header "X-Auth-Token: ${{ secrets.SCW_SECRET_KEY }}" \
+            "https://api.scaleway.com/containers/v1beta1/regions/nl-ams/containers" \
+            -d "{}" | jq -r --arg APP_NAME "$APP_NAME" '.containers[] | select(.name==$APP_NAME) | .id'`
+          curl -s \
+            --request POST \
+            --header "X-Auth-Token: ${{ secrets.SCW_SECRET_KEY }}" \
+            "https://api.scaleway.com/containers/v1beta1/regions/nl-ams/containers/$CONTAINER_ID/deploy" \
+            -d "{}"
