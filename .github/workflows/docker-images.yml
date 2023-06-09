@@ -1,17 +1,12 @@
-name: Docker Image CI
-
+name: Rcaas CI
 on:
   push:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
-
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
     - name: Build the Rcaas Api Docker image
@@ -28,4 +23,6 @@ jobs:
       uses: docker/build-push-action@v4.0.0
       with:
         push: true
-        tags: rg.nl-ams.scw.cloud/rcaas/rcaas-api rg.nl-ams.scw.cloud/rcaas/rcaas-ui
+        tags: |
+          rg.nl-ams.scw.cloud/rcaas/rcaas-api
+          rg.nl-ams.scw.cloud/rcaas/rcaas-ui
