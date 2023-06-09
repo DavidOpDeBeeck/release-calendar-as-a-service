@@ -1,3 +1,7 @@
 spring:
   datasource:
     url: jdbc:h2:mem:testdb
+  main:
+    lazy-initialization: true
+  jmx:
+    enabled: false
