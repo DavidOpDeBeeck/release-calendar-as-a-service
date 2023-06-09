@@ -8,6 +8,6 @@ jobs:
       - name: deploy to cluster
         uses: wahyd4/kubectl-helm-action@master
         env:
-          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG }}
         with:
           args: helm upgrade --install --set registry=${{ secrets.SCW_DOCKER_REGISTRY }} --set email=${{ secrets.ACME_EMAIL }} rcaas deployment  
