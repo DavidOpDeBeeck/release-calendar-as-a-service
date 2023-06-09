@@ -5,8 +5,9 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions-hub/kubectl@master
+      - name: deploy to cluster
+        uses: wahyd4/kubectl-helm-action@master
         env:
-          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
-          args: get pods
+          args: helm upgrade --install -f deployment/values.yaml rcaas deployment  
