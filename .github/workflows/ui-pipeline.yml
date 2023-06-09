@@ -24,17 +24,15 @@ jobs:
     needs: [ build ]
     runs-on: ubuntu-latest
     steps:
-      - name: Retrieve container id
+      - name: Deploy container with new image version
         run: |
           container_id=`curl -s \
             --request GET \
             --header "X-Auth-Token: ${{ secrets.DOCKER_TOKEN }}" \
             "https://api.scaleway.com/containers/v1beta1/regions/nl-ams/containers" \
             -d "{}" | jq -r '.containers[] | select(.name=="rcaas-ui") | .id'`
-      - name: Deploy container with new image version
-        run: |
           curl \
-          --request POST \
-          --header "X-Auth-Token: ${{ secrets.DOCKER_TOKEN }}" \
-          "https://api.scaleway.com/containers/v1beta1/regions/nl-ams/containers/$container_id/deploy" \
-          -d "{}" -v
+            --request POST \
+            --header "X-Auth-Token: ${{ secrets.DOCKER_TOKEN }}" \
+            "https://api.scaleway.com/containers/v1beta1/regions/nl-ams/containers/$container_id/deploy" \
+            -d "{}" -v
