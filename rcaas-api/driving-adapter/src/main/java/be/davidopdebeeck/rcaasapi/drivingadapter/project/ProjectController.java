@@ -28,6 +28,7 @@ import static org.springframework.http.ResponseEntity.ok;
 import static org.springframework.http.ResponseEntity.status;
 
 
+@CrossOrigin(origins = "https://www.releasecalendar.app")
 @RestController
 @RequestMapping("/api/v1/projects")
 public class ProjectController {
