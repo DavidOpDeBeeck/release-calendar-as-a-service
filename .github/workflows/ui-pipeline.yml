@@ -23,19 +23,3 @@ jobs:
           password: ${{ secrets.SCW_SECRET_KEY }}
       - name: Docker push
         run: docker push ${{ secrets.SCW_DOCKER_REGISTRY }}/$APP_NAME
-  deploy:
-    needs: [ build ]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy container
-        run: |
-          CONTAINER_ID=`curl \
-            --request GET \
-            --header "X-Auth-Token: ${{ secrets.SCW_SECRET_KEY }}" \
-            "https://api.scaleway.com/containers/v1beta1/regions/nl-ams/containers" \
-            -d "{}" | jq -r --arg APP_NAME "$APP_NAME" '.containers[] | select(.name==$APP_NAME) | .id'`
-          curl \
-            --request POST \
-            --header "X-Auth-Token: ${{ secrets.SCW_SECRET_KEY }}" \
-            "https://api.scaleway.com/containers/v1beta1/regions/nl-ams/containers/$CONTAINER_ID/deploy" \
-            -d "{}" > /dev/null

@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN ./gradlew clean build -x test --no-daemon
+RUN ./gradlew bootJar --no-daemon
 
 FROM amazoncorretto:17-alpine-jdk
 
