@@ -2,8 +2,6 @@ name: Rcaas CI
 on:
   push:
     branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -23,3 +21,10 @@ jobs:
       run: docker push ${{ secrets.DOCKER_REGISTRY }}/rcaas-api
     - name: Push Rcaas UI images
       run: docker push ${{ secrets.DOCKER_REGISTRY }}/rcaas-ui
+    - name: update Rcaas Api container with new image version
+      uses: yamatt/scaleway-serverless-container-deploy-action@v1.1
+      with:
+        region: nl-ams
+        container_id: 2eeda69d-ad2c-466c-b61a-ae0ea319ddb5
+        secret_key: ${{ secrets.DOCKER_SECRET }}
+        registry_image_url: ${{ secrets.DOCKER_REGISTRY }}/rcaas-api
