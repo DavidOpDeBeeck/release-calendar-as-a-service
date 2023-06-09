@@ -15,9 +15,9 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Rcaas Api Docker image
-      run: docker build . --file rcaas-api/Dockerfile --tag rg.nl-ams.scw.cloud/rcaas/rcaas-api
+      run: docker build rcaas-api --file rcaas-api/Dockerfile --tag rg.nl-ams.scw.cloud/rcaas/rcaas-api
     - name: Build the Rcaas UI Docker image
-      run: docker build . --file rcaas-ui/Dockerfile --tag rg.nl-ams.scw.cloud/rcaas/rcaas-ui
+      run: docker build rcaas-ui --file rcaas-ui/Dockerfile --tag rg.nl-ams.scw.cloud/rcaas/rcaas-ui
     - name: Docker Login
       uses: docker/login-action@v2
       with:
