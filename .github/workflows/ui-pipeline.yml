@@ -29,13 +29,13 @@ jobs:
     steps:
       - name: Deploy container
         run: |
-          CONTAINER_ID=`curl -s \
+          CONTAINER_ID=`curl \
             --request GET \
             --header "X-Auth-Token: ${{ secrets.SCW_SECRET_KEY }}" \
             "https://api.scaleway.com/containers/v1beta1/regions/nl-ams/containers" \
             -d "{}" | jq -r --arg APP_NAME "$APP_NAME" '.containers[] | select(.name==$APP_NAME) | .id'`
-          curl -s \
+          curl \
             --request POST \
             --header "X-Auth-Token: ${{ secrets.SCW_SECRET_KEY }}" \
             "https://api.scaleway.com/containers/v1beta1/regions/nl-ams/containers/$CONTAINER_ID/deploy" \
-            -d "{}"
+            -d "{}" > /dev/null
