@@ -33,7 +33,7 @@ jobs:
             -d "{}" | jq -r '.containers[] | select(.name=="rcaas-ui") | .id'`
       - name: Deploy container with new image version
         run: |
-          curl -s \
+          curl \
           --request POST \
           --header "X-Auth-Token: ${{ secrets.DOCKER_TOKEN }}" \
           "https://api.scaleway.com/containers/v1beta1/regions/nl-ams/containers/$container_id/deploy" \
