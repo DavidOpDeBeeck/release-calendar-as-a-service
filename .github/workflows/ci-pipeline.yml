@@ -20,7 +20,7 @@ jobs:
     - name: Push Rcaas Api image
       run: docker push ${{ secrets.DOCKER_REGISTRY }}/rcaas-api
     - name: Push Rcaas UI images
-      run: docker push ${{ secrets.DOCKER_REGISTRY }}/rcaas-uicd ..
+      run: docker push ${{ secrets.DOCKER_REGISTRY }}/rcaas-ui
     - name: update Rcaas Api container with new image version
       run: | 
         curl \
