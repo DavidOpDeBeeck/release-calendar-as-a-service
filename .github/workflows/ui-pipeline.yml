@@ -26,11 +26,11 @@ jobs:
     steps:
       - name: Retrieve container id
         run: |
-          container_id = $(curl \                                                                                                                                                                          0.196s
+          container_id=`curl \                                                                                                                                                                          0.196s
             --request GET \
-            --header "X-Auth-Token: 13b0e32b-fcdb-44d8-913a-949d1d29c17a" \
+            --header "X-Auth-Token: ${{ secrets.DOCKER_TOKEN }}" \
             "https://api.scaleway.com/containers/v1beta1/regions/nl-ams/containers" \
-            -d "{}" | jq -r '.containers[] | select(.name=="rcaas-ui") | .id')
+            -d "{}" | jq -r '.containers[] | select(.name=="rcaas-ui") | .id'`
           echo "response from curl= $container_id"
 #      - name: Deploy container with new image version
 #        run: |
