@@ -26,7 +26,7 @@ jobs:
     steps:
       - name: Retrieve container id
         run: |
-          container_id=`curl \                                                                                                                                                                          0.196s
+          container_id=`curl \
             --request GET \
             --header "X-Auth-Token: ${{ secrets.DOCKER_TOKEN }}" \
             "https://api.scaleway.com/containers/v1beta1/regions/nl-ams/containers" \
