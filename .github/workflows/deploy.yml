@@ -10,4 +10,4 @@ jobs:
         env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
-          args: helm upgrade --install -f deployment/values.yaml rcaas deployment  
+          args: helm upgrade --install --set registry=${{ secrets.SCW_DOCKER_REGISTRY }} --set email=${{ secrets.ACME_EMAIL }} rcaas deployment  
