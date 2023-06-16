@@ -1,0 +1,1 @@
+helm upgrade --install -f values.yaml rcaas . --create-namespace --namespace rcaas --wait
