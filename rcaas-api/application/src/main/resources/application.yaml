@@ -1,7 +1,7 @@
 spring:
   datasource:
     name: rcaas
-    url: jdbc:postgresql://postgres:5432/apps
+    url: jdbc:postgresql://postgresql:5432/apps
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver

@@ -30,7 +30,7 @@ services:
       - "traefik.http.services.api.loadbalancer.server.port=8080"
   database:
     image: "postgres"
-    container_name: "postgres"
+    container_name: "postgresql"
     volumes:
       - /tmp/var/lib/postgresql:/var/lib/postgresql
     environment:
