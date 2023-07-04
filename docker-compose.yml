@@ -34,6 +34,6 @@ services:
     volumes:
       - /tmp/var/lib/postgresql:/var/lib/postgresql
     environment:
-      - "POSTGRES_USER=postgres"
-      - "POSTGRES_PASSWORD=postgres"
+      - "POSTGRES_USER=application"
+      - "POSTGRES_PASSWORD=application"
       - "POSTGRES_DB=apps"
