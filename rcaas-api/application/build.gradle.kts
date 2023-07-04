@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    runtimeOnly("com.h2database:h2")
+    runtimeOnly("org.postgresql:postgresql")
 
     implementation(project(":driving-adapter"))
     implementation(project(":core:use-case"))

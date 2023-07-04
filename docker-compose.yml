@@ -28,3 +28,12 @@ services:
       - "traefik.http.routers.api.rule=Host(`localhost`) && PathPrefix(`/api`)"
       - "traefik.http.routers.api.entrypoints=web"
       - "traefik.http.services.api.loadbalancer.server.port=8080"
+  database:
+    image: "postgres"
+    container_name: "postgres"
+    volumes:
+      - /tmp/var/lib/postgresql:/var/lib/postgresql
+    environment:
+      - "POSTGRES_USER=postgres"
+      - "POSTGRES_PASSWORD=postgres"
+      - "POSTGRES_DB=apps"
