@@ -12,10 +12,10 @@ jobs:
         env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG }}
         with:
-          args: helm upgrade --install --set registry=${{ secrets.DOCKER_REGISTRY }} --set email=${{ secrets.ACME_EMAIL }} --set database_password=${{ secrets.DATABASE_PASSWORD }} rcaas deployment
+          args: helm upgrade --install -n apps --set registry=${{ secrets.DOCKER_REGISTRY }} --set email=${{ secrets.ACME_EMAIL }} --set database_password=${{ secrets.DATABASE_PASSWORD }} rcaas deployment
       - name: Rollout
         uses: wahyd4/kubectl-helm-action@master
         env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG }}
         with:
-          args: kubectl rollout restart deploy rcaas-api-app rcaas-ui-app
+          args: kubectl -n apps rollout restart deploy rcaas-api-app rcaas-ui-app
