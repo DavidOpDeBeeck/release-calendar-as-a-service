@@ -1,4 +1,4 @@
-name: Rcaas Deploy Pipeline
+name: Deploy
 on:
   workflow_dispatch:
 jobs:

@@ -1,12 +1,12 @@
-name: Rcaas UI Pipeline
+name: Build API
 on:
   push:
     branches: [ "master" ]
     paths:
-      - rcaas-ui/**
+      - rcaas-api/**
   workflow_dispatch:
 env:
-  APP_NAME: rcaas-ui
+  APP_NAME: rcaas-api
 jobs:
   build:
     runs-on: ubuntu-latest
