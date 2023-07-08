@@ -38,7 +38,7 @@ export default function Settings() {
                                 <div className="bg-white px-4 pt-5 pb-4 dark:bg-slate-700 sm:p-6 sm:pb-4">
                                     <div className="mt-3 text-center sm:mt-0 sm:text-left">
                                         <Dialog.Title as="h3"
-                                                      className="pb-3 text-2xl font-bold leading-6 text-gray-800 dark:text-gray-200">
+                                                      className="border-b border-gray-200 pb-3 text-2xl font-bold leading-6 text-gray-800 dark:border-slate-600 dark:text-gray-200">
                                             Settings
                                         </Dialog.Title>
                                         <div>
@@ -82,7 +82,7 @@ export default function Settings() {
                                 <div className="bg-gray-50 px-4 py-3 dark:bg-slate-800 sm:flex sm:flex-row-reverse sm:px-6">
                                     <button
                                         type="button"
-                                        className="rounded-md border border-gray-200 px-3 py-2 text-sm font-bold text-gray-800 shadow space-x-1 hover:bg-gray-50 focus:outline focus:outline-2 focus:outline-blue-600 dark:border-slate-800 dark:bg-slate-700 dark:text-gray-200 dark:hover:bg-slate-600"
+                                        className="rounded-lg border-2 border-gray-200 bg-white p-2 font-semibold text-gray-800 hover:bg-gray-50 focus:outline focus:outline-2 focus:outline-blue-600 dark:border-slate-800 dark:bg-slate-700 dark:text-gray-200 dark:hover:bg-slate-600"
                                         onClick={() => setShowSettings(false)}
                                         ref={cancelButtonRef}>
                                         Close

@@ -60,7 +60,7 @@ export default function NewReleaseButton() {
         <>
             <button onClick={() => setOpen(true)}
                     type="button"
-                    className="flex items-center rounded-md border border-gray-200 px-3 py-2 text-sm font-bold text-gray-800 shadow space-x-1 hover:bg-gray-50 focus:outline focus:outline-2 focus:outline-blue-600 dark:border-slate-800 dark:bg-slate-700 dark:text-gray-200 dark:hover:bg-slate-600">
+                    className="flex items-center rounded-lg border-2 border-gray-200 p-2 font-semibold text-gray-800 space-x-1 hover:bg-gray-50 focus:outline focus:outline-2 focus:outline-blue-600 dark:border-slate-800 dark:text-gray-200 dark:hover:bg-slate-600">
                 <PlusIcon className="h-4 w-4"/>
                 <span>Release</span>
             </button>
@@ -120,7 +120,7 @@ export default function NewReleaseButton() {
                             <select
                                 id="color"
                                 {...register("version.color", {required: true})}
-                                className="w-full appearance-none rounded-lg border border-gray-200 p-2 text-sm focus:outline focus:outline-2 focus:outline-blue-600 dark:border-slate-600 dark:bg-slate-700 dark:text-gray-200 shadow">
+                                className="w-full appearance-none rounded-lg border border-gray-200 p-2 text-sm shadow focus:outline focus:outline-2 focus:outline-blue-600 dark:border-slate-600 dark:bg-slate-700 dark:text-gray-200">
                                 <option value="red">Red</option>
                                 <option value="orange">Orange</option>
                                 <option value="amber">Amber</option>
