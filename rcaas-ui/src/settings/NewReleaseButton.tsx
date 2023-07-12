@@ -150,7 +150,7 @@ export default function NewReleaseButton() {
                     <div className="flex flex-col space-y-2">
                         <span className="text-sm font-bold text-gray-800 dark:text-gray-200">Preview</span>
                         {version.value && version.environment && version.color
-                            ? (<Version version={version}/>)
+                            ? (<Version version={version} faded={false}/>)
                             : <span className="text-xs italic dark:text-gray-200">Preview not available</span>}
                     </div>
                 </div>

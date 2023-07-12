@@ -1,6 +1,7 @@
 import YearMonthSelector from "../year-month/YearMonthSelector.tsx";
 import YearMonthTitle from "../year-month/YearMonthTitle.tsx";
 import TodayButton from "./TodayButton.tsx";
+import SettingsButton from "../settings/SettingsButton";
 
 export default function ActionBar() {
     return (
@@ -11,6 +12,7 @@ export default function ActionBar() {
                 <div className="flex space-x-2">
                     <TodayButton/>
                     <YearMonthSelector/>
+                    <SettingsButton/>
                 </div>
             </div>
         </div>

@@ -25,11 +25,11 @@ export default function Day({day, dayIndex, showDayName}: Props) {
     const [isHovering, setIsHovering] = useState(false);
     const daysOfTheWeek = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
 
-    const versions = day.versions.slice(0, 3);
-    const releases = day.releases.slice(0, 3);
+    const versions = day.versions.slice(0, 4);
+    const releases = day.releases.slice(0, 4);
 
     return (
-        <div className={`${dayClass(day)} grid grid-rows-4 gap-y-1 items-center p-2 duration-150 ease-in`}
+        <div className={`${dayClass(day)} grid grid-rows-5 gap-y-1 items-center p-2 duration-150 ease-in`}
              onMouseOver={() => setIsHovering(true)}
              onMouseOut={() => setIsHovering(false)}>
             <div className="flex justify-between">
@@ -37,8 +37,8 @@ export default function Day({day, dayIndex, showDayName}: Props) {
                 {showDayName && (<span className="font-bold text-gray-600 dark:text-gray-300">{daysOfTheWeek[dayIndex]}</span>)}
             </div>
             {isHovering
-                ? versions.map((version, index) => (<Version key={index} version={version}/>))
-                : releases.map((release, index) => (<Version key={index} version={release.version}/>))}
+                ? versions.map((version, index) => (<Version key={index} version={version} faded={true}/>))
+                : releases.map((release, index) => (<Version key={index} version={release.version} faded={false}/>))}
         </div>
     )
 }
