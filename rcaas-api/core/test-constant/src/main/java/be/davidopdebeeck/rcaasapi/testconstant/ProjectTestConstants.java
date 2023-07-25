@@ -62,11 +62,15 @@ public class ProjectTestConstants {
     }
 
     public static SprintBasedReleaseSpecification sprintBasedReleaseSpecification() {
+        return sprintBasedReleaseSpecificationBuilder()
+            .build();
+    }
+
+    public static SprintBasedReleaseSpecification.Builder sprintBasedReleaseSpecificationBuilder() {
         return new SprintBasedReleaseSpecification.Builder()
             .withVersion(sprintBasedVersion())
             .withSprintLength(SPRINT_LENGTH)
-            .withStartDate(SPRINT_START_DATE)
-            .build();
+            .withStartDate(SPRINT_START_DATE);
     }
 
     public static SprintBasedVersion sprintBasedVersion() {

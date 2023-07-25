@@ -60,7 +60,7 @@ export default function NewReleaseButton() {
         <>
             <button onClick={() => setOpen(true)}
                     type="button"
-                    className="flex items-center rounded-lg border-2 border-gray-200 p-2 font-semibold text-gray-800 space-x-1 hover:bg-gray-50 focus:outline focus:outline-2 focus:outline-blue-600 dark:border-slate-800 dark:text-gray-200 dark:hover:bg-slate-600">
+                    className="flex items-center rounded-lg border-2 border-gray-200 p-2 text-sm font-semibold text-gray-800 space-x-1 hover:bg-gray-50 focus:outline focus:outline-2 focus:outline-blue-600 dark:border-slate-800 dark:text-gray-200 dark:hover:bg-slate-600">
                 <PlusIcon className="h-4 w-4"/>
                 <span>Release</span>
             </button>
@@ -150,7 +150,7 @@ export default function NewReleaseButton() {
                     <div className="flex flex-col space-y-2">
                         <span className="text-sm font-bold text-gray-800 dark:text-gray-200">Preview</span>
                         {version.value && version.environment && version.color
-                            ? (<Version version={version} faded={false}/>)
+                            ? (<Version version={version}/>)
                             : <span className="text-xs italic dark:text-gray-200">Preview not available</span>}
                     </div>
                 </div>

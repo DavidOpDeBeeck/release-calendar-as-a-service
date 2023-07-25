@@ -7,6 +7,7 @@ import be.davidopdebeeck.rcaasapi.core.domain.project.version.Version;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.List;
+import java.util.Optional;
 
 public class DayFactory {
 
@@ -31,13 +32,15 @@ public class DayFactory {
 
     private List<Version> determineVersions(LocalDate date) {
         return project.getSpecifications().stream()
-            .flatMap(specification -> specification.determineVersionAtDate(date).stream())
+            .map(specification -> specification.determineVersionAtDate(date))
+            .flatMap(Optional::stream)
             .toList();
     }
 
     private List<Release> determineReleases(LocalDate date) {
         return project.getSpecifications().stream()
-            .flatMap(specification -> specification.determineReleaseAtDate(date).stream())
+            .map(specification -> specification.determineReleaseAtDate(date))
+            .flatMap(Optional::stream)
             .toList();
     }
 }

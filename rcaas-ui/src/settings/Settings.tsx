@@ -4,11 +4,23 @@ import {useProject} from "../queries/project/useProject.ts";
 import {showSettingsAtom} from "../store.ts";
 import {useAtom} from "jotai";
 import {Fragment, useRef} from "react";
+import {TrashIcon} from "@heroicons/react/24/outline";
+import {useUpdateProjectMutation} from "../queries/project/useUpdateProjectMutation.ts";
 
 export default function Settings() {
+    const mutation = useUpdateProjectMutation();
     const [showSettings, setShowSettings] = useAtom(showSettingsAtom);
     const {data: project} = useProject();
     const cancelButtonRef = useRef(null);
+    const onDelete = (index: number) => {
+        mutation.mutate({
+            name: project!.name,
+            specifications: [
+                ...project!.specifications.slice(0, index),
+                ...project!.specifications.slice(index + 1)
+            ]
+        });
+    };
 
     return (
         <Transition.Root show={showSettings} as={Fragment}>
@@ -52,6 +64,7 @@ export default function Settings() {
                                                         <th className="py-2 font-medium">Start Date</th>
                                                         <th className="py-2 font-medium">Sprint Length</th>
                                                         <th className="py-2 font-medium">Color</th>
+                                                        <th className="py-2"></th>
                                                     </tr>
                                                     </thead>
                                                     <tbody className="text-left text-sm">
@@ -63,7 +76,13 @@ export default function Settings() {
                                                             <td className="py-2">{specification.sprintBased.sprintLength}</td>
                                                             <td className="py-2">
                                                                 <div
-                                                                    className={`w-5 h-5 bg-${specification.sprintBased.version.color}-400 border-2 border-${specification.sprintBased.version.color}-500`}></div>
+                                                                    className={`w-5 h-5 rounded-md bg-${specification.sprintBased.version.color}-400 border-2 border-${specification.sprintBased.version.color}-500`}></div>
+                                                            </td>
+                                                            <td>
+                                                                <button type="button"
+                                                                        className="rounded-lg border-2 border-red-700 bg-red-600 p-1 text-xs font-semibold text-gray-200 hover:bg-red-500 focus:outline focus:outline-2 focus:outline-blue-600">
+                                                                    <TrashIcon onClick={() => onDelete(index)} className="h-4 w-4"/>
+                                                                </button>
                                                             </td>
                                                         </tr>
                                                     ))}

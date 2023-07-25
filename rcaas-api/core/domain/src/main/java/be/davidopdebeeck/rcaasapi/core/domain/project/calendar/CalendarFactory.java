@@ -33,11 +33,12 @@ public class CalendarFactory {
     }
 
     private Week createWeekFrom(LocalDate date, YearMonth yearMonth) {
-        LocalDate monday = date.minusDays(date.getDayOfWeek().getValue() - 1);
+        LocalDate monday = date.minusDays(date.getDayOfWeek().getValue() - 1L);
 
         return new Week.Builder()
             .withDays(range(0, 7)
-                .mapToObj(dayOfWeek -> dayFactory.create(monday.plusDays(dayOfWeek), yearMonth))
+                .mapToObj(monday::plusDays)
+                .map(dayOfWeek -> dayFactory.create(dayOfWeek, yearMonth))
                 .toList())
             .build();
     }
