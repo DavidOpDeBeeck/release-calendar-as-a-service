@@ -1,0 +1,2 @@
+registry: docker_registry_url
+database_password: database_password
