@@ -1,6 +1,6 @@
 import {DayTO} from "../domain/CalendarTO.ts";
 import Version from "./Version.tsx";
-import {useState} from "react";
+import {useMemo, useState} from "react";
 
 function dayClass(day: DayTO): string {
     if (day.today) {
@@ -26,7 +26,14 @@ export default function Day({day, dayIndex, showDayName}: Props) {
     const daysOfTheWeek = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
 
     const versions = day.versions.slice(0, 4);
-    const releases = day.releases.slice(0, 4);
+    const releases = day.releases.slice(0, 4).map(release => release.version);
+
+    const versionsToShow = useMemo(() => (
+            isHovering
+                ? [...releases, ...versions].filter((value, index, array) =>
+                    (array.findIndex(value1 => JSON.stringify(value) === JSON.stringify(value1)) === index))
+                : releases),
+        [isHovering, releases, versions]);
 
     return (
         <div className={`${dayClass(day)} grid grid-rows-5 items-center p-2 duration-150 ease-in`}
@@ -36,9 +43,9 @@ export default function Day({day, dayIndex, showDayName}: Props) {
                 <span className="font-bold text-gray-800 dark:text-gray-200">{new Date(day.date).getDate()}</span>
                 {showDayName && (<span className="font-bold text-gray-600 dark:text-gray-300">{daysOfTheWeek[dayIndex]}</span>)}
             </div>
-            {isHovering
-                ? versions.map((version, index) => (<Version key={index} version={version}/>))
-                : releases.map((release, index) => (<Version key={index} version={release.version}/>))}
+            {versionsToShow.map((version, index) => (releases.indexOf(version) > -1
+                ? <Version key={index} version={version}/>
+                : <div className="opacity-70"><Version key={index} version={version}/></div>))}
         </div>
-    )
+    );
 }
