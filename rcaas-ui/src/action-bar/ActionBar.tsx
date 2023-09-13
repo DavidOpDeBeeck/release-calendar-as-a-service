@@ -2,6 +2,7 @@ import YearMonthSelector from "../year-month/YearMonthSelector.tsx";
 import YearMonthTitle from "../year-month/YearMonthTitle.tsx";
 import TodayButton from "./TodayButton.tsx";
 import SettingsButton from "../settings/SettingsButton";
+import VisualisationButton from "../visualisation/VisualisationButton.tsx";
 
 export default function ActionBar() {
     return (
@@ -13,6 +14,7 @@ export default function ActionBar() {
                     <TodayButton/>
                     <YearMonthSelector/>
                     <SettingsButton/>
+                    <VisualisationButton/>
                 </div>
             </div>
         </div>

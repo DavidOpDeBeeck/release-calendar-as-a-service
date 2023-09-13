@@ -1,6 +1,8 @@
 import {DayTO} from "../domain/CalendarTO.ts";
 import Version from "./Version.tsx";
 import {useMemo, useState} from "react";
+import {showVersionsForEachDayAtom} from "../store.ts";
+import {useAtomValue} from "jotai";
 
 function dayClass(day: DayTO): string {
     if (day.today) {
@@ -22,6 +24,7 @@ interface Props {
 }
 
 export default function Day({day, dayIndex, showDayName}: Props) {
+    const showVersionsForEachDay = useAtomValue(showVersionsForEachDayAtom);
     const [isHovering, setIsHovering] = useState(false);
     const daysOfTheWeek = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
 
@@ -29,7 +32,7 @@ export default function Day({day, dayIndex, showDayName}: Props) {
     const releases = day.releases.slice(0, 4).map(release => release.version);
 
     const versionsToShow = useMemo(() => (
-            isHovering
+            showVersionsForEachDay || isHovering
                 ? [...releases, ...versions].filter((value, index, array) =>
                     (array.findIndex(value1 => JSON.stringify(value) === JSON.stringify(value1)) === index))
                 : releases),
@@ -45,7 +48,7 @@ export default function Day({day, dayIndex, showDayName}: Props) {
             </div>
             {versionsToShow.map((version, index) => (releases.indexOf(version) > -1
                 ? <Version key={index} version={version}/>
-                : <div className="opacity-70"><Version key={index} version={version}/></div>))}
+                : <div key={index} className="opacity-70"><Version version={version}/></div>))}
         </div>
     );
 }
