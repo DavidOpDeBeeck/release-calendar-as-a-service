@@ -4,8 +4,9 @@ WORKDIR /app
 
 COPY . .
 
-RUN npm ci
-RUN npm run build
+RUN npm i -g pnpm
+RUN pnpm install
+RUN pnpm run build
 
 ENV NODE_ENV production
 
