@@ -5,7 +5,7 @@ import {useState} from "react";
 import {useProject} from "../queries/project/useProject.ts";
 import {useUpdateProjectMutation} from "../queries/project/useUpdateProjectMutation.ts";
 import {ChevronDownIcon, PlusIcon} from "@heroicons/react/24/outline";
-import Version from "../calendar/Version.tsx";
+import Release from "../calendar/Release";
 
 interface NewRelease {
     version?: {
@@ -150,7 +150,7 @@ export default function NewReleaseButton() {
                     <div className="flex flex-col space-y-2">
                         <span className="text-sm font-bold text-gray-800 dark:text-gray-200">Preview</span>
                         {version.value && version.environment && version.color
-                            ? (<Version version={version}/>)
+                            ? (<Release version={version}/>)
                             : <span className="text-xs italic dark:text-gray-200">Preview not available</span>}
                     </div>
                 </div>

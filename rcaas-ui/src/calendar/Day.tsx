@@ -3,6 +3,7 @@ import Version from "./Version.tsx";
 import {useMemo, useState} from "react";
 import {showVersionsForEachDayAtom} from "../store.ts";
 import {useAtomValue} from "jotai";
+import Release from "./Release";
 
 function dayClass(day: DayTO): string {
     if (day.today) {
@@ -47,8 +48,8 @@ export default function Day({day, dayIndex, showDayName}: Props) {
                 {showDayName && (<span className="font-bold text-gray-600 dark:text-gray-300">{daysOfTheWeek[dayIndex]}</span>)}
             </div>
             {versionsToShow.map((version, index) => (releases.indexOf(version) > -1
-                ? <Version key={index} version={version}/>
-                : <div key={index} className="opacity-70"><Version version={version}/></div>))}
+                ? <Release key={index} version={version}/>
+                : <Version key={index} version={version}/>))}
         </div>
     );
 }
