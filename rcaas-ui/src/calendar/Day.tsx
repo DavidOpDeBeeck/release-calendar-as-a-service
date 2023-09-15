@@ -7,13 +7,13 @@ import Release from "./Release";
 
 function dayClass(day: DayTO): string {
     if (day.today) {
-        return "bg-blue-300 dark:bg-blue-500 bg-stripes bg-stripes-blue-400 dark:bg-stripes-blue-600";
+        return "bg-blue-400 dark:bg-blue-600";
     }
     if (day.weekend) {
-        return "bg-gray-300 dark:bg-slate-700 bg-stripes bg-stripes-white dark:bg-stripes-slate-800";
+        return `bg-gray-400 dark:bg-slate-800 ${day.otherMonth ? 'bg-stripes bg-stripes-gray-500 dark:bg-stripes-slate-900' : ''}`;
     }
     if (day.otherMonth) {
-        return "bg-gray-200 dark:bg-slate-600 bg-stripes bg-stripes-white dark:bg-stripes-slate-700";
+        return `bg-gray-300 dark:bg-slate-600 bg-stripes bg-stripes-gray-400 dark:bg-stripes-slate-700`;
     }
     return "bg-white dark:bg-slate-700";
 }
@@ -40,7 +40,7 @@ export default function Day({day, dayIndex, showDayName}: Props) {
         [isHovering, releases, versions]);
 
     return (
-        <div className={`${dayClass(day)} grid grid-rows-5 items-center p-2 duration-150 ease-in`}
+        <div className={`${dayClass(day)} grid grid-rows-5 rounded-lg items-center p-2 duration-150 ease-in`}
              onMouseOver={() => setIsHovering(true)}
              onMouseOut={() => setIsHovering(false)}>
             <div className="flex justify-between">
