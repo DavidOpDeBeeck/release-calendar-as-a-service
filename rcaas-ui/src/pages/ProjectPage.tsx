@@ -11,7 +11,7 @@ export default function ProjectPage() {
     }, [project]);
 
     return (
-        <div className="flex h-screen w-screen flex-col gap-2 bg-gray-100 p-4 dark:bg-slate-800">
+        <div className="flex h-screen flex-col gap-2 bg-gray-100 p-2 dark:bg-slate-800">
             <ActionBar/>
             <Calendar/>
         </div>

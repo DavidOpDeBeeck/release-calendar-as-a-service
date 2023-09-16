@@ -40,12 +40,13 @@ export default function Day({day, dayIndex, showDayName}: Props) {
         [isHovering, releases, versions]);
 
     return (
-        <div className={`${dayClass(day)} grid grid-rows-5 rounded-lg items-center p-2 duration-150 ease-in`}
+        <div className={`${dayClass(day)} grid grid-rows-5 rounded-lg items-center gap-1 p-2 duration-150 ease-in`}
              onMouseOver={() => setIsHovering(true)}
              onMouseOut={() => setIsHovering(false)}>
             <div className="flex justify-between">
                 <span className="font-bold text-gray-800 dark:text-gray-200">{new Date(day.date).getDate()}</span>
-                {showDayName && (<span className="font-bold text-gray-600 dark:text-gray-300">{daysOfTheWeek[dayIndex]}</span>)}
+                {showDayName && (<span
+                    className="rounded-md border border-gray-400 bg-gray-300 px-2 font-bold text-gray-600 shadow dark:border-slate-700 dark:bg-slate-600 dark:text-gray-300">{daysOfTheWeek[dayIndex]}</span>)}
             </div>
             {versionsToShow.map((version, index) => (releases.indexOf(version) > -1
                 ? <Release key={index} version={version}/>
