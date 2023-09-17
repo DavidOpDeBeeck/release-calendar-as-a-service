@@ -40,7 +40,7 @@ export default function Day({day, dayIndex, showDayName}: Props) {
         [isHovering, releases, versions]);
 
     return (
-        <div className={`${dayClass(day)} grid grid-rows-5 rounded-lg items-center gap-1 p-2 duration-150 ease-in`}
+        <div className={`${dayClass(day)} flex flex-col space-y-1 rounded-lg p-2 duration-150 ease-in`}
              onMouseOver={() => setIsHovering(true)}
              onMouseOut={() => setIsHovering(false)}>
             <div className="flex justify-between">
