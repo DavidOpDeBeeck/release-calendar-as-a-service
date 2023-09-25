@@ -15,7 +15,7 @@ function dayClass(day: DayTO): string {
     if (day.otherMonth) {
         return `bg-gray-300 dark:bg-slate-600 bg-stripes bg-stripes-gray-400 dark:bg-stripes-slate-700`;
     }
-    return "bg-white dark:bg-slate-700";
+    return "bg-gray-100 dark:bg-slate-700";
 }
 
 interface Props {
@@ -33,11 +33,10 @@ export default function Day({day, dayIndex, showDayName}: Props) {
     const releases = day.releases.slice(0, 4).map(release => release.version);
 
     const versionsToShow = useMemo(() => (
-            showVersionsForEachDay || isHovering
-                ? [...releases, ...versions].filter((value, index, array) =>
-                    (array.findIndex(value1 => JSON.stringify(value) === JSON.stringify(value1)) === index))
-                : releases),
-        [isHovering, releases, versions]);
+            [...releases, ...versions].filter((value, index, array) =>
+                (array.findIndex(value1 => JSON.stringify(value) === JSON.stringify(value1)) === index))
+                .map(value => ({version: value, visible: showVersionsForEachDay || isHovering}))),
+        [showVersionsForEachDay, isHovering, releases, versions]);
 
     return (
         <div className={`${dayClass(day)} flex flex-col space-y-1 rounded-lg p-2 duration-150 ease-in`}
@@ -48,9 +47,9 @@ export default function Day({day, dayIndex, showDayName}: Props) {
                 {showDayName && (<span
                     className="rounded-md border border-gray-400 bg-gray-300 px-2 font-bold text-gray-600 shadow dark:border-slate-700 dark:bg-slate-600 dark:text-gray-300">{daysOfTheWeek[dayIndex]}</span>)}
             </div>
-            {versionsToShow.map((version, index) => (releases.indexOf(version) > -1
-                ? <Release key={index} version={version}/>
-                : <Version key={index} version={version}/>))}
+            {versionsToShow.map((value, index) => (releases.indexOf(value.version) > -1
+                ? <Release key={index} version={value.version}/>
+                : <Version key={index} version={value.version} visible={value.visible}/>))}
         </div>
     );
 }
