@@ -13,9 +13,9 @@ function dayClass(day: DayTO): string {
         return `bg-gray-400 dark:bg-slate-800 ${day.otherMonth ? 'bg-stripes bg-stripes-gray-500 dark:bg-stripes-slate-900' : ''}`;
     }
     if (day.otherMonth) {
-        return `bg-gray-300 dark:bg-slate-600 bg-stripes bg-stripes-gray-400 dark:bg-stripes-slate-700`;
+        return `bg-stripes bg-stripes-gray-400 dark:bg-stripes-slate-700`;
     }
-    return "bg-gray-100 dark:bg-slate-700";
+    return "bg-gray-300 dark:bg-slate-700";
 }
 
 interface Props {
@@ -45,7 +45,7 @@ export default function Day({day, dayIndex, showDayName}: Props) {
             <div className="flex justify-between">
                 <span className="font-bold text-gray-800 dark:text-gray-200">{new Date(day.date).getDate()}</span>
                 {showDayName && (<span
-                    className="rounded-md border border-gray-400 bg-gray-300 px-2 font-bold text-gray-600 shadow dark:border-slate-700 dark:bg-slate-600 dark:text-gray-300">{daysOfTheWeek[dayIndex]}</span>)}
+                    className="rounded-lg backdrop-blur-sm px-2 font-bold text-gray-600 shadow dark:text-gray-300">{daysOfTheWeek[dayIndex]}</span>)}
             </div>
             {versionsToShow.map((value, index) => (releases.indexOf(value.version) > -1
                 ? <Release key={index} version={value.version}/>

@@ -16,7 +16,7 @@ export default function CreateProject() {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}
-              className="flex rounded-lg border border-gray-200 bg-white p-3 text-xl shadow-md space-y-2 dark:border-slate-800 dark:bg-slate-700">
+              className="flex rounded-lg border-2 border-gray-200 bg-white p-3 text-xl shadow space-y-2 dark:border-slate-800 dark:bg-slate-700">
             <div className="flex flex-1 items-center space-x-3">
                 <input id="name"
                        type="text"
