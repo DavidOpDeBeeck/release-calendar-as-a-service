@@ -28,6 +28,7 @@ const flattenColorPalette = (obj, sep = '-') => Object.assign(
 );
 
 module.exports = {
+    darkMode: 'class',
     content: [
         "./index.html",
         "./src/**/*.{js,ts,jsx,tsx}",
