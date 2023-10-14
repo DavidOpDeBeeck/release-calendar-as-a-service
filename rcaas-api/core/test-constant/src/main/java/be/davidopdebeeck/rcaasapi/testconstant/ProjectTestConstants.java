@@ -8,6 +8,7 @@ import be.davidopdebeeck.rcaasapi.core.domain.project.version.SprintBasedVersion
 import be.davidopdebeeck.rcaasapi.transferobject.project.ProjectTO;
 import be.davidopdebeeck.rcaasapi.transferobject.project.environment.EnvironmentTO;
 import be.davidopdebeeck.rcaasapi.transferobject.project.release.ReleaseSpecificationTO;
+import be.davidopdebeeck.rcaasapi.transferobject.project.release.ReschedulingTO;
 import be.davidopdebeeck.rcaasapi.transferobject.project.release.SprintBasedReleaseSpecificationTO;
 import be.davidopdebeeck.rcaasapi.transferobject.project.version.SprintBasedVersionTO;
 
@@ -17,6 +18,7 @@ import java.util.List;
 import static be.davidopdebeeck.rcaasapi.core.domain.project.ProjectId.projectId;
 import static be.davidopdebeeck.rcaasapi.core.domain.project.environment.Environment.environment;
 import static be.davidopdebeeck.rcaasapi.transferobject.project.environment.EnvironmentTO.environmentTO;
+import static java.util.Collections.emptyList;
 
 public class ProjectTestConstants {
 
@@ -70,7 +72,8 @@ public class ProjectTestConstants {
         return new SprintBasedReleaseSpecification.Builder()
             .withVersion(sprintBasedVersion())
             .withSprintLength(SPRINT_LENGTH)
-            .withStartDate(SPRINT_START_DATE);
+            .withStartDate(SPRINT_START_DATE)
+            .withReschedulings(emptyList());
     }
 
     public static SprintBasedVersion sprintBasedVersion() {
@@ -86,6 +89,7 @@ public class ProjectTestConstants {
             .withVersion(anotherSprintBasedVersion())
             .withSprintLength(ANOTHER_SPRINT_LENGTH)
             .withStartDate(ANOTHER_SPRINT_START_DATE)
+            .withReschedulings(emptyList())
             .build();
     }
 
@@ -120,10 +124,22 @@ public class ProjectTestConstants {
     }
 
     public static SprintBasedReleaseSpecificationTO sprintBasedReleaseSpecificationTO() {
+        return sprintBasedReleaseSpecificationTOBuilder()
+            .build();
+    }
+
+    public static SprintBasedReleaseSpecificationTO.Builder sprintBasedReleaseSpecificationTOBuilder() {
         return new SprintBasedReleaseSpecificationTO.Builder()
             .withVersion(sprintBasedVersionTO())
             .withSprintLength(SPRINT_LENGTH)
             .withStartDate(SPRINT_START_DATE)
+            .withReschedulings(emptyList());
+    }
+
+    public static ReschedulingTO reschedulingTO() {
+        return new ReschedulingTO.Builder()
+            .withFrom(LocalDate.now())
+            .withTo(LocalDate.now().plusDays(SPRINT_LENGTH))
             .build();
     }
 
@@ -146,6 +162,7 @@ public class ProjectTestConstants {
             .withVersion(anotherSprintBasedVersionTO())
             .withSprintLength(ANOTHER_SPRINT_LENGTH)
             .withStartDate(ANOTHER_SPRINT_START_DATE)
+            .withReschedulings(emptyList())
             .build();
     }
 

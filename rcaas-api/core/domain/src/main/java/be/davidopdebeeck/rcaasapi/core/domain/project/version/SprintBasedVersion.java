@@ -58,6 +58,15 @@ public final class SprintBasedVersion implements Version {
         return Objects.hash(value, environment);
     }
 
+    @Override
+    public String toString() {
+        return "SprintBasedVersion{" +
+            "value=" + value +
+            ", color='" + color + '\'' +
+            ", environment=" + environment +
+            '}';
+    }
+
     public static final class Builder {
 
         private Long value;

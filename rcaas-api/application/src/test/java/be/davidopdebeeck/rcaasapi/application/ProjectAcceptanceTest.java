@@ -5,6 +5,7 @@ import be.davidopdebeeck.rcaasapi.transferobject.project.ProjectIdTO;
 import be.davidopdebeeck.rcaasapi.transferobject.project.ProjectTO;
 import be.davidopdebeeck.rcaasapi.transferobject.project.UpdateProjectTO;
 import be.davidopdebeeck.rcaasapi.transferobject.project.calendar.CalendarTO;
+import be.davidopdebeeck.rcaasapi.transferobject.project.release.ReleaseSpecificationTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,8 @@ import java.util.List;
 
 import static be.davidopdebeeck.rcaasapi.testconstant.ProjectTestConstants.ANOTHER_PROJECT_NAME;
 import static be.davidopdebeeck.rcaasapi.testconstant.ProjectTestConstants.PROJECT_NAME;
-import static be.davidopdebeeck.rcaasapi.testconstant.ProjectTestConstants.releaseSpecificationTO;
+import static be.davidopdebeeck.rcaasapi.testconstant.ProjectTestConstants.reschedulingTO;
+import static be.davidopdebeeck.rcaasapi.testconstant.ProjectTestConstants.sprintBasedReleaseSpecificationTOBuilder;
 import static java.lang.String.format;
 import static java.time.format.DateTimeFormatter.ofPattern;
 import static java.util.Collections.emptyList;
@@ -63,7 +65,11 @@ class ProjectAcceptanceTest {
 
         updateProject(projectId, new UpdateProjectTO.Builder()
             .withName(ANOTHER_PROJECT_NAME)
-            .withSpecifications(List.of(releaseSpecificationTO()))
+            .withSpecifications(List.of(new ReleaseSpecificationTO.Builder()
+                .withSprintBased(sprintBasedReleaseSpecificationTOBuilder()
+                    .withReschedulings(List.of(reschedulingTO()))
+                    .build())
+                .build()))
             .build());
 
         assertThat(findProject(projectId))
@@ -71,7 +77,11 @@ class ProjectAcceptanceTest {
             .isEqualTo(new ProjectTO.Builder()
                 .withProjectId(projectId)
                 .withName(ANOTHER_PROJECT_NAME)
-                .withSpecifications(List.of(releaseSpecificationTO()))
+                .withSpecifications(List.of(new ReleaseSpecificationTO.Builder()
+                    .withSprintBased(sprintBasedReleaseSpecificationTOBuilder()
+                        .withReschedulings(List.of(reschedulingTO()))
+                        .build())
+                    .build()))
                 .build());
     }
 

@@ -35,6 +35,13 @@ public class Release {
         return version.hashCode();
     }
 
+    @Override
+    public String toString() {
+        return "Release{" +
+            "version=" + version +
+            '}';
+    }
+
     public static final class Builder {
 
         private Version version;

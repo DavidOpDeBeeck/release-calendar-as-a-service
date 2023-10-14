@@ -3,11 +3,13 @@ package be.davidopdebeeck.rcaasapi.drivenadapter.project;
 import be.davidopdebeeck.rcaasapi.core.domain.project.Project;
 import be.davidopdebeeck.rcaasapi.core.domain.project.ProjectId;
 import be.davidopdebeeck.rcaasapi.core.domain.project.release.ReleaseSpecification;
+import be.davidopdebeeck.rcaasapi.core.domain.project.release.Rescheduling;
 import be.davidopdebeeck.rcaasapi.core.domain.project.release.SprintBasedReleaseSpecification;
 import be.davidopdebeeck.rcaasapi.core.domain.project.version.SprintBasedVersion;
 import be.davidopdebeeck.rcaasapi.drivenport.ProjectRepository;
 import be.davidopdebeeck.rcaasapi.transferobject.project.ProjectTO;
 import be.davidopdebeeck.rcaasapi.transferobject.project.release.ReleaseSpecificationTO;
+import be.davidopdebeeck.rcaasapi.transferobject.project.release.ReschedulingTO;
 import be.davidopdebeeck.rcaasapi.transferobject.project.release.SprintBasedReleaseSpecificationTO;
 import be.davidopdebeeck.rcaasapi.transferobject.project.version.SprintBasedVersionTO;
 import org.springframework.stereotype.Repository;
@@ -64,6 +66,12 @@ public class ProjectJpaRepository implements ProjectRepository {
                         .build())
                     .withStartDate(sprintBased.getStartDate())
                     .withSprintLength(sprintBased.getSprintLength())
+                    .withReschedulings(sprintBased.getReschedulings().stream()
+                        .map(rescheduling -> new ReschedulingTO.Builder()
+                            .withFrom(rescheduling.getFrom())
+                            .withTo(rescheduling.getTo())
+                            .build())
+                        .toList())
                     .build())
                 .build();
         }
@@ -80,6 +88,12 @@ public class ProjectJpaRepository implements ProjectRepository {
                     .build())
             .withStartDate(specification.getSprintBased().getStartDate())
             .withSprintLength(specification.getSprintBased().getSprintLength())
+            .withReschedulings(specification.getSprintBased().getReschedulings().stream()
+                .map(reschedulingTO -> new Rescheduling.Builder()
+                    .withFrom(reschedulingTO.getFrom())
+                    .withTo(reschedulingTO.getTo())
+                    .build())
+                .toList())
             .build();
     }
 }

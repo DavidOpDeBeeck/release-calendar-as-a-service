@@ -3,6 +3,7 @@ package be.davidopdebeeck.rcaasapi.core.usecase.project;
 import be.davidopdebeeck.rcaasapi.core.domain.project.Project;
 import be.davidopdebeeck.rcaasapi.core.domain.project.UpdateProject;
 import be.davidopdebeeck.rcaasapi.core.domain.project.release.ReleaseSpecification;
+import be.davidopdebeeck.rcaasapi.core.domain.project.release.Rescheduling;
 import be.davidopdebeeck.rcaasapi.core.domain.project.release.SprintBasedReleaseSpecification;
 import be.davidopdebeeck.rcaasapi.core.domain.project.version.SprintBasedVersion;
 import be.davidopdebeeck.rcaasapi.drivenport.ProjectRepository;
@@ -58,6 +59,12 @@ public class UpdateProjectUseCaseImpl implements UpdateProjectUseCase {
                 .build())
             .withStartDate(sprintBased.getStartDate())
             .withSprintLength(sprintBased.getSprintLength())
+            .withReschedulings(sprintBased.getReschedulings().stream()
+                .map(reschedulingTO -> new Rescheduling.Builder()
+                    .withFrom(reschedulingTO.getFrom())
+                    .withTo(reschedulingTO.getTo())
+                    .build())
+                .toList())
             .build();
     }
 }

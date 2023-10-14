@@ -4,6 +4,7 @@ import be.davidopdebeeck.rcaasapi.core.domain.project.version.SprintBasedVersion
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static be.davidopdebeeck.rcaasapi.core.domain.project.environment.Environment.environment;
 import static be.davidopdebeeck.rcaasapi.testconstant.ProjectTestConstants.SPRINT_LENGTH;
@@ -11,6 +12,7 @@ import static be.davidopdebeeck.rcaasapi.testconstant.ProjectTestConstants.SPRIN
 import static be.davidopdebeeck.rcaasapi.testconstant.ProjectTestConstants.SPRINT_VERSION_COLOR;
 import static be.davidopdebeeck.rcaasapi.testconstant.ProjectTestConstants.SPRINT_VERSION_ENVIRONMENT_VALUE;
 import static be.davidopdebeeck.rcaasapi.testconstant.ProjectTestConstants.sprintBasedVersion;
+import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -40,6 +42,7 @@ class SprintBasedReleaseSpecificationTest {
             .withStartDate(LocalDate.of(2023, 1, 1))
             .withVersion(version(1))
             .withSprintLength(2)
+            .withReschedulings(emptyList())
             .build();
 
         assertThat(specification.determineVersionAtDate(LocalDate.of(2022, 12, 31))).isEmpty();
@@ -55,6 +58,7 @@ class SprintBasedReleaseSpecificationTest {
             .withStartDate(LocalDate.of(2023, 1, 1))
             .withVersion(version(1))
             .withSprintLength(2)
+            .withReschedulings(emptyList())
             .build();
 
         assertThat(specification.determineReleaseAtDate(LocalDate.of(2022, 12, 31))).isEmpty();
@@ -62,6 +66,49 @@ class SprintBasedReleaseSpecificationTest {
         assertThat(specification.determineReleaseAtDate(LocalDate.of(2023, 1, 2))).isEmpty();
         assertThat(specification.determineReleaseAtDate(LocalDate.of(2023, 1, 3))).contains(release(2));
         assertThat(specification.determineReleaseAtDate(LocalDate.of(2023, 1, 4))).isEmpty();
+    }
+
+    @Test
+    void determineVersionAtDate_withRescheduling() {
+        SprintBasedReleaseSpecification specification = new SprintBasedReleaseSpecification.Builder()
+            .withStartDate(LocalDate.of(2023, 1, 1))
+            .withVersion(version(1))
+            .withSprintLength(2)
+            .withReschedulings(List.of(
+                rescheduling(LocalDate.of(2023, 1, 3), LocalDate.of(2023, 1, 4)),
+                rescheduling(LocalDate.of(2023, 1, 4), LocalDate.of(2023, 1, 5))
+            ))
+            .build();
+
+        assertThat(specification.determineVersionAtDate(LocalDate.of(2023, 1, 1))).contains(version(1));
+        assertThat(specification.determineVersionAtDate(LocalDate.of(2023, 1, 2))).contains(version(1));
+        assertThat(specification.determineVersionAtDate(LocalDate.of(2023, 1, 3))).contains(version(1));
+        assertThat(specification.determineVersionAtDate(LocalDate.of(2023, 1, 4))).contains(version(1));
+        assertThat(specification.determineVersionAtDate(LocalDate.of(2023, 1, 5))).contains(version(2));
+        assertThat(specification.determineVersionAtDate(LocalDate.of(2023, 1, 6))).contains(version(2));
+        assertThat(specification.determineVersionAtDate(LocalDate.of(2023, 1, 7))).contains(version(3));
+    }
+
+    @Test
+    void determineReleaseAtDate_withRescheduling() {
+        SprintBasedReleaseSpecification specification = new SprintBasedReleaseSpecification.Builder()
+            .withStartDate(LocalDate.of(2023, 1, 1))
+            .withVersion(version(1))
+            .withSprintLength(2)
+            .withReschedulings(List.of(
+                rescheduling(LocalDate.of(2023, 1, 3), LocalDate.of(2023, 1, 4)),
+                rescheduling(LocalDate.of(2023, 1, 4), LocalDate.of(2023, 1, 5))
+            ))
+            .build();
+
+        assertThat(specification.determineReleaseAtDate(LocalDate.of(2022, 12, 31))).isEmpty();
+        assertThat(specification.determineReleaseAtDate(LocalDate.of(2023, 1, 1))).contains(release(1));
+        assertThat(specification.determineReleaseAtDate(LocalDate.of(2023, 1, 2))).isEmpty();
+        assertThat(specification.determineReleaseAtDate(LocalDate.of(2023, 1, 3))).isEmpty();
+        assertThat(specification.determineReleaseAtDate(LocalDate.of(2023, 1, 4))).isEmpty();
+        assertThat(specification.determineReleaseAtDate(LocalDate.of(2023, 1, 5))).contains(release(2));
+        assertThat(specification.determineReleaseAtDate(LocalDate.of(2023, 1, 6))).isEmpty();
+        assertThat(specification.determineReleaseAtDate(LocalDate.of(2023, 1, 7))).contains(release(3));
     }
 
     private Release release(int value) {
@@ -79,6 +126,13 @@ class SprintBasedReleaseSpecificationTest {
             .withValue(value)
             .withColor(SPRINT_VERSION_COLOR)
             .withEnvironment(environment(SPRINT_VERSION_ENVIRONMENT_VALUE))
+            .build();
+    }
+
+    private Rescheduling rescheduling(LocalDate from, LocalDate to) {
+        return new Rescheduling.Builder()
+            .withFrom(from)
+            .withTo(to)
             .build();
     }
 }

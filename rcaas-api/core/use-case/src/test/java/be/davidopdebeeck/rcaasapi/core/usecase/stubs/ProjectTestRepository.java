@@ -8,6 +8,7 @@ import be.davidopdebeeck.rcaasapi.drivenport.ProjectQueryRepository;
 import be.davidopdebeeck.rcaasapi.drivenport.ProjectRepository;
 import be.davidopdebeeck.rcaasapi.transferobject.project.ProjectTO;
 import be.davidopdebeeck.rcaasapi.transferobject.project.release.ReleaseSpecificationTO;
+import be.davidopdebeeck.rcaasapi.transferobject.project.release.ReschedulingTO;
 import be.davidopdebeeck.rcaasapi.transferobject.project.release.SprintBasedReleaseSpecificationTO;
 import be.davidopdebeeck.rcaasapi.transferobject.project.version.SprintBasedVersionTO;
 import org.springframework.stereotype.Component;
@@ -60,6 +61,12 @@ public class ProjectTestRepository implements ProjectRepository, ProjectQueryRep
                         .build())
                     .withStartDate(sprintBased.getStartDate())
                     .withSprintLength(sprintBased.getSprintLength())
+                    .withReschedulings(sprintBased.getReschedulings().stream()
+                        .map(rescheduling -> new ReschedulingTO.Builder()
+                            .withFrom(rescheduling.getFrom())
+                            .withTo(rescheduling.getTo())
+                            .build())
+                        .toList())
                     .build())
                 .build();
         }
