@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    name: rcaas
+    url: jdbc:postgresql://postgresql:5432/apps
+    username: application
+    password: application
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+  main:
+    lazy-initialization: true
+  jmx:
+    enabled: false
