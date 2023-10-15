@@ -1,21 +1,23 @@
 import {Dialog, Transition} from "@headlessui/react";
 import NewReleaseButton from "./NewReleaseButton.tsx";
 import {useProject} from "../queries/project/useProject.ts";
-import {showSettingsAtom} from "../store.ts";
-import {useAtom} from "jotai";
 import {Fragment, useRef} from "react";
 import NewReschedulingButton from "./NewReschedulingButton.tsx";
 import DeleteProjectButton from "./DeleteProjectButton.tsx";
 import DeleteReschedulingButton from "./DeleteReschedulingButton.tsx";
 
-export default function SettingsModal() {
-    const [showSettings, setShowSettings] = useAtom(showSettingsAtom);
+type Props = {
+    showModal: boolean;
+    closeModal: () => void;
+}
+
+export default function SettingsModal({showModal, closeModal}: Props) {
     const {data: project} = useProject();
     const cancelButtonRef = useRef(null);
 
     return (
-        <Transition.Root show={showSettings} as={Fragment}>
-            <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={() => setShowSettings(false)}>
+        <Transition.Root show={showModal} as={Fragment}>
+            <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={() => closeModal()}>
                 <Transition.Child
                     as={Fragment}
                     enter="ease-out duration-300"
@@ -48,7 +50,7 @@ export default function SettingsModal() {
                                             <div className="flex flex-col py-2 space-y-2">
                                                 {project?.specifications.map((specification, specificationIndex) => (
                                                     <div key={specificationIndex}
-                                                         className="rounded-md border bg-gray-50 p-2 dark:border-slate-700 dark:bg-slate-600">
+                                                         className="rounded-md border bg-gray-50 p-4 shadow-sm dark:border-slate-700 dark:bg-slate-800">
                                                         <div className="flex items-center justify-between">
                                                             <h1 className="text-lg font-semibold text-gray-800 dark:text-gray-200">{specification.sprintBased.version.environment}</h1>
                                                             <div className="flex space-x-1">
@@ -56,8 +58,8 @@ export default function SettingsModal() {
                                                                 <DeleteProjectButton specificationIndex={specificationIndex}/>
                                                             </div>
                                                         </div>
-                                                        <h2 className="mt-2 py-2 text-sm font-medium dark:text-gray-200">Configuration</h2>
-                                                        <div className="grid grid-cols-2 gap-x-3 gap-y-1">
+                                                        <h2 className="mt-2 py-2 font-medium dark:text-gray-200">Configuration</h2>
+                                                        <div className="grid grid-cols-2 gap-x-3 gap-y-1 px-2">
                                                             <div className="flex justify-between text-sm space-x-2 dark:text-gray-200">
                                                                 <span>Version</span>
                                                                 <span>{specification.sprintBased.version.value}</span>
@@ -76,34 +78,37 @@ export default function SettingsModal() {
                                                                     className={`w-4 h-4 rounded-full bg-${specification.sprintBased.version.color}-400 border-2 border-${specification.sprintBased.version.color}-500`}></div>
                                                             </div>
                                                         </div>
-                                                        <h2 className="mt-2 py-2 text-sm font-medium dark:text-gray-200">Reschedulings</h2>
-                                                        <table className="w-full table-fixed">
-                                                            <thead>
-                                                            <tr className="border-b border-gray-200 text-left text-sm dark:border-gray-700 dark:text-gray-200">
-                                                                <th className="py-2 font-medium">From Date</th>
-                                                                <th className="py-2 font-medium">To Date</th>
-                                                                <th></th>
-                                                            </tr>
-                                                            </thead>
-                                                            <tbody className="text-left text-sm">
-                                                            {specification?.sprintBased.reschedulings.map((rescheduling, reschedulingIndex) => (
-                                                                <tr key={reschedulingIndex}
-                                                                    className="border-b border-gray-200 dark:border-gray-700 dark:text-gray-200">
-                                                                    <td className="py-2">{rescheduling.from}</td>
-                                                                    <td className="py-2">{rescheduling.to}</td>
-                                                                    <td>
-                                                                        <DeleteReschedulingButton
-                                                                            specificationIndex={specificationIndex}
-                                                                            reschedulingIndex={reschedulingIndex}/>
-                                                                    </td>
+                                                        <h2 className="mt-2 py-2 font-medium dark:text-gray-200">Reschedulings</h2>
+                                                        <div className="px-2">
+                                                            <table className="w-full table-fixed">
+                                                                <thead>
+                                                                <tr className="border-b border-gray-200 text-left text-sm dark:border-gray-700 dark:text-gray-200">
+                                                                    <th className="w-2/5 py-2 font-medium">From Date</th>
+                                                                    <th className="w-2/5 py-2 font-medium">To Date</th>
+                                                                    <th className="w-1/5 py-2 font-medium"></th>
                                                                 </tr>
-                                                            ))}
-                                                            {specification?.sprintBased.reschedulings.length === 0 && (<tr>
-                                                                <td colSpan={5} className="py-2 text-xs italic dark:text-gray-200">No reschedulings available
-                                                                </td>
-                                                            </tr>)}
-                                                            </tbody>
-                                                        </table>
+                                                                </thead>
+                                                                <tbody className="text-left text-sm">
+                                                                {specification?.sprintBased.reschedulings.map((rescheduling, reschedulingIndex) => (
+                                                                    <tr key={reschedulingIndex}
+                                                                        className="border-b border-gray-200 dark:border-gray-700 dark:text-gray-200">
+                                                                        <td className="py-2">{rescheduling.from}</td>
+                                                                        <td className="py-2">{rescheduling.to}</td>
+                                                                        <td>
+                                                                            <DeleteReschedulingButton
+                                                                                specificationIndex={specificationIndex}
+                                                                                reschedulingIndex={reschedulingIndex}/>
+                                                                        </td>
+                                                                    </tr>
+                                                                ))}
+                                                                {specification?.sprintBased.reschedulings.length === 0 && (<tr>
+                                                                    <td colSpan={5} className="py-2 text-xs italic dark:text-gray-200">No reschedulings
+                                                                        available
+                                                                    </td>
+                                                                </tr>)}
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
                                                     </div>
                                                 ))}
                                                 {project?.specifications.length === 0 && (<div>
@@ -120,7 +125,7 @@ export default function SettingsModal() {
                                     <button
                                         type="button"
                                         className="rounded-lg border-2 border-gray-200 bg-white p-2 font-semibold text-gray-800 hover:bg-gray-50 focus:outline focus:outline-2 focus:outline-blue-600 dark:border-slate-800 dark:bg-slate-700 dark:text-gray-200 dark:hover:bg-slate-600"
-                                        onClick={() => setShowSettings(false)}
+                                        onClick={() => closeModal()}
                                         ref={cancelButtonRef}>
                                         Close
                                     </button>

@@ -5,8 +5,6 @@ import {useProject} from "../queries/project/useProject.ts";
 import {useUpdateProjectMutation} from "../queries/project/useUpdateProjectMutation.ts";
 import {ChevronDownIcon} from "@heroicons/react/24/outline";
 import Release from "../calendar/Release";
-import {useAtom} from "jotai";
-import {showNewReleaseAtom} from "../store.ts";
 import {ErrorMessages} from "../error-message/ErrorMessages.tsx";
 
 interface NewRelease {
@@ -19,10 +17,14 @@ interface NewRelease {
     sprintLength?: number
 }
 
-export default function NewReleaseModal() {
+type Props = {
+    showModal: boolean;
+    closeModal: () => void;
+}
+
+export default function NewReleaseModal({showModal, closeModal}: Props) {
     const {data: project} = useProject();
     const mutation = useUpdateProjectMutation();
-    const [showNewRelease, setShowNewRelease] = useAtom(showNewReleaseAtom)
 
     const {register, watch, formState: {errors}, reset, handleSubmit} = useForm({
         defaultValues: {
@@ -53,7 +55,7 @@ export default function NewReleaseModal() {
             }]
         }, {
             onSuccess: () => {
-                setShowNewRelease(false);
+                closeModal();
                 reset();
             }
         });
@@ -62,9 +64,9 @@ export default function NewReleaseModal() {
     return (
         <Modal title={"New Release"}
                submitLabel={"Create"}
-               open={showNewRelease}
+               open={showModal}
                onSubmit={handleSubmit(onSubmit)}
-               onClose={() => setShowNewRelease(false)}>
+               onClose={() => closeModal()}>
             <div>
                 <ErrorMessages errorMessages={mutation.error}/>
                 <div className="grid grid-cols-2 gap-2">

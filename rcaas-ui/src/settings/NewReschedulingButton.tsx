@@ -7,7 +7,7 @@ type Props = {
 }
 
 export default function NewReschedulingButton({specificationIndex}: Props) {
-    const [showModal, setShowModal] = useState(false)
+    const [showModal, setShowModal] = useState(false);
 
     return (
         <>
