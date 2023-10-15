@@ -27,11 +27,12 @@ class ReschedulingTest {
         List<Rescheduling> actual = Rescheduling.merge(List.of(
             rescheduling(LocalDate.of(2023, 1, 1), LocalDate.of(2023, 1, 2)),
             rescheduling(LocalDate.of(2023, 1, 3), LocalDate.of(2023, 1, 4)),
-            rescheduling(LocalDate.of(2023, 1, 5), LocalDate.of(2023, 1, 6))
+            rescheduling(LocalDate.of(2023, 1, 5), LocalDate.of(2023, 1, 6)),
+            rescheduling(LocalDate.of(2023, 1, 7), LocalDate.of(2023, 1, 8))
         ));
 
         assertThat(actual).containsExactly(
-            rescheduling(LocalDate.of(2023, 1, 1), LocalDate.of(2023, 1, 6))
+            rescheduling(LocalDate.of(2023, 1, 1), LocalDate.of(2023, 1, 8))
         );
     }
 
@@ -39,12 +40,13 @@ class ReschedulingTest {
     void merge_adjacent_outOfOrder() {
         List<Rescheduling> actual = Rescheduling.merge(List.of(
             rescheduling(LocalDate.of(2023, 1, 3), LocalDate.of(2023, 1, 4)),
-            rescheduling(LocalDate.of(2023, 1, 5), LocalDate.of(2023, 1, 6)),
-            rescheduling(LocalDate.of(2023, 1, 1), LocalDate.of(2023, 1, 2))
+            rescheduling(LocalDate.of(2023, 1, 7), LocalDate.of(2023, 1, 8)),
+            rescheduling(LocalDate.of(2023, 1, 1), LocalDate.of(2023, 1, 2)),
+            rescheduling(LocalDate.of(2023, 1, 5), LocalDate.of(2023, 1, 6))
         ));
 
         assertThat(actual).containsExactly(
-            rescheduling(LocalDate.of(2023, 1, 1), LocalDate.of(2023, 1, 6))
+            rescheduling(LocalDate.of(2023, 1, 1), LocalDate.of(2023, 1, 8))
         );
     }
 

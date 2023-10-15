@@ -8,7 +8,9 @@ import static be.davidopdebeeck.rcaasapi.core.domain.project.ProjectValidationMe
 import static be.davidopdebeeck.rcaasapi.core.framework.validation.ValidationCondition.validateTrue;
 import static be.davidopdebeeck.rcaasapi.core.framework.validation.ValidationConstraints.validateConstraints;
 import static java.time.temporal.ChronoUnit.DAYS;
+import static java.util.Comparator.comparing;
 import static java.util.Objects.requireNonNull;
+import static java.util.stream.Collectors.toList;
 import static org.apache.commons.lang3.ObjectUtils.max;
 import static org.apache.commons.lang3.ObjectUtils.min;
 
@@ -19,29 +21,25 @@ public class Rescheduling {
             return reschedulings;
         }
 
-        List<Rescheduling> reschedulingsToProcess = new ArrayList<>(reschedulings);
-        List<Rescheduling> mergedReschedulings = new ArrayList<>();
+        List<Rescheduling> processed = new ArrayList<>();
+        List<Rescheduling> toProcess = reschedulings.stream()
+            .sorted(comparing(Rescheduling::getFrom))
+            .collect(toList());
 
-        Rescheduling reschedulingToMerge = reschedulings.get(0);
-        List<Rescheduling> reschedulingsToRemove;
-
-        do {
-            reschedulingsToRemove = new ArrayList<>();
-            for (Rescheduling reschedulingToCheck : reschedulingsToProcess) {
-                if (reschedulingToMerge.isAdjacentTo(reschedulingToCheck) || reschedulingToMerge.overlapsWith(reschedulingToCheck)) {
-                    reschedulingToMerge = reschedulingToMerge.merge(reschedulingToCheck);
-                    reschedulingsToRemove.add(reschedulingToCheck);
+        while (!toProcess.isEmpty()) {
+            Rescheduling current = toProcess.get(0);
+            List<Rescheduling> toRemove = new ArrayList<>();
+            for (Rescheduling toCheck : toProcess) {
+                if (current.isAdjacentTo(toCheck) || current.overlapsWith(toCheck)) {
+                    current = current.merge(toCheck);
+                    toRemove.add(toCheck);
                 }
             }
-            reschedulingsToProcess.removeAll(reschedulingsToRemove);
-        } while (!reschedulingsToRemove.isEmpty());
-
-        mergedReschedulings.add(reschedulingToMerge);
-        if (!reschedulingsToProcess.isEmpty()) {
-            mergedReschedulings.addAll(merge(reschedulingsToProcess));
+            toProcess.removeAll(toRemove);
+            processed.add(current);
         }
 
-        return mergedReschedulings;
+        return processed;
     }
 
     private final LocalDate from;
