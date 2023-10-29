@@ -56,6 +56,7 @@ export default function NewReschedulingModal({showModal, closeModal, specificati
     return (
         <Modal title={"New Rescheduling"}
                submitLabel={"Create"}
+               closeLabel={"Cancel"}
                open={showModal}
                onSubmit={handleSubmit(onSubmit)}
                onClose={() => closeModal()}>
@@ -63,7 +64,7 @@ export default function NewReschedulingModal({showModal, closeModal, specificati
                 <ErrorMessages errorMessages={mutation.error}/>
                 <div className="grid grid-cols-2 gap-2">
                     <div className="flex flex-col space-y-2">
-                        <label htmlFor="from" className="text-sm font-bold text-gray-800 dark:text-gray-200">From Date</label>
+                        <label htmlFor="from" className="text-sm font-semibold text-gray-800 dark:text-gray-200">From Date</label>
                         <input id="from"
                                type="date"
                                {...register("from", {required: true})}
@@ -73,7 +74,7 @@ export default function NewReschedulingModal({showModal, closeModal, specificati
                         </span>
                     </div>
                     <div className="flex flex-col space-y-2">
-                        <label htmlFor="to" className="text-sm font-bold text-gray-800 dark:text-gray-200">To Date</label>
+                        <label htmlFor="to" className="text-sm font-semibold text-gray-800 dark:text-gray-200">To Date</label>
                         <input id="to"
                                type="date"
                                {...register("to", {required: true})}

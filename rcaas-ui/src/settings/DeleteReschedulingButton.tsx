@@ -1,6 +1,7 @@
 import {TrashIcon} from "@heroicons/react/24/outline";
 import {useUpdateProjectMutation} from "../queries/project/useUpdateProjectMutation.ts";
 import {useProject} from "../queries/project/useProject.ts";
+import Button from "../components/Button.tsx";
 
 type Props = {
     specificationIndex: number;
@@ -30,11 +31,10 @@ export default function DeleteReschedulingButton({specificationIndex, rescheduli
     };
 
     return (
-        <button type="button"
-                onClick={() => onDelete()}
-                className="rounded-lg border-2 border-red-700 bg-red-600 p-1 text-xs font-semibold text-gray-200 hover:bg-red-500 focus:outline focus:outline-2 focus:outline-blue-600">
-            <TrashIcon onClick={() => onDelete()} className="h-4 w-4"/>
-        </button>
+        <Button onClick={() => onDelete()}
+                style="error">
+            <TrashIcon className="h-4 w-4"/>
+        </Button>
     )
 }
 

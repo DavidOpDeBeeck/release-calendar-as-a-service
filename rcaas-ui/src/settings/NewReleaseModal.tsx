@@ -64,6 +64,7 @@ export default function NewReleaseModal({showModal, closeModal}: Props) {
     return (
         <Modal title={"New Release"}
                submitLabel={"Create"}
+               closeLabel={"Cancel"}
                open={showModal}
                onSubmit={handleSubmit(onSubmit)}
                onClose={() => closeModal()}>
@@ -71,7 +72,7 @@ export default function NewReleaseModal({showModal, closeModal}: Props) {
                 <ErrorMessages errorMessages={mutation.error}/>
                 <div className="grid grid-cols-2 gap-2">
                     <div className="flex flex-col space-y-2">
-                        <label htmlFor="environment" className="text-sm font-bold text-gray-800 dark:text-gray-200">Environment</label>
+                        <label htmlFor="environment" className="text-sm font-semibold text-gray-800 dark:text-gray-200">Environment</label>
                         <input id="environment"
                                type="text"
                                placeholder="Environment"
@@ -82,7 +83,7 @@ export default function NewReleaseModal({showModal, closeModal}: Props) {
                         </span>
                     </div>
                     <div className="flex flex-col space-y-2">
-                        <label htmlFor="version" className="text-sm font-bold text-gray-800 dark:text-gray-200">Version</label>
+                        <label htmlFor="version" className="text-sm font-semibold text-gray-800 dark:text-gray-200">Version</label>
                         <input id="version"
                                type="number"
                                placeholder="Version"
@@ -93,7 +94,7 @@ export default function NewReleaseModal({showModal, closeModal}: Props) {
                         </span>
                     </div>
                     <div className="flex flex-col space-y-2">
-                        <label htmlFor="startDate" className="text-sm font-bold text-gray-800 dark:text-gray-200">Start Date</label>
+                        <label htmlFor="startDate" className="text-sm font-semibold text-gray-800 dark:text-gray-200">Start Date</label>
                         <input id="startDate"
                                type="date"
                                placeholder="Start Date"
@@ -104,7 +105,7 @@ export default function NewReleaseModal({showModal, closeModal}: Props) {
                         </span>
                     </div>
                     <div className="flex flex-col space-y-2">
-                        <label htmlFor="sprint-length" className="text-sm font-bold text-gray-800 dark:text-gray-200">Sprint Length</label>
+                        <label htmlFor="sprint-length" className="text-sm font-semibold text-gray-800 dark:text-gray-200">Sprint Length</label>
                         <input id="sprint-length"
                                type="number"
                                placeholder="Sprint Length"
@@ -115,7 +116,7 @@ export default function NewReleaseModal({showModal, closeModal}: Props) {
                         </span>
                     </div>
                     <div className="flex flex-col space-y-2">
-                        <label htmlFor="color" className="text-sm font-bold text-gray-800 dark:text-gray-200">Color</label>
+                        <label htmlFor="color" className="text-sm font-semibold text-gray-800 dark:text-gray-200">Color</label>
                         <div className="relative">
                             <select
                                 id="color"
@@ -148,10 +149,10 @@ export default function NewReleaseModal({showModal, closeModal}: Props) {
                     </div>
                     <div></div>
                     <div className="flex flex-col space-y-2">
-                        <span className="text-sm font-bold text-gray-800 dark:text-gray-200">Preview</span>
+                        <span className="text-sm font-semibold text-gray-800 dark:text-gray-200">Preview</span>
                         {version.value && version.environment && version.color
                             ? (<Release version={version}/>)
-                            : <span className="text-xs italic dark:text-gray-200">Preview not available</span>}
+                            : <span className="text-xs italic dark:text-gray-200">Fill in an environment and a version</span>}
                     </div>
                 </div>
             </div>

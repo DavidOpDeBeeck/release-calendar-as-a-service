@@ -1,20 +1,21 @@
-import {Fragment, ReactElement, useRef} from 'react'
+import {Fragment, ReactElement} from 'react'
 import {Dialog, Transition} from '@headlessui/react'
+import Button from "../components/Button.tsx";
 
-interface Props {
+type Props = {
     title: string,
-    submitLabel: string,
+    submitLabel?: string,
+    closeLabel?: string,
     open: boolean,
-    onSubmit: () => void,
+    onSubmit?: () => void,
     onClose: () => void,
     children: ReactElement
 }
 
-export default function Modal({title, submitLabel, open, onSubmit, onClose, children}: Props) {
-    const cancelButtonRef = useRef(null)
+export default function Modal({title, submitLabel, closeLabel, open, onSubmit, onClose, children}: Props) {
     return (
         <Transition.Root show={open} as={Fragment}>
-            <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={onClose}>
+            <Dialog as="div" className="relative z-10" onClose={onClose}>
                 <Transition.Child
                     as={Fragment}
                     enter="ease-out duration-300"
@@ -38,7 +39,7 @@ export default function Modal({title, submitLabel, open, onSubmit, onClose, chil
                             <Dialog.Panel
                                 className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-xl">
                                 <div className="bg-white px-4 pt-5 pb-4 dark:bg-slate-700 sm:p-6 sm:pb-4">
-                                    <div className="mt-3 text-center sm:mt-0 sm:text-left">
+                                    <div className="mt-0 text-left">
                                         <Dialog.Title as="h3"
                                                       className="border-b border-gray-200 pb-3 text-2xl font-bold leading-6 text-gray-800 dark:border-slate-600 dark:text-gray-200">
                                             {title}
@@ -50,20 +51,16 @@ export default function Modal({title, submitLabel, open, onSubmit, onClose, chil
                                         </div>
                                     </div>
                                 </div>
-                                <div className="bg-gray-50 px-4 py-3 dark:bg-slate-800 sm:flex sm:flex-row-reverse sm:px-6">
-                                    <button
-                                        type="button"
-                                        className="rounded-lg border-2 border-blue-700 bg-blue-600 p-2 font-semibold text-gray-800 hover:bg-blue-500 focus:outline focus:outline-2 focus:outline-blue-600 dark:text-gray-200 sm:ml-2 sm:w-auto"
-                                        onClick={() => onSubmit()}>
+                                <div className="flex-row-reverse bg-gray-50 px-6 py-3 space-x-reverse space-x-1 dark:bg-slate-800 sm:flex">
+                                    {submitLabel && <Button
+                                        style="primary"
+                                        onClick={() => onSubmit && onSubmit()}>
                                         {submitLabel}
-                                    </button>
-                                    <button
-                                        type="button"
-                                        className="rounded-lg border-2 border-gray-200 bg-white p-2 font-semibold text-gray-800 hover:bg-gray-50 focus:outline focus:outline-2 focus:outline-blue-600 dark:border-slate-800 dark:bg-slate-700 dark:text-gray-200 dark:hover:bg-slate-600"
-                                        onClick={() => onClose()}
-                                        ref={cancelButtonRef}>
-                                        Cancel
-                                    </button>
+                                    </Button>}
+                                    {closeLabel && <Button
+                                        onClick={() => onClose()}>
+                                        {closeLabel}
+                                    </Button>}
                                 </div>
                             </Dialog.Panel>
                         </Transition.Child>
