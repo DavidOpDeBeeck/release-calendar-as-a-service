@@ -11,7 +11,7 @@ export default function ProjectPage() {
     }, [project]);
 
     return (
-        <div className="flex min-h-screen w-full flex-col bg-gray-100 p-2 dark:bg-slate-800">
+        <div className="flex min-h-screen w-full flex-col">
             <ActionBar/>
             <Calendar/>
         </div>

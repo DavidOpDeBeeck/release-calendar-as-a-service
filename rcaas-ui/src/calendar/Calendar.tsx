@@ -6,7 +6,7 @@ export default function Calendar() {
 
     return (
         <div
-            className="grid flex-1 grid-rows-6 gap-1 rounded-b-lg border border-gray-200 bg-white p-1 shadow dark:border-slate-800 dark:bg-slate-600">
+            className="grid flex-1 grid-rows-6 gap-1 bg-white p-1 shadow dark:bg-slate-600">
             {
                 (calendar?.weeks || []).map((week, weekIndex) => (
                     <Week key={weekIndex}
