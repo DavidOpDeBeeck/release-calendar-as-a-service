@@ -1,9 +1,22 @@
 # Release calendar as a service
 
-"Release calendar as a service" is a cloud-based software that simplifies software release management. Plan, manage, and
-visualize release schedules with an intuitive calendar interface. Customize release details, collaborate seamlessly, and
-integrate effortlessly. Stay organized and focused on delivering top-notch software, all in a convenient and scalable
-cloud environment. Start by creating your own release calendar at [releasecalendar.app](https://releasecalendar.app).
+"Rcaas" is a cloud-based software that simplifies software release management. Plan, manage, and
+visualize release schedules with an intuitive calendar interface. Start by creating your own release calendar
+at [releasecalendar.app](https://releasecalendar.app).
+
+## Diagrams
+
+### Context Diagram
+
+![Context Diagram2.png](diagrams/Context%20Diagram.png)
+
+### Container Diagram
+
+![Container Diagram.png](diagrams/Container%20Diagram.png)
+
+### Module Structure
+
+![Module Structure.png](diagrams/Module%20Structure.png)
 
 ## Development
 
