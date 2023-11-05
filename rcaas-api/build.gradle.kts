@@ -15,7 +15,7 @@ subprojects {
     }
 
     dependencies {
-        implementation(platform("org.springframework.boot:spring-boot-dependencies:3.1.0"))
+        implementation(platform("org.springframework.boot:spring-boot-dependencies:3.1.5"))
 
         implementation("org.apache.commons:commons-lang3")
         implementation("org.springframework.boot:spring-boot-autoconfigure")
@@ -24,11 +24,12 @@ subprojects {
         testImplementation("org.springframework.boot:spring-boot-starter-test")
 
         constraints {
-            implementation("org.apache.commons:commons-lang3:3.12.0")
-            implementation("com.fasterxml.jackson.core:jackson-databind:2.15.1")
-            implementation("com.fasterxml.jackson.core:jackson-annotations:2.15.1")
-            testImplementation("org.testcontainers:postgresql:1.16.2")
-            testImplementation("org.testcontainers:junit-jupiter:1.16.2")
+            implementation("org.yaml:snakeyaml:2.2")
+            implementation("org.apache.commons:commons-lang3:3.13.0")
+            implementation("com.fasterxml.jackson.core:jackson-databind:2.15.3")
+            implementation("com.fasterxml.jackson.core:jackson-annotations:2.15.3")
+            testImplementation("org.testcontainers:postgresql:1.18.3")
+            testImplementation("org.testcontainers:junit-jupiter:1.18.3")
         }
     }
 
