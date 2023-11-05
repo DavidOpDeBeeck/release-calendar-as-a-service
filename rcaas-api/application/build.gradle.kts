@@ -11,5 +11,7 @@ dependencies {
 
     testImplementation(project(":core:test-constant"))
     testImplementation(project(":core:transfer-object"))
+    testImplementation("org.testcontainers:postgresql")
+    testImplementation("org.testcontainers:junit-jupiter")
     testImplementation("org.springframework.boot:spring-boot-starter-web")
 }

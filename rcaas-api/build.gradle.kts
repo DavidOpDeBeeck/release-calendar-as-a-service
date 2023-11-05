@@ -27,6 +27,8 @@ subprojects {
             implementation("org.apache.commons:commons-lang3:3.12.0")
             implementation("com.fasterxml.jackson.core:jackson-databind:2.15.1")
             implementation("com.fasterxml.jackson.core:jackson-annotations:2.15.1")
+            testImplementation("org.testcontainers:postgresql:1.16.2")
+            testImplementation("org.testcontainers:junit-jupiter:1.16.2")
         }
     }
 
