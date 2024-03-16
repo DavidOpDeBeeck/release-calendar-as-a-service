@@ -38,7 +38,7 @@ export default function Modal({title, submitLabel, closeLabel, open, onSubmit, o
                             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
                             <Dialog.Panel
                                 className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-xl">
-                                <div className="bg-white px-6 pt-6 pb-2 dark:bg-slate-700">
+                                <div className="bg-white px-6 pt-6 dark:bg-slate-700">
                                     <Dialog.Title as="h3"
                                                   className="border-b border-gray-200 pb-3 text-2xl font-bold leading-6 text-gray-800 dark:border-slate-600 dark:text-gray-200">
                                         {title}

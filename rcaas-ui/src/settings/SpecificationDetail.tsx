@@ -1,10 +1,11 @@
-import {ChevronDownIcon, ChevronRightIcon} from "@heroicons/react/24/outline";
+import {InformationCircleIcon} from "@heroicons/react/24/outline";
 import NewReschedulingButton from "./NewReschedulingButton.tsx";
 import DeleteProjectButton from "./DeleteProjectButton.tsx";
 import {ReleaseSpecificationTO} from "../domain/ReleaseTO.ts";
 import {Fragment, useState} from "react";
 import DeleteReschedulingButton from "./DeleteReschedulingButton.tsx";
 import {Transition} from "@headlessui/react";
+import Button from "../components/Button";
 
 type Props = {
     specification: ReleaseSpecificationTO;
@@ -15,17 +16,15 @@ export default function SpecificationDetail({specification, specificationIndex}:
     const [collapsed, setCollapsed] = useState(true);
 
     return <div key={specificationIndex}
-                className="rounded-md border-2 border-gray-200 bg-white p-3 shadow-sm dark:border-slate-800 dark:bg-slate-600">
+                className="rounded-md border-2 border-gray-200 bg-white p-3 shadow-sm dark:border-slate-800 dark:bg-slate-700">
         <div className="flex items-center justify-between">
             <div className="flex items-center text-gray-800 space-x-2 dark:text-gray-200">
-                {collapsed
-                    ? <ChevronRightIcon onClick={() => setCollapsed(prev => !prev)}
-                                        className="h-4 w-4 cursor-pointer [&>path]:stroke-[3]"/>
-                    : <ChevronDownIcon onClick={() => setCollapsed(prev => !prev)}
-                                       className="h-4 w-4 cursor-pointer [&>path]:stroke-[3]"/>}
                 <h1 className="text-lg font-semibold">{specification.sprintBased.version.environment}</h1>
             </div>
             <div className="flex space-x-1">
+                <Button onClick={() => setCollapsed(prev => !prev)}>
+                    <InformationCircleIcon className="h-4 w-4"/>
+                </Button>
                 <NewReschedulingButton specificationIndex={specificationIndex}/>
                 <DeleteProjectButton specificationIndex={specificationIndex}/>
             </div>
@@ -40,7 +39,7 @@ export default function SpecificationDetail({specification, specificationIndex}:
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0">
                 <div>
-                    <h2 className="py-2 font-medium uppercase dark:text-gray-200">Configuration</h2>
+                    <h2 className="py-2 font-medium dark:text-gray-200">Configuration</h2>
                     <div className="grid grid-cols-2 gap-x-3 gap-y-1 px-2">
                         <div className="flex justify-between text-sm space-x-2 dark:text-gray-200">
                             <span>Version</span>
@@ -60,7 +59,7 @@ export default function SpecificationDetail({specification, specificationIndex}:
                                 className={`w-4 h-4 rounded-full bg-${specification.sprintBased.version.color}-400 border-2 border-${specification.sprintBased.version.color}-500`}></div>
                         </div>
                     </div>
-                    <h2 className="mt-2 py-2 font-medium uppercase dark:text-gray-200">Reschedulings</h2>
+                    <h2 className="mt-2 py-2 font-medium dark:text-gray-200">Reschedulings</h2>
                     <div className="px-2">
                         <table className="w-full table-fixed">
                             <thead>
