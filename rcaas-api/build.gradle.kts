@@ -6,7 +6,7 @@ subprojects {
     apply(plugin = "java-library")
 
     group = "be.davidopdebeeck"
-    version = "0.0.1-SNAPSHOT"
+    version = "1.0.0"
     java.sourceCompatibility = JavaVersion.VERSION_21
 
     repositories {
@@ -15,7 +15,7 @@ subprojects {
     }
 
     dependencies {
-        implementation(platform("org.springframework.boot:spring-boot-dependencies:3.1.5"))
+        implementation(platform("org.springframework.boot:spring-boot-dependencies:3.2.5"))
 
         implementation("org.apache.commons:commons-lang3")
         implementation("org.springframework.boot:spring-boot-autoconfigure")
