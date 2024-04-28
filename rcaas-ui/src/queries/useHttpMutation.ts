@@ -11,22 +11,26 @@ type MutationInput = {
 export const useHttpMutation = <INPUT, OUTPUT>({key, path, method, onSuccess}: MutationInput) => {
     const queryClient = useQueryClient()
 
-    return useMutation<OUTPUT, ErrorMessage[], INPUT>(key, async (input: INPUT) => {
-        const response = await fetch(`/api/v1${path}`, {
-            method: method || 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(input)
-        });
+    return useMutation<OUTPUT, ErrorMessage[], INPUT>({
+        mutationKey: key,
+        mutationFn: async (input: INPUT) => {
+            const response = await fetch(`/api/v1${path}`, {
+                method: method || 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(input)
+            });
 
-        const body = await response.json();
+            const body = await response.json();
 
-        if (response.ok) {
-            return body;
-        }
+            if (response.ok) {
+                return body;
+            }
 
-        throw translateErrorMessages(body);
-    }, {onSuccess: () => onSuccess && onSuccess(queryClient)});
+            throw translateErrorMessages(body);
+        },
+        onSuccess: () => onSuccess && onSuccess(queryClient)
+    });
 }

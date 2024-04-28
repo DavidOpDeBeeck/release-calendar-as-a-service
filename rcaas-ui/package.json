@@ -10,17 +10,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@fontsource/open-sans": "^4.5.14",
-    "@headlessui/react": "^1.7.14",
-    "@heroicons/react": "^2.0.18",
-    "@tanstack/query-core": "^4.29.7",
-    "@tanstack/react-query": "^4.29.7",
-    "jotai": "^2.1.0",
-    "jotai-tanstack-query": "^0.7.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-hook-form": "^7.44.2",
-    "react-router-dom": "^6.11.2"
+    "@fontsource/open-sans": "^5.0.28",
+    "@headlessui/react": "^1.7.19",
+    "@heroicons/react": "^2.1.3",
+    "@tanstack/query-core": "^5.32.0",
+    "@tanstack/react-query": "^5.32.0",
+    "jotai": "^2.8.0",
+    "jotai-tanstack-query": "^0.8.5",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-hook-form": "^7.51.3",
+    "react-router-dom": "^6.23.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",
