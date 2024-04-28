@@ -13,12 +13,12 @@ const queryClient = new QueryClient({
             refetchOnWindowFocus: false,
             refetchOnReconnect: false,
             retry: false,
-            keepPreviousData: true
+            placeholderData: (prev: unknown) => prev
         },
     },
 })
 
-const HydrateAtoms = ({children}: { children: ReactElement }) => {
+const HydrateAtoms = ({children}: {children: ReactElement}) => {
     useHydrateAtoms([[queryClientAtom, queryClient]])
     return children
 }
