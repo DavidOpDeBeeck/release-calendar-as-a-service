@@ -11,7 +11,9 @@ export const useUpdateProjectMutation = () => {
         path: `/projects/${projectId}`,
         method: "PUT",
         onSuccess: (queryClient) => {
-            void queryClient.invalidateQueries(['project'])
+            void queryClient.invalidateQueries({
+                queryKey: ['project']
+            })
         }
     });
 }
