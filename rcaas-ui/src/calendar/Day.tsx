@@ -6,19 +6,6 @@ import {useAtomValue} from "jotai";
 import Release from "./Release";
 import {Flex, GridItem, Spacer, Text, VStack} from "@chakra-ui/react";
 
-// function dayClass(day: DayTO): string {
-//     if (day.today) {
-//         return "bg-blue-400 dark:bg-blue-600";
-//     }
-//     if (day.weekend) {
-//         return `bg-gray-400 dark:bg-slate-800 ${day.otherMonth ? 'bg-stripes bg-stripes-gray-500 dark:bg-stripes-slate-900' : ''}`;
-//     }
-//     if (day.otherMonth) {
-//         return `bg-stripes bg-stripes-gray-400 dark:bg-stripes-slate-700`;
-//     }
-//     return "bg-gray-300 dark:bg-slate-700";
-// }
-
 function dayBg(day: DayTO): string {
     if (day.today) {
         return singleColor("blue.500");
@@ -78,9 +65,11 @@ export default function Day({day, dayIndex, showDayName}: Props) {
                     <Spacer/>
                     {showDayName && (<Text fontWeight="bold">{daysOfTheWeek[dayIndex]}</Text>)}
                 </Flex>
-                {versionsToShow.map((value, index) => (releases.indexOf(value.version) > -1
-                    ? <Release key={index} version={value.version}/>
-                    : <Version key={index} version={value.version} visible={value.visible}/>))}
+                <VStack w="100%" gap={1} fontSize="sm">
+                    {versionsToShow.map((value, index) => (releases.indexOf(value.version) > -1
+                        ? <Release key={index} version={value.version}/>
+                        : <Version key={index} version={value.version} visible={value.visible}/>))}
+                </VStack>
             </VStack>
         </GridItem>
     );

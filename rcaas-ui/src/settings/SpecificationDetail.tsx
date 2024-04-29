@@ -30,7 +30,8 @@ type Props = {
 
 export default function SpecificationDetail({specification, specificationIndex}: Props) {
     return <Card key={specificationIndex}
-                 w="100%">
+                 w="100%"
+                 variant="outline">
         <CardHeader>
             <Flex>
                 <Heading size='md'>{specification.sprintBased.version.environment}</Heading>
@@ -47,26 +48,26 @@ export default function SpecificationDetail({specification, specificationIndex}:
                     <Heading size='xs' textTransform='uppercase'>
                         Configuration
                     </Heading>
-                    <SimpleGrid columns={2} columnGap={2}>
+                    <SimpleGrid fontSize='sm' pt={2} columns={2} columnGap={2} rowGap={2}>
                         <Flex>
-                            <Text pt='2' fontSize='sm'>Version</Text>
+                            <Text>Version</Text>
                             <Spacer/>
-                            <Text pt='2' fontSize='sm'>{specification.sprintBased.version.value}</Text>
+                            <Text>{specification.sprintBased.version.value}</Text>
                         </Flex>
                         <Flex>
-                            <Text pt='2' fontSize='sm'>Start Date</Text>
+                            <Text>Start Date</Text>
                             <Spacer/>
-                            <Text pt='2' fontSize='sm'>{specification.sprintBased.startDate}</Text>
+                            <Text>{specification.sprintBased.startDate}</Text>
                         </Flex>
                         <Flex>
-                            <Text pt='2' fontSize='sm'>Sprint Length</Text>
+                            <Text>Sprint Length</Text>
                             <Spacer/>
-                            <Text pt='2' fontSize='sm'>{specification.sprintBased.sprintLength}</Text>
+                            <Text>{specification.sprintBased.sprintLength}</Text>
                         </Flex>
                         <Flex>
-                            <Text pt='2' fontSize='sm'>Color</Text>
+                            <Text>Color</Text>
                             <Spacer/>
-                            <Text pt='2' fontSize='sm'>{specification.sprintBased.version.color}</Text>
+                            <Text>{specification.sprintBased.version.color}</Text>
                         </Flex>
                     </SimpleGrid>
                 </Box>
@@ -77,8 +78,8 @@ export default function SpecificationDetail({specification, specificationIndex}:
                     {specification?.sprintBased.reschedulings.length === 0 && (
                         <Text pt='2' fontSize='sm'>No reschedulings available</Text>)}
                     {specification?.sprintBased.reschedulings.length > 0 && (
-                        <TableContainer>
-                            <Table variant='simple'>
+                        <TableContainer pt='2'>
+                            <Table variant='simple' size='sm'>
                                 <Thead>
                                     <Tr>
                                         <Th>From Date</Th>

@@ -10,7 +10,6 @@ export default function NewReleaseButton() {
         <>
             <Button leftIcon={<AddIcon/>}
                     colorScheme='blue'
-                    variant='outline'
                     size="sm"
                     onClick={() => setShowModal(prev => !prev)}>
                 Release

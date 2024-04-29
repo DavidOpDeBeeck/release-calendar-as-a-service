@@ -9,7 +9,7 @@ interface Props {
 
 export default function Week({week, weekIndex}: Props) {
     return (
-        <GridItem w='100%'>
+        <GridItem>
             <Grid h="100%" templateColumns='repeat(7, 1fr)' columnGap={2}>
                 {
                     week.days.map((day, dayIndex) => (

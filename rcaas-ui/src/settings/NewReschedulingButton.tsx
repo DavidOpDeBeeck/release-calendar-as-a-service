@@ -1,7 +1,7 @@
 import NewReschedulingModal from "./NewReschedulingModal.tsx";
 import {useState} from "react";
-import {IconButton} from "@chakra-ui/react";
-import {TimeIcon} from "@chakra-ui/icons";
+import {Button} from "@chakra-ui/react";
+import {AddIcon} from "@chakra-ui/icons";
 
 type Props = {
     specificationIndex: number;
@@ -12,11 +12,12 @@ export default function NewReschedulingButton({specificationIndex}: Props) {
 
     return (
         <>
-            <IconButton aria-label="Add rescheduling"
-                        icon={<TimeIcon/>}
-                        size="sm"
-                        onClick={() => setShowModal(true)}>
-            </IconButton>
+            <Button leftIcon={<AddIcon/>}
+                    colorScheme='gray'
+                    size="sm"
+                    onClick={() => setShowModal(true)}>
+                Rescheduling
+            </Button>
             <NewReschedulingModal showModal={showModal} closeModal={() => setShowModal(false)} specificationIndex={specificationIndex}/>
         </>
     )
