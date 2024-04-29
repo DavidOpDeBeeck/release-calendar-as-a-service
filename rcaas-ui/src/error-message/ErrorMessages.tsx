@@ -1,4 +1,5 @@
 import {ErrorMessage} from "./ErrorMessage.ts";
+import {Text, VStack} from "@chakra-ui/react";
 
 type Props = {
     errorMessages: ErrorMessage[] | null
@@ -8,11 +9,11 @@ export function ErrorMessages({errorMessages}: Props) {
     if (errorMessages === null || errorMessages?.length === 0) {
         return <></>;
     }
-    return <div className="mb-2 flex flex-col space-y-1">
+    return <VStack w="100%">
         {errorMessages.map(value => (
-            <div key={value.message} className="rounded-lg border border-red-600 bg-red-500 p-2 text-xs text-white">
+            <Text key={value.message} color="red">
                 {value.message}
-            </div>
+            </Text>
         ))}
-    </div>;
+    </VStack>;
 }

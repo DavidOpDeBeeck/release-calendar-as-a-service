@@ -4,18 +4,43 @@ import {useMemo, useState} from "react";
 import {showVersionsForEachDayAtom} from "../store.ts";
 import {useAtomValue} from "jotai";
 import Release from "./Release";
+import {Flex, GridItem, Spacer, Text, VStack} from "@chakra-ui/react";
 
-function dayClass(day: DayTO): string {
+// function dayClass(day: DayTO): string {
+//     if (day.today) {
+//         return "bg-blue-400 dark:bg-blue-600";
+//     }
+//     if (day.weekend) {
+//         return `bg-gray-400 dark:bg-slate-800 ${day.otherMonth ? 'bg-stripes bg-stripes-gray-500 dark:bg-stripes-slate-900' : ''}`;
+//     }
+//     if (day.otherMonth) {
+//         return `bg-stripes bg-stripes-gray-400 dark:bg-stripes-slate-700`;
+//     }
+//     return "bg-gray-300 dark:bg-slate-700";
+// }
+
+function dayBg(day: DayTO): string {
     if (day.today) {
-        return "bg-blue-400 dark:bg-blue-600";
+        return singleColor("blue.500");
     }
     if (day.weekend) {
-        return `bg-gray-400 dark:bg-slate-800 ${day.otherMonth ? 'bg-stripes bg-stripes-gray-500 dark:bg-stripes-slate-900' : ''}`;
+        if (day.otherMonth) {
+            return striped("blackAlpha.400", "whiteAlpha.50");
+        }
+        return singleColor("blackAlpha.400");
     }
     if (day.otherMonth) {
-        return `bg-stripes bg-stripes-gray-400 dark:bg-stripes-slate-700`;
+        return striped("blackAlpha.200", "whiteAlpha.50");
     }
-    return "bg-gray-300 dark:bg-slate-700";
+    return singleColor("blackAlpha.200");
+}
+
+function singleColor(color: string) {
+    return `linear(to-r, ${color}, ${color})`;
+}
+
+function striped(color: string, stripes: string) {
+    return `linear-gradient(45deg, ${stripes} 12.50%, ${color} 12.50%, ${color} 50%, ${stripes} 50%, ${stripes} 62.50%, ${color} 62.50%, ${color} 100%)`;
 }
 
 interface Props {
@@ -39,17 +64,24 @@ export default function Day({day, dayIndex, showDayName}: Props) {
         [showVersionsForEachDay, isHovering, releases, versions]);
 
     return (
-        <div className={`${dayClass(day)} flex flex-col space-y-1 rounded-lg p-2 duration-150 ease-in`}
-             onMouseOver={() => setIsHovering(true)}
-             onMouseOut={() => setIsHovering(false)}>
-            <div className="flex justify-between">
-                <span className="font-bold text-gray-800 dark:text-gray-200">{new Date(day.date).getDate()}</span>
-                {showDayName && (<span
-                    className="rounded-lg px-2 font-bold text-gray-600 shadow backdrop-blur-sm dark:text-gray-300">{daysOfTheWeek[dayIndex]}</span>)}
-            </div>
-            {versionsToShow.map((value, index) => (releases.indexOf(value.version) > -1
-                ? <Release key={index} version={value.version}/>
-                : <Version key={index} version={value.version} visible={value.visible}/>))}
-        </div>
+        <GridItem w='100%'
+                  h="100%"
+                  bgGradient={dayBg(day)}
+                  bgSize='5.66px 5.66px'
+                  p={2}
+                  borderRadius={10}
+                  onMouseOver={() => setIsHovering(true)}
+                  onMouseOut={() => setIsHovering(false)}>
+            <VStack>
+                <Flex w='100%'>
+                    <Text fontWeight="extrabold">{new Date(day.date).getDate()}</Text>
+                    <Spacer/>
+                    {showDayName && (<Text fontWeight="bold">{daysOfTheWeek[dayIndex]}</Text>)}
+                </Flex>
+                {versionsToShow.map((value, index) => (releases.indexOf(value.version) > -1
+                    ? <Release key={index} version={value.version}/>
+                    : <Version key={index} version={value.version} visible={value.visible}/>))}
+            </VStack>
+        </GridItem>
     );
 }

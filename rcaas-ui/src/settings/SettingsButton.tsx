@@ -1,16 +1,17 @@
-import {Cog6ToothIcon} from "@heroicons/react/24/outline";
 import SettingsModal from "./SettingsModal.tsx";
 import {useState} from "react";
-import Button from "../components/Button.tsx";
+import {IconButton} from "@chakra-ui/react";
+import {SettingsIcon} from "@chakra-ui/icons";
 
 export default function SettingsButton() {
     const [showModal, setShowModal] = useState(false);
 
     return (
         <>
-            <Button onClick={() => setShowModal(prev => !prev)}>
-                <Cog6ToothIcon className="h-4 w-4"/>
-            </Button>
+            <IconButton aria-label="Show settings"
+                        onClick={() => setShowModal(prev => !prev)}
+                        icon={<SettingsIcon/>}>
+            </IconButton>
             <SettingsModal showModal={showModal} closeModal={() => setShowModal(false)}/>
         </>
     );

@@ -1,4 +1,5 @@
 import {VersionTO} from "../domain/VersionTO.ts";
+import {Flex, Spacer, Text} from "@chakra-ui/react";
 
 interface Props {
     version: VersionTO;
@@ -7,10 +8,18 @@ interface Props {
 
 export default function Version({version, visible}: Props) {
     return (
-        <div
-            className={`${visible ? 'visible' : 'invisible'} bg-${version.color}-400 border-${version.color}-500 flex px-2 font-bold text-sm text-gray-800 border-2 rounded-md shadow-md duration-150 ease-in opacity-60`}>
-            <span className="flex-1">{version.environment}</span>
-            <span>{version.value}</span>
-        </div>
+        <Flex w="100%"
+              px={2}
+              shadow="md"
+              bg={`${version.color}.400`}
+              border="2px"
+              borderColor={`${version.color}.500`}
+              borderRadius={5}
+              opacity="75%"
+              visibility={visible ? "visible" : "hidden"}>
+            <Text fontWeight="bold">{version.environment}</Text>
+            <Spacer/>
+            <Text fontWeight="bold">{version.value}</Text>
+        </Flex>
     )
 }

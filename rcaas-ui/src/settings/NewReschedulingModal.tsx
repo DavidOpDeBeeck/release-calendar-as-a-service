@@ -4,6 +4,7 @@ import Modal from "../modal/Modal.tsx";
 import {useProject} from "../queries/project/useProject.ts";
 import {useUpdateProjectMutation} from "../queries/project/useUpdateProjectMutation.ts";
 import {ErrorMessages} from "../error-message/ErrorMessages.tsx";
+import {FormControl, FormErrorMessage, FormLabel, Input, VStack} from "@chakra-ui/react";
 
 type NewRescheduling = {
     from: string;
@@ -60,31 +61,25 @@ export default function NewReschedulingModal({showModal, closeModal, specificati
                open={showModal}
                onSubmit={handleSubmit(onSubmit)}
                onClose={() => closeModal()}>
-            <div>
+            <VStack>
                 <ErrorMessages errorMessages={mutation.error}/>
-                <div className="grid grid-cols-2 gap-2">
-                    <div className="flex flex-col space-y-2">
-                        <label htmlFor="from" className="text-sm font-semibold text-gray-800 dark:text-gray-200">From Date</label>
-                        <input id="from"
-                               type="date"
-                               {...register("from", {required: true})}
-                               className="rounded-lg border border-gray-200 text-sm text-gray-800 shadow p-[7px] focus:outline focus:outline-2 focus:outline-blue-600 dark:border-slate-600 dark:bg-slate-700 dark:text-gray-200"/>
-                        <span className="text-xs font-semibold text-red-700 dark:text-red-400">
-                        {errors.from?.type === 'required' && "From date is required"}
-                        </span>
-                    </div>
-                    <div className="flex flex-col space-y-2">
-                        <label htmlFor="to" className="text-sm font-semibold text-gray-800 dark:text-gray-200">To Date</label>
-                        <input id="to"
-                               type="date"
-                               {...register("to", {required: true})}
-                               className="rounded-lg border border-gray-200 text-sm text-gray-800 shadow p-[7px] focus:outline focus:outline-2 focus:outline-blue-600 dark:border-slate-600 dark:bg-slate-700 dark:text-gray-200"/>
-                        <span className="text-xs font-semibold text-red-700 dark:text-red-400">
-                        {errors.to?.type === 'required' && "To date is required"}
-                        </span>
-                    </div>
-                </div>
-            </div>
+                <FormControl isInvalid={!!errors.from}>
+                    <FormLabel>From Date</FormLabel>
+                    <Input type="date"
+                           placeholder="From date"
+                           {...register("from", {required: true})}
+                    />
+                    <FormErrorMessage>From date is required.</FormErrorMessage>
+                </FormControl>
+                <FormControl isInvalid={!!errors.to}>
+                    <FormLabel>To Date</FormLabel>
+                    <Input type="date"
+                           placeholder="To date"
+                           {...register("to", {required: true})}
+                    />
+                    <FormErrorMessage>To date is required.</FormErrorMessage>
+                </FormControl>
+            </VStack>
         </Modal>
     )
 }

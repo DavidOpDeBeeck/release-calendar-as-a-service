@@ -1,5 +1,6 @@
 import {WeekTO} from "../domain/CalendarTO.ts";
 import Day from "./Day.tsx";
+import {Grid, GridItem} from "@chakra-ui/react";
 
 interface Props {
     week: WeekTO;
@@ -8,15 +9,17 @@ interface Props {
 
 export default function Week({week, weekIndex}: Props) {
     return (
-        <div className="grid grid-cols-7 gap-1 rounded-lg">
-            {
-                week.days.map((day, dayIndex) => (
-                    <Day key={weekIndex + dayIndex}
-                         day={day}
-                         dayIndex={dayIndex}
-                         showDayName={weekIndex == 0}/>
-                ))
-            }
-        </div>
+        <GridItem w='100%'>
+            <Grid h="100%" templateColumns='repeat(7, 1fr)' columnGap={2}>
+                {
+                    week.days.map((day, dayIndex) => (
+                        <Day key={weekIndex + dayIndex}
+                             day={day}
+                             dayIndex={dayIndex}
+                             showDayName={weekIndex == 0}/>
+                    ))
+                }
+            </Grid>
+        </GridItem>
     )
 }

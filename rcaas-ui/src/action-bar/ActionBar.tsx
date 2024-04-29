@@ -2,21 +2,22 @@ import TodayButton from "./TodayButton.tsx";
 import SettingsButton from "../settings/SettingsButton";
 import ShowVersionsForEachDayButton from "./ShowVersionsForEachDayButton.tsx";
 import DarkModeButton from "./DarkModeButton.tsx";
-import YearMonthTitle from "./YearMonthTitle.tsx";
 import YearMonthSelector from "./YearMonthSelector.tsx";
+import {Flex, HStack, Spacer} from "@chakra-ui/react";
+import ProjectTitle from "./ProjectTitle.tsx";
 
 export default function ActionBar() {
     return (
-        <div
-            className="flex flex-none justify-between border-b-2 border-gray-200 bg-white p-2 shadow dark:border-slate-800 dark:bg-slate-700">
-            <YearMonthTitle/>
-            <div className="flex space-x-2">
-                <TodayButton/>
+        <Flex width="100%" p={2} shadow="md">
+            <ProjectTitle/>
+            <Spacer/>
+            <HStack>
                 <YearMonthSelector/>
+                <TodayButton/>
                 <ShowVersionsForEachDayButton/>
                 <DarkModeButton/>
                 <SettingsButton/>
-            </div>
-        </div>
+            </HStack>
+        </Flex>
     )
 }

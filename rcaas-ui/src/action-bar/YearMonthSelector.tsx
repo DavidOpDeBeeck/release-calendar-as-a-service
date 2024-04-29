@@ -1,11 +1,13 @@
 import {useSetAtom} from "jotai";
-import {ChevronLeftIcon, ChevronRightIcon} from "@heroicons/react/24/outline";
 import {yearMonthAtom} from "../store.ts";
 import {useEffect} from "react";
-import Button from "../components/Button.tsx";
+import {Button, ButtonGroup, HStack, IconButton, Text} from "@chakra-ui/react";
+import {ChevronLeftIcon, ChevronRightIcon} from "@chakra-ui/icons";
+import {useAtomValue} from "jotai/index";
 
 export default function YearMonthSelector() {
     const setYearMonth = useSetAtom(yearMonthAtom);
+    const yearMonth = useAtomValue(yearMonthAtom);
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -25,13 +27,21 @@ export default function YearMonthSelector() {
     }, [setYearMonth]);
 
     return (
-        <div className="flex space-x-2">
-            <Button onClick={() => setYearMonth(yearMonth => yearMonth.previous())}>
-                <ChevronLeftIcon className="h-4 w-4"/>
+        <ButtonGroup isAttached>
+            <IconButton aria-label='Go to previous month'
+                        icon={<ChevronLeftIcon/>}
+                        onClick={() => setYearMonth(yearMonth => yearMonth.previous())}>
+            </IconButton>
+            <Button disabled={true}>
+                <HStack>
+                    <Text fontWeight="bold">{yearMonth.getMonthName()}</Text>
+                    <Text fontWeight="bold">{yearMonth.year}</Text>
+                </HStack>
             </Button>
-            <Button onClick={() => setYearMonth(yearMonth => yearMonth.next())}>
-                <ChevronRightIcon className="h-4 w-4"/>
-            </Button>
-        </div>
+            <IconButton aria-label='Go to next month'
+                        icon={<ChevronRightIcon/>}
+                        onClick={() => setYearMonth(yearMonth => yearMonth.next())}>
+            </IconButton>
+        </ButtonGroup>
     )
 }

@@ -6,6 +6,8 @@ import {QueryClient, QueryClientProvider,} from '@tanstack/react-query'
 import {useHydrateAtoms} from 'jotai/react/utils'
 import {queryClientAtom} from "jotai-tanstack-query";
 import {ReactElement} from "react";
+import {ChakraProvider, extendTheme, ThemeConfig} from "@chakra-ui/react";
+import '@fontsource/open-sans'
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -23,20 +25,34 @@ const HydrateAtoms = ({children}: {children: ReactElement}) => {
     return children
 }
 
+const config: ThemeConfig = {
+    initialColorMode: 'system',
+    useSystemColorMode: false,
+}
+
+const theme = extendTheme(config, {
+    fonts: {
+        heading: `'Open Sans', sans-serif`,
+        body: `'Open Sans', sans-serif`,
+    },
+})
+
 function App() {
     return (
-        <QueryClientProvider client={queryClient}>
-            <Provider>
-                <HydrateAtoms>
-                    <Router>
-                        <Routes>
-                            <Route path="/" element={<HeroPage/>}/>
-                            <Route path="/:id" element={<ProjectPage/>}/>
-                        </Routes>
-                    </Router>
-                </HydrateAtoms>
-            </Provider>
-        </QueryClientProvider>
+        <ChakraProvider theme={theme}>
+            <QueryClientProvider client={queryClient}>
+                <Provider>
+                    <HydrateAtoms>
+                        <Router>
+                            <Routes>
+                                <Route path="/" element={<HeroPage/>}/>
+                                <Route path="/:id" element={<ProjectPage/>}/>
+                            </Routes>
+                        </Router>
+                    </HydrateAtoms>
+                </Provider>
+            </QueryClientProvider>
+        </ChakraProvider>
     )
 }
 

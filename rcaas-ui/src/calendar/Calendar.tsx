@@ -1,12 +1,12 @@
 import Week from "./Week.tsx";
 import {useCalendar} from "../queries/calendar/useCalendar.ts";
+import {Grid} from "@chakra-ui/react";
 
 export default function Calendar() {
     const {data: calendar} = useCalendar();
 
     return (
-        <div
-            className="grid flex-1 grid-rows-6 gap-1 bg-white p-1 shadow dark:bg-slate-600">
+        <Grid width="100%" height="100%" templateRows='repeat(6, 1fr)' p={2} rowGap={2}>
             {
                 (calendar?.weeks || []).map((week, weekIndex) => (
                     <Week key={weekIndex}
@@ -14,6 +14,6 @@ export default function Calendar() {
                           weekIndex={weekIndex}/>
                 ))
             }
-        </div>
+        </Grid>
     )
 }

@@ -1,19 +1,13 @@
-import {useAtom} from "jotai";
-import {darkModeAtom} from "../store.ts";
-import {useEffect} from "react";
-import {MoonIcon, SunIcon} from "@heroicons/react/24/outline";
-import Button from "../components/Button.tsx";
+import {IconButton, useColorMode} from "@chakra-ui/react";
+import {MoonIcon, SunIcon} from "@chakra-ui/icons";
 
 export default function DarkModeButton() {
-    const [isDarkMode, setIsDarkMode] = useAtom(darkModeAtom);
-
-    useEffect(() => {
-        document.documentElement.classList.toggle('dark', isDarkMode);
-    }, [isDarkMode]);
+    const {colorMode, toggleColorMode} = useColorMode()
 
     return (
-        <Button onClick={() => setIsDarkMode((prev) => !prev)}>
-            {isDarkMode ? <SunIcon className="h-4 w-4"/> : <MoonIcon className="h-4 w-4"/>}
-        </Button>
+        <IconButton aria-label="Toggle darkmode"
+                    onClick={toggleColorMode}
+                    icon={colorMode == "light" ? <SunIcon/> : <MoonIcon/>}>
+        </IconButton>
     );
 }

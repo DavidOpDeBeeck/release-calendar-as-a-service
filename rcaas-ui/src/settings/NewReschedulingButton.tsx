@@ -1,7 +1,7 @@
-import {ClockIcon} from "@heroicons/react/24/outline";
 import NewReschedulingModal from "./NewReschedulingModal.tsx";
 import {useState} from "react";
-import Button from "../components/Button.tsx";
+import {IconButton} from "@chakra-ui/react";
+import {TimeIcon} from "@chakra-ui/icons";
 
 type Props = {
     specificationIndex: number;
@@ -12,9 +12,11 @@ export default function NewReschedulingButton({specificationIndex}: Props) {
 
     return (
         <>
-            <Button onClick={() => setShowModal(true)}>
-                <ClockIcon className="h-4 w-4"/>
-            </Button>
+            <IconButton aria-label="Add rescheduling"
+                        icon={<TimeIcon/>}
+                        size="sm"
+                        onClick={() => setShowModal(true)}>
+            </IconButton>
             <NewReschedulingModal showModal={showModal} closeModal={() => setShowModal(false)} specificationIndex={specificationIndex}/>
         </>
     )

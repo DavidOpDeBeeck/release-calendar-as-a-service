@@ -3,11 +3,12 @@ import {useForm} from "react-hook-form";
 
 import {useCreateProjectMutation} from "../queries/project/useCreateProjectMutation.ts";
 import {CreateProjectTO} from "../domain/ProjectTO.ts";
+import {Button, FormControl, FormErrorMessage, HStack, Input} from '@chakra-ui/react'
 
 export default function CreateProject() {
     const navigate = useNavigate();
     const createProjectMutation = useCreateProjectMutation();
-    const {register, handleSubmit} = useForm({values: {name: ""}});
+    const {register, handleSubmit, formState: {errors, isSubmitting},} = useForm({values: {name: ""}});
     const onSubmit = (data: CreateProjectTO) => {
         createProjectMutation.mutate(data, {
             onSuccess: ({projectId}) => navigate("/" + projectId)
@@ -15,20 +16,34 @@ export default function CreateProject() {
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}
-              className="flex rounded-lg border-2 border-gray-200 bg-white p-3 text-xl shadow space-y-2 dark:border-slate-800 dark:bg-slate-700">
-            <div className="flex flex-1 items-center space-x-3">
-                <input id="name"
-                       type="text"
-                       placeholder="Project Name"
-                       {...register("name", {required: true})}
-                       autoComplete="off"
-                       className="flex-1 rounded-lg p-3 text-gray-800 focus:outline focus:outline-2 focus:outline-blue-600 dark:bg-slate-700 dark:text-slate-200"/>
-                <button type="submit"
-                        className="rounded-lg border-2 border-gray-200 px-4 py-3 font-semibold text-gray-800 hover:bg-gray-50 focus:outline focus:outline-2 focus:outline-blue-600 dark:border-slate-800 dark:text-gray-200 dark:hover:bg-slate-600">
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <HStack spacing={2}
+                    paddingLeft={5}
+                    paddingRight={2}
+                    paddingY={2}
+                    shadow="md"
+                    border="1px"
+                    borderColor="blackAlpha.200"
+                    borderRadius={10}
+                    width="md">
+                <FormControl isInvalid={!!errors.name}>
+                    <Input id="name"
+                           type="text"
+                           placeholder="Project Name"
+                           variant='unstyled'
+                           size="lg"
+                           {...register("name", {
+                               required: 'Please enter a project name',
+                           })}
+                           autoComplete="off"/>
+                    <FormErrorMessage>
+                        {errors.name && errors.name.message}
+                    </FormErrorMessage>
+                </FormControl>
+                <Button type="submit" size="lg" colorScheme='blue' isLoading={isSubmitting}>
                     Create
-                </button>
-            </div>
+                </Button>
+            </HStack>
         </form>
     )
 }

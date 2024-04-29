@@ -1,7 +1,7 @@
-import {TrashIcon} from "@heroicons/react/24/outline";
 import {useUpdateProjectMutation} from "../queries/project/useUpdateProjectMutation.ts";
 import {useProject} from "../queries/project/useProject.ts";
-import Button from "../components/Button.tsx";
+import {IconButton} from "@chakra-ui/react";
+import {DeleteIcon} from "@chakra-ui/icons";
 
 type Props = {
     specificationIndex: number;
@@ -21,10 +21,12 @@ export default function DeleteProjectButton({specificationIndex}: Props) {
     };
 
     return (
-        <Button onClick={() => onDelete()}
-                style="error">
-            <TrashIcon className="h-4 w-4"/>
-        </Button>
+        <IconButton aria-label="Delete specification"
+                    icon={<DeleteIcon/>}
+                    colorScheme="red"
+                    size="sm"
+                    onClick={() => onDelete()}>
+        </IconButton>
     )
 }
 
