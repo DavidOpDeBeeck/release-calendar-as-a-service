@@ -4,20 +4,6 @@
 visualize release schedules with an intuitive calendar interface. Start by creating your own release calendar
 at [releasecalendar.app](https://releasecalendar.app).
 
-## Diagrams
-
-### Context Diagram
-
-![Context Diagram2.png](diagrams/Context%20Diagram.png)
-
-### Container Diagram
-
-![Container Diagram.png](diagrams/Container%20Diagram.png)
-
-### Module Structure
-
-![Module Structure.png](diagrams/Module%20Structure.png)
-
 ## Development
 
 ### Database
