@@ -53,19 +53,21 @@ export default function Day({day, dayIndex, showDayName}: Props) {
     return (
         <GridItem w='100%'
                   h="100%"
+                  p={2}
                   bgGradient={dayBg(day)}
                   bgSize='5.66px 5.66px'
-                  p={2}
-                  borderRadius={10}
+                  border="1px"
+                  borderColor="blackAlpha.100"
+                  borderRadius={5}
                   onMouseOver={() => setIsHovering(true)}
                   onMouseOut={() => setIsHovering(false)}>
-            <VStack>
+            <VStack gap={1}>
                 <Flex w='100%'>
                     <Text fontWeight="extrabold">{new Date(day.date).getDate()}</Text>
                     <Spacer/>
                     {showDayName && (<Text fontWeight="bold">{daysOfTheWeek[dayIndex]}</Text>)}
                 </Flex>
-                <VStack w="100%" gap={1} fontSize="sm">
+                <VStack w="100%" gap={1} fontSize={{base: "xs", md: "sm"}}>
                     {versionsToShow.map((value, index) => (releases.indexOf(value.version) > -1
                         ? <Release key={index} version={value.version}/>
                         : <Version key={index} version={value.version} visible={value.visible}/>))}

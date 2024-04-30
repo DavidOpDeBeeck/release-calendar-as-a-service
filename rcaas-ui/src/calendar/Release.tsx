@@ -9,11 +9,10 @@ export default function Release({version}: Props) {
     return (
         <Flex w="100%"
               px={2}
-              shadow="md"
               bg={`${version.color}.400`}
-              border="2px"
+              borderLeft="4px"
               borderColor={`${version.color}.500`}
-              borderRadius={5}>
+              borderRadius={3}>
             <Text fontWeight="bold">{version.environment}</Text>
             <Spacer/>
             <Text fontWeight="bold">{version.value}</Text>

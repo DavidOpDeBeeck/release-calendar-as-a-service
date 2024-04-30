@@ -1,9 +1,10 @@
+import {useEffect} from "react";
+import {FormControl, FormErrorMessage, HStack, IconButton, Input} from '@chakra-ui/react'
 import {useNavigate} from "react-router-dom";
-import {useForm} from "react-hook-form";
-
 import {useCreateProjectMutation} from "../queries/project/useCreateProjectMutation.ts";
+import {useForm} from "react-hook-form";
 import {CreateProjectTO} from "../domain/ProjectTO.ts";
-import {Button, FormControl, FormErrorMessage, HStack, Input} from '@chakra-ui/react'
+import {ArrowForwardIcon} from "@chakra-ui/icons";
 
 export default function CreateProject() {
     const navigate = useNavigate();
@@ -15,34 +16,34 @@ export default function CreateProject() {
         });
     };
 
+    useEffect(() => {
+        document.title = 'New Project';
+    }, []);
+
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <HStack spacing={2}
-                    paddingLeft={5}
-                    paddingRight={2}
-                    paddingY={2}
-                    shadow="md"
-                    border="1px"
-                    borderColor="blackAlpha.200"
-                    borderRadius={10}
-                    width="md">
+            <HStack>
                 <FormControl isInvalid={!!errors.name}>
                     <Input id="name"
                            type="text"
                            placeholder="Project Name"
-                           variant='unstyled'
-                           size="lg"
+                           variant='filled'
+                           size={{base: "md", md: "lg"}}
                            {...register("name", {
                                required: 'Please enter a project name',
                            })}
                            autoComplete="off"/>
-                    <FormErrorMessage>
+                    <FormErrorMessage pos="absolute">
                         {errors.name && errors.name.message}
                     </FormErrorMessage>
                 </FormControl>
-                <Button type="submit" size="lg" colorScheme='blue' isLoading={isSubmitting}>
-                    Create
-                </Button>
+                <IconButton aria-label="Create Project"
+                            icon={<ArrowForwardIcon/>}
+                            type="submit"
+                            size={{base: "md", md: "lg"}}
+                            colorScheme='blue'
+                            isLoading={isSubmitting}>
+                </IconButton>
             </HStack>
         </form>
     )
