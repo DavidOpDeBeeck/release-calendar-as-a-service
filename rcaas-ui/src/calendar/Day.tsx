@@ -10,10 +10,10 @@ function dayBg(day: DayTO): string {
     if (day.today) {
         return singleColor("blue.500");
     }
+    if (day.weekend && day.otherMonth) {
+        return striped("blackAlpha.400", "whiteAlpha.50");
+    }
     if (day.weekend) {
-        if (day.otherMonth) {
-            return striped("blackAlpha.400", "whiteAlpha.50");
-        }
         return singleColor("blackAlpha.400");
     }
     if (day.otherMonth) {
@@ -27,7 +27,7 @@ function singleColor(color: string) {
 }
 
 function striped(color: string, stripes: string) {
-    return `linear-gradient(45deg, ${stripes} 12.50%, ${color} 12.50%, ${color} 50%, ${stripes} 50%, ${stripes} 62.50%, ${color} 62.50%, ${color} 100%)`;
+    return `linear-gradient(45deg, ${color} 25%, ${stripes} 25%, ${stripes} 50%, ${color} 50%, ${color} 75%, ${stripes} 75%, ${stripes} 100%)`;
 }
 
 interface Props {
@@ -55,9 +55,9 @@ export default function Day({day, dayIndex, showDayName}: Props) {
                   h="100%"
                   p={2}
                   bgGradient={dayBg(day)}
-                  bgSize='5.66px 5.66px'
+                  bgSize='14.14px 14.14px'
                   border="1px"
-                  borderColor="blackAlpha.100"
+                  borderColor="blackAlpha.200"
                   borderRadius={5}
                   onMouseOver={() => setIsHovering(true)}
                   onMouseOut={() => setIsHovering(false)}>
