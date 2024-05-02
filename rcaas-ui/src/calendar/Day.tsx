@@ -57,15 +57,15 @@ export default function Day({day, dayIndex, showDayName}: Props) {
                   bgGradient={dayBg(day)}
                   bgSize='14.14px 14.14px'
                   border="1px"
-                  borderColor="blackAlpha.200"
+                  borderColor="whiteAlpha.50"
                   borderRadius={5}
                   onMouseOver={() => setIsHovering(true)}
                   onMouseOut={() => setIsHovering(false)}>
             <VStack gap={1}>
-                <Flex w='100%'>
-                    <Text fontWeight="extrabold">{new Date(day.date).getDate()}</Text>
+                <Flex w="100%" fontSize="sm" fontWeight="extrabold">
+                    <Text>{new Date(day.date).getDate()}</Text>
                     <Spacer/>
-                    {showDayName && (<Text fontWeight="bold">{daysOfTheWeek[dayIndex]}</Text>)}
+                    {showDayName && (<Text>{daysOfTheWeek[dayIndex]}</Text>)}
                 </Flex>
                 <VStack w="100%" gap={1} fontSize={{base: "xs", md: "sm"}}>
                     {versionsToShow.map((value, index) => (releases.indexOf(value.version) > -1

@@ -1,7 +1,7 @@
 import TodayButton from "./TodayButton.tsx";
 import SettingsButton from "../settings/SettingsButton";
 import ShowVersionsForEachDayButton from "./ShowVersionsForEachDayButton.tsx";
-import DarkModeButton from "./DarkModeButton.tsx";
+import ColorModeButton from "./ColorModeButton.tsx";
 import YearMonthSelector from "./YearMonthSelector.tsx";
 import {Flex, HStack, Spacer} from "@chakra-ui/react";
 import ProjectTitle from "./ProjectTitle.tsx";
@@ -15,7 +15,7 @@ export default function ActionBar() {
                 <YearMonthSelector/>
                 <TodayButton/>
                 <ShowVersionsForEachDayButton/>
-                <DarkModeButton/>
+                <ColorModeButton/>
                 <SettingsButton/>
             </HStack>
         </Flex>

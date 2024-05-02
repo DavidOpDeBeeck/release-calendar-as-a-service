@@ -8,10 +8,10 @@ type Props = {
     open: boolean,
     onSubmit?: () => void,
     onClose: () => void,
-    children: ReactElement
+    children: ReactElement | ReactElement[]
 }
 
-export default function Modal({title, submitLabel, closeLabel, open, onSubmit, onClose, children}: Props) {
+export default function SideDrawer({title, submitLabel, closeLabel, open, onSubmit, onClose, children}: Props) {
     return (
         <Drawer isOpen={open}
                 placement='right'

@@ -17,10 +17,7 @@ dependencies:
   '@emotion/styled':
     specifier: ^11.11.5
     version: 11.11.5(@emotion/react@11.11.4)(@types/react@18.0.28)(react@18.3.1)
-  '@fontsource/open-sans':
-    specifier: ^5.0.28
-    version: 5.0.28
-  '@fontsource/raleway':
+  '@fontsource/montserrat':
     specifier: ^5.0.18
     version: 5.0.18
   '@tanstack/query-core':
@@ -1801,12 +1798,8 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
 
-  /@fontsource/open-sans@5.0.28:
-    resolution: {integrity: sha512-hBvJHY76pJT/JynGUB5EXWhnzjYfLdcMn655J5p1v9lTT9HdQSy+keq2KPVXO2Htlg998BBa3p6u/jlrZ6w0kg==}
-    dev: false
-
-  /@fontsource/raleway@5.0.18:
-    resolution: {integrity: sha512-8oPzZe8N7f5XWSUNWn0ygF1bG6HifLGOTo1uWJxLTRVpd+ZPOwF6ztNOGWDIsGwXD+Jy4exbo6mT82Ky0GpILA==}
+  /@fontsource/montserrat@5.0.18:
+    resolution: {integrity: sha512-85JBs2rCdFK/VBdSb401e2lXk5gynVo2zi3Rh2Guem4WNtT2q52+V90o3KzjmajY3TPJvCZA/kI7R05ev7148g==}
     dev: false
 
   /@humanwhocodes/config-array@0.11.11:

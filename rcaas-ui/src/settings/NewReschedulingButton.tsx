@@ -1,4 +1,4 @@
-import NewReschedulingModal from "./NewReschedulingModal.tsx";
+import NewReschedulingSideDrawer from "./NewReschedulingSideDrawer.tsx";
 import {useState} from "react";
 import {Button} from "@chakra-ui/react";
 import {AddIcon} from "@chakra-ui/icons";
@@ -18,7 +18,7 @@ export default function NewReschedulingButton({specificationIndex}: Props) {
                     onClick={() => setShowModal(true)}>
                 Rescheduling
             </Button>
-            <NewReschedulingModal showModal={showModal} closeModal={() => setShowModal(false)} specificationIndex={specificationIndex}/>
+            <NewReschedulingSideDrawer showModal={showModal} closeModal={() => setShowModal(false)} specificationIndex={specificationIndex}/>
         </>
     )
 }

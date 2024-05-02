@@ -1,9 +1,9 @@
 import {useForm} from "react-hook-form";
-import Modal from "../modal/Modal.tsx";
+import SideDrawer from "../common/SideDrawer.tsx";
 
 import {useProject} from "../queries/project/useProject.ts";
 import {useUpdateProjectMutation} from "../queries/project/useUpdateProjectMutation.ts";
-import {ErrorMessages} from "../error-message/ErrorMessages.tsx";
+import {ErrorMessages} from "../common/ErrorMessages.tsx";
 import {FormControl, FormErrorMessage, FormLabel, Input, VStack} from "@chakra-ui/react";
 
 type NewRescheduling = {
@@ -17,7 +17,7 @@ type Props = {
     specificationIndex: number;
 }
 
-export default function NewReschedulingModal({showModal, closeModal, specificationIndex}: Props) {
+export default function NewReschedulingSideDrawer({showModal, closeModal, specificationIndex}: Props) {
     const {data: project} = useProject();
     const mutation = useUpdateProjectMutation();
 
@@ -55,14 +55,14 @@ export default function NewReschedulingModal({showModal, closeModal, specificati
     };
 
     return (
-        <Modal title={"New Rescheduling"}
-               submitLabel={"Create"}
-               closeLabel={"Cancel"}
-               open={showModal}
-               onSubmit={handleSubmit(onSubmit)}
-               onClose={() => closeModal()}>
+        <SideDrawer title={"New Rescheduling"}
+                    submitLabel={"Create"}
+                    closeLabel={"Cancel"}
+                    open={showModal}
+                    onSubmit={handleSubmit(onSubmit)}
+                    onClose={() => closeModal()}>
             <VStack>
-                <ErrorMessages errorMessages={mutation.error}/>
+                <ErrorMessages messages={mutation.error}/>
                 <FormControl isInvalid={!!errors.from}>
                     <FormLabel>From Date</FormLabel>
                     <Input type="date"
@@ -80,7 +80,7 @@ export default function NewReschedulingModal({showModal, closeModal, specificati
                     <FormErrorMessage>To date is required.</FormErrorMessage>
                 </FormControl>
             </VStack>
-        </Modal>
+        </SideDrawer>
     )
 }
 

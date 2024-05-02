@@ -1,5 +1,4 @@
 import {QueryClient, useMutation, useQueryClient} from "@tanstack/react-query";
-import {ErrorMessage, translateErrorMessages} from "../error-message/ErrorMessage.ts";
 
 type MutationInput = {
     key: unknown[];
@@ -11,7 +10,7 @@ type MutationInput = {
 export const useHttpMutation = <INPUT, OUTPUT>({key, path, method, onSuccess}: MutationInput) => {
     const queryClient = useQueryClient()
 
-    return useMutation<OUTPUT, ErrorMessage[], INPUT>({
+    return useMutation<OUTPUT, string[], INPUT>({
         mutationKey: key,
         mutationFn: async (input: INPUT) => {
             const response = await fetch(`/api/v1${path}`, {
@@ -33,4 +32,14 @@ export const useHttpMutation = <INPUT, OUTPUT>({key, path, method, onSuccess}: M
         },
         onSuccess: () => onSuccess && onSuccess(queryClient)
     });
+}
+
+const translations = new Map([
+    ["PROJECT_NAME_SHOULD_NOT_BE_NULL", "Project name is required"],
+    ["RESCHEDULING_FROM_DATE_SHOULD_BE_A_RELEASE_DATE", "From date should be a release date"],
+    ["FROM_DATE_SHOULD_BE_BEFORE_TO_DATE", "From date should be before To date"],
+])
+
+export function translateErrorMessages(errorMessages: { message: string }[]) : string[] {
+    return errorMessages.map(value => translations.get(value.message) || value.message)
 }
