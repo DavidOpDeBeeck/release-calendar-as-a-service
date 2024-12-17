@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: Rcaas API
   threads:
     virtual:
       enabled: true
