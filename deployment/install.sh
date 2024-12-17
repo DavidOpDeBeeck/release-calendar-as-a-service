@@ -1,1 +1,0 @@
-helm upgrade --install -f values.yaml rcaas . --create-namespace --namespace apps
