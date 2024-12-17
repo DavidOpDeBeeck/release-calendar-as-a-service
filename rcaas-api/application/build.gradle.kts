@@ -4,10 +4,12 @@ plugins {
 
 dependencies {
     runtimeOnly("org.postgresql:postgresql")
+    runtimeOnly("io.micrometer:micrometer-registry-prometheus")
 
     implementation(project(":driving-adapter"))
     implementation(project(":core:use-case"))
     implementation(project(":driven-adapter"))
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
 
     testImplementation(project(":core:test-constant"))
     testImplementation(project(":core:transfer-object"))
