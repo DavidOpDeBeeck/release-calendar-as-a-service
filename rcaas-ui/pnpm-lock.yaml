@@ -65,7 +65,7 @@ importers:
         version: 5.57.1(eslint@8.38.0)(typescript@5.0.2)
       '@vitejs/plugin-react':
         specifier: ^4.0.0
-        version: 4.0.0(vite@4.5.3)
+        version: 4.0.0(vite@4.5.5)
       eslint:
         specifier: ^8.38.0
         version: 8.38.0
@@ -79,8 +79,8 @@ importers:
         specifier: ^5.0.2
         version: 5.0.2
       vite:
-        specifier: ^4.5.3
-        version: 4.5.3
+        specifier: ^4.5.5
+        version: 4.5.5
 
 packages:
 
@@ -1248,6 +1248,7 @@ packages:
   eslint@8.38.0:
     resolution: {integrity: sha512-pIdsD2jwlUGf/U38Jv97t8lq6HpaU/G9NKbYmpWpZGw3LdTNhZLbJePqxOXGB5+JEKfOPU/XLxYxFh03nr1KTg==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
 
   espree@9.6.1:
@@ -1861,8 +1862,8 @@ packages:
       '@types/react':
         optional: true
 
-  vite@4.5.3:
-    resolution: {integrity: sha512-kQL23kMeX92v3ph7IauVkXkikdDRsYMGTVl5KY2E9OY4ONLvkHf04MDTbnfo6NKxZiDLWzVpP5oTa8hQD8U3dg==}
+  vite@4.5.5:
+    resolution: {integrity: sha512-ifW3Lb2sMdX+WU91s3R0FyQlAyLxOzCSCP37ujw0+r5POeHPwe6udWVIElKQq8gk3t7b8rkmvqC6IHBpCff4GQ==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
     peerDependencies:
@@ -3122,13 +3123,13 @@ snapshots:
       '@typescript-eslint/types': 5.57.1
       eslint-visitor-keys: 3.4.3
 
-  '@vitejs/plugin-react@4.0.0(vite@4.5.3)':
+  '@vitejs/plugin-react@4.0.0(vite@4.5.5)':
     dependencies:
       '@babel/core': 7.22.19
       '@babel/plugin-transform-react-jsx-self': 7.22.5(@babel/core@7.22.19)
       '@babel/plugin-transform-react-jsx-source': 7.22.5(@babel/core@7.22.19)
       react-refresh: 0.14.0
-      vite: 4.5.3
+      vite: 4.5.5
     transitivePeerDependencies:
       - supports-color
 
@@ -3890,7 +3891,7 @@ snapshots:
     optionalDependencies:
       '@types/react': 18.0.28
 
-  vite@4.5.3:
+  vite@4.5.5:
     dependencies:
       esbuild: 0.18.20
       postcss: 8.4.31
