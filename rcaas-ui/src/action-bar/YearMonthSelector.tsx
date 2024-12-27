@@ -32,7 +32,7 @@ export default function YearMonthSelector() {
                         icon={<ChevronLeftIcon/>}
                         onClick={() => setYearMonth(yearMonth => yearMonth.previous())}>
             </IconButton>
-            <Button disabled={true}>
+            <Button>
                 <HStack>
                     <Text fontWeight="bold">{yearMonth.getMonthName()}</Text>
                     <Text fontWeight="bold">{yearMonth.year}</Text>

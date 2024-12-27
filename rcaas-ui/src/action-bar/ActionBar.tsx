@@ -8,7 +8,7 @@ import ProjectTitle from "./ProjectTitle.tsx";
 
 export default function ActionBar() {
     return (
-        <Flex width="100%" p={2} shadow="md">
+        <Flex width="100%" p={2} pb={0}>
             <ProjectTitle/>
             <Spacer/>
             <HStack>

@@ -7,7 +7,7 @@ import {useHydrateAtoms} from 'jotai/react/utils'
 import {queryClientAtom} from "jotai-tanstack-query";
 import {ReactElement} from "react";
 import {ChakraProvider, extendTheme, ThemeConfig} from "@chakra-ui/react";
-import '@fontsource/montserrat'
+import '@fontsource/inter'
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -32,8 +32,8 @@ const config: ThemeConfig = {
 
 const theme = extendTheme(config, {
     fonts: {
-        heading: `'Montserrat', sans-serif`,
-        body: `'Montserrat', sans-serif`,
+        heading: `'Inter', sans-serif`,
+        body: `'Inter', sans-serif`,
     },
 })
 

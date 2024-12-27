@@ -12,7 +12,7 @@ export default function ProjectPage() {
     }, [project]);
 
     return (
-        <VStack height="100vh">
+        <VStack height="100vh" spacing={0}>
             <ActionBar/>
             <Calendar/>
         </VStack>
