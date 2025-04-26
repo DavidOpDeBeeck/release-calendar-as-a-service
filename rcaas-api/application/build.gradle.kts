@@ -9,7 +9,6 @@ dependencies {
     implementation(project(":driving-adapter"))
     implementation(project(":core:use-case"))
     implementation(project(":driven-adapter"))
-    implementation("com.github.loki4j:loki-logback-appender")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
 
     testImplementation(project(":core:test-constant"))
