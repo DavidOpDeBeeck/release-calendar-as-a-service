@@ -2,7 +2,7 @@
 
 "Rcaas" is a cloud-based software that simplifies software release management. Plan, manage, and
 visualize release schedules with an intuitive calendar interface. Start by creating your own release calendar
-at [releasecalendar.app](https://releasecalendar.app).
+at [https://releasecalendar.dodb.app](https://releasecalendar.dodb.app).
 
 ## Development
 
