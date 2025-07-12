@@ -1,7 +1,9 @@
 package be.davidopdebeeck.rcaasapi.core.usecase.project;
 
+import app.dodb.smd.test.SMDTestExtension;
 import be.davidopdebeeck.rcaasapi.core.usecase.UseCaseTest;
 import be.davidopdebeeck.rcaasapi.core.usecase.stubs.ProjectTestRepository;
+import be.davidopdebeeck.rcaasapi.drivingport.project.GenerateCalendarQuery;
 import be.davidopdebeeck.rcaasapi.transferobject.project.calendar.CalendarTO;
 import be.davidopdebeeck.rcaasapi.transferobject.project.calendar.DayTO;
 import be.davidopdebeeck.rcaasapi.transferobject.project.calendar.WeekTO;
@@ -20,14 +22,14 @@ import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @UseCaseTest
-class GenerateCalendarUseCaseImplTest {
+class GenerateCalendarUseCaseTest {
 
     private static final YearMonth JAN_2023 = YearMonth.of(2023, 1);
 
     @Autowired
-    private GenerateCalendarUseCaseImpl useCase;
-    @Autowired
     private ProjectTestRepository repository;
+    @Autowired
+    private SMDTestExtension smd;
 
     @Test
     void generateCalendar() {
@@ -90,7 +92,7 @@ class GenerateCalendarUseCaseImplTest {
             weekendDay(of(2023, 2, 5), true)
         );
 
-        assertThat(useCase.generateCalendar(PROJECT_ID_VALUE, JAN_2023))
+        assertThat(smd.send(new GenerateCalendarQuery(PROJECT_ID_VALUE, JAN_2023)))
             .usingRecursiveComparison()
             .isEqualTo(Optional.of(calendar(week1, week2, week3, week4, week5, week6)));
     }

@@ -1,8 +1,9 @@
 package be.davidopdebeeck.rcaasapi.core.usecase.project;
 
+import app.dodb.smd.test.SMDTestExtension;
 import be.davidopdebeeck.rcaasapi.core.usecase.UseCaseTest;
 import be.davidopdebeeck.rcaasapi.core.usecase.stubs.ProjectTestRepository;
-import be.davidopdebeeck.rcaasapi.transferobject.project.UpdateProjectTO;
+import be.davidopdebeeck.rcaasapi.drivingport.project.UpdateProjectCommand;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -22,21 +23,18 @@ import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @UseCaseTest
-class UpdateProjectUseCaseImplTest {
+class UpdateProjectUseCaseTest {
 
     @Autowired
-    private UpdateProjectUseCaseImpl useCase;
-    @Autowired
     private ProjectTestRepository repository;
+    @Autowired
+    private SMDTestExtension smd;
 
     @Test
     void updateProject() {
         repository.save(project());
 
-        useCase.updateProject(PROJECT_ID_VALUE, new UpdateProjectTO.Builder()
-            .withName(ANOTHER_PROJECT_NAME)
-            .withSpecifications(List.of(anotherReleaseSpecificationTO()))
-            .build());
+        smd.send(new UpdateProjectCommand(PROJECT_ID_VALUE, ANOTHER_PROJECT_NAME, List.of(anotherReleaseSpecificationTO())));
 
         assertThat(repository.findBy(PROJECT_ID))
             .usingRecursiveComparison()
@@ -52,12 +50,7 @@ class UpdateProjectUseCaseImplTest {
     void updateProject_withoutName() {
         repository.save(project());
 
-        UpdateProjectTO projectWithoutName = new UpdateProjectTO.Builder()
-            .withName(null)
-            .withSpecifications(emptyList())
-            .build();
-
-        assertThatThrownBy(() -> useCase.updateProject(PROJECT_ID_VALUE, projectWithoutName))
+        assertThatThrownBy(() -> smd.send(new UpdateProjectCommand(PROJECT_ID_VALUE, null, emptyList())))
             .isValidationException()
             .containsMessage(PROJECT_NAME_SHOULD_NOT_BE_NULL);
     }

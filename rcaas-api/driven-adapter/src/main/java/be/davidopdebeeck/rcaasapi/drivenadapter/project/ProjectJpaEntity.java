@@ -1,22 +1,23 @@
 package be.davidopdebeeck.rcaasapi.drivenadapter.project;
 
 import be.davidopdebeeck.rcaasapi.transferobject.project.ProjectTO;
-import jakarta.persistence.Convert;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
+import org.hibernate.annotations.JdbcTypeCode;
 
 import static java.util.Objects.requireNonNull;
+import static org.hibernate.type.SqlTypes.JSON;
 
 @Entity
-@Table(name = "calendar")
+@Table(name = "projects")
 public class ProjectJpaEntity {
 
     @Id
     private String projectId;
-    @Lob
-    @Convert(converter = ProjectTOJsonConverter.class)
+    @Column(name = "data")
+    @JdbcTypeCode(JSON)
     private ProjectTO projectTO;
 
     private ProjectJpaEntity() {

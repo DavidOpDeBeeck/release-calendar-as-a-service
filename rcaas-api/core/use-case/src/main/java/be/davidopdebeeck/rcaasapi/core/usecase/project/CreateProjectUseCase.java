@@ -1,32 +1,33 @@
 package be.davidopdebeeck.rcaasapi.core.usecase.project;
 
+import app.dodb.smd.api.command.CommandHandler;
+import app.dodb.smd.api.metadata.Metadata;
 import be.davidopdebeeck.rcaasapi.core.domain.project.Project;
 import be.davidopdebeeck.rcaasapi.core.domain.project.ProjectId;
 import be.davidopdebeeck.rcaasapi.drivenport.ProjectRepository;
-import be.davidopdebeeck.rcaasapi.drivingport.project.CreateProjectUseCase;
-import be.davidopdebeeck.rcaasapi.transferobject.project.CreateProjectTO;
+import be.davidopdebeeck.rcaasapi.drivingport.project.CreateProjectCommand;
 import be.davidopdebeeck.rcaasapi.transferobject.project.ProjectIdTO;
 import org.springframework.stereotype.Component;
 
 import static java.util.Collections.emptyList;
-import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
+import static org.apache.commons.lang3.RandomStringUtils.secure;
 
 @Component
-public class CreateProjectUseCaseImpl implements CreateProjectUseCase {
+public class CreateProjectUseCase {
 
     private final ProjectRepository repository;
 
-    public CreateProjectUseCaseImpl(ProjectRepository repository) {
+    public CreateProjectUseCase(ProjectRepository repository) {
         this.repository = repository;
     }
 
-    @Override
-    public ProjectIdTO createProject(CreateProjectTO createProjectTO) {
-        ProjectId projectId = createProjectId(createProjectTO);
+    @CommandHandler
+    public ProjectIdTO handle(CreateProjectCommand command, Metadata metadata) {
+        ProjectId projectId = createProjectId(command);
 
         repository.save(new Project.Builder()
             .withProjectId(projectId)
-            .withName(createProjectTO.getName().orElse(null))
+            .withName(command.getName().orElse(null))
             .withSpecifications(emptyList())
             .build());
 
@@ -35,8 +36,8 @@ public class CreateProjectUseCaseImpl implements CreateProjectUseCase {
             .build();
     }
 
-    private ProjectId createProjectId(CreateProjectTO createProjectTO) {
-        return createProjectTO.getName()
+    private ProjectId createProjectId(CreateProjectCommand command) {
+        return command.getName()
             .map(name -> name.chars()
                 .filter(Character::isAlphabetic)
                 .map(Character::toLowerCase)
@@ -44,9 +45,9 @@ public class CreateProjectUseCaseImpl implements CreateProjectUseCase {
                 .map(String::new)
                 .reduce("", String::concat)
                 .concat("-")
-                .concat(randomAlphabetic(5))
+                .concat(secure().nextAlphabetic(5))
                 .concat("-")
-                .concat(randomAlphabetic(5)))
+                .concat(secure().nextAlphabetic(5)))
             .map(ProjectId::projectId)
             .orElse(null);
     }

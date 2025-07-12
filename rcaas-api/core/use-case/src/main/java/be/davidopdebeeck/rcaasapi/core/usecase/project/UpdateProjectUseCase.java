@@ -1,5 +1,6 @@
 package be.davidopdebeeck.rcaasapi.core.usecase.project;
 
+import app.dodb.smd.api.command.CommandHandler;
 import be.davidopdebeeck.rcaasapi.core.domain.project.Project;
 import be.davidopdebeeck.rcaasapi.core.domain.project.UpdateProject;
 import be.davidopdebeeck.rcaasapi.core.domain.project.release.ReleaseSpecification;
@@ -7,9 +8,8 @@ import be.davidopdebeeck.rcaasapi.core.domain.project.release.Rescheduling;
 import be.davidopdebeeck.rcaasapi.core.domain.project.release.SprintBasedReleaseSpecification;
 import be.davidopdebeeck.rcaasapi.core.domain.project.version.SprintBasedVersion;
 import be.davidopdebeeck.rcaasapi.drivenport.ProjectRepository;
-import be.davidopdebeeck.rcaasapi.drivingport.project.UpdateProjectUseCase;
+import be.davidopdebeeck.rcaasapi.drivingport.project.UpdateProjectCommand;
 import be.davidopdebeeck.rcaasapi.transferobject.project.ProjectIdTO;
-import be.davidopdebeeck.rcaasapi.transferobject.project.UpdateProjectTO;
 import be.davidopdebeeck.rcaasapi.transferobject.project.release.ReleaseSpecificationTO;
 import be.davidopdebeeck.rcaasapi.transferobject.project.release.SprintBasedReleaseSpecificationTO;
 import org.springframework.stereotype.Component;
@@ -20,21 +20,21 @@ import static be.davidopdebeeck.rcaasapi.core.domain.project.ProjectId.projectId
 import static be.davidopdebeeck.rcaasapi.core.domain.project.environment.Environment.environment;
 
 @Component
-public class UpdateProjectUseCaseImpl implements UpdateProjectUseCase {
+public class UpdateProjectUseCase {
 
     private final ProjectRepository repository;
 
-    public UpdateProjectUseCaseImpl(ProjectRepository repository) {
+    public UpdateProjectUseCase(ProjectRepository repository) {
         this.repository = repository;
     }
 
-    @Override
-    public ProjectIdTO updateProject(String projectId, UpdateProjectTO updateProjectTO) {
-        Project project = repository.findBy(projectId(projectId)).orElseThrow();
+    @CommandHandler
+    public ProjectIdTO handle(UpdateProjectCommand command) {
+        Project project = repository.findBy(projectId(command.projectId())).orElseThrow();
 
         project.update(new UpdateProject.Builder()
-            .withName(updateProjectTO.getName().orElse(null))
-            .withSpecifications(mapSpecifications(updateProjectTO.getSpecifications()))
+            .withName(command.getName().orElse(null))
+            .withSpecifications(mapSpecifications(command.specifications()))
             .build());
         repository.save(project);
 

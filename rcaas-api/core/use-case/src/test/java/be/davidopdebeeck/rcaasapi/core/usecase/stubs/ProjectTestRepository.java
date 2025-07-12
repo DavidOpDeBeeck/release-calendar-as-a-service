@@ -1,5 +1,6 @@
 package be.davidopdebeeck.rcaasapi.core.usecase.stubs;
 
+import app.dodb.smd.spring.test.scope.annotation.SMDTestScope;
 import be.davidopdebeeck.rcaasapi.core.domain.project.Project;
 import be.davidopdebeeck.rcaasapi.core.domain.project.ProjectId;
 import be.davidopdebeeck.rcaasapi.core.domain.project.release.ReleaseSpecification;
@@ -20,6 +21,7 @@ import java.util.Optional;
 import static be.davidopdebeeck.rcaasapi.transferobject.project.environment.EnvironmentTO.environmentTO;
 
 @Component
+@SMDTestScope
 public class ProjectTestRepository implements ProjectRepository, ProjectQueryRepository {
 
     private final Map<ProjectId, Project> projectsById = new HashMap<>();

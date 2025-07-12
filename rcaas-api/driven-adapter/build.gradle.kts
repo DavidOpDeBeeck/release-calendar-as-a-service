@@ -1,6 +1,7 @@
 dependencies {
     implementation(project(":core:driven-port"))
 
+    implementation("org.liquibase:liquibase-core")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 

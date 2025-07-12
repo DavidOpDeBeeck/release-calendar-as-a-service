@@ -11,10 +11,10 @@ spring:
     password: postgres
     driver-class-name: org.postgresql.Driver
   jpa:
-    generate-ddl: true
-    hibernate:
-      ddl-auto: update
     open-in-view: false
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/master.xml
   main:
     lazy-initialization: true
   jmx:

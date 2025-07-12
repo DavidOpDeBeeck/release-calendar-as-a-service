@@ -5,4 +5,5 @@ dependencies {
     implementation(project(":core:driven-port"))
 
     testImplementation(project(":core:test-constant"))
+    testImplementation("app.dodb:smd-spring-boot-starter-test")
 }

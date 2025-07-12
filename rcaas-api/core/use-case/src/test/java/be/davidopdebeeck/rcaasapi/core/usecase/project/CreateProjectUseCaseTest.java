@@ -1,10 +1,11 @@
 package be.davidopdebeeck.rcaasapi.core.usecase.project;
 
+import app.dodb.smd.test.SMDTestExtension;
 import be.davidopdebeeck.rcaasapi.core.domain.project.Project;
 import be.davidopdebeeck.rcaasapi.core.domain.project.ProjectId;
 import be.davidopdebeeck.rcaasapi.core.usecase.UseCaseTest;
 import be.davidopdebeeck.rcaasapi.core.usecase.stubs.ProjectTestRepository;
-import be.davidopdebeeck.rcaasapi.transferobject.project.CreateProjectTO;
+import be.davidopdebeeck.rcaasapi.drivingport.project.CreateProjectCommand;
 import be.davidopdebeeck.rcaasapi.transferobject.project.ProjectIdTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,18 +20,16 @@ import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @UseCaseTest
-class CreateProjectUseCaseImplTest {
+class CreateProjectUseCaseTest {
 
     @Autowired
-    private CreateProjectUseCaseImpl useCase;
-    @Autowired
     private ProjectTestRepository repository;
+    @Autowired
+    private SMDTestExtension smd;
 
     @Test
     void createProject() {
-        ProjectIdTO projectIdTO = useCase.createProject(new CreateProjectTO.Builder()
-            .withName(PROJECT_NAME)
-            .build());
+        ProjectIdTO projectIdTO = smd.send(new CreateProjectCommand(PROJECT_NAME));
 
         ProjectId projectId = projectId(projectIdTO.getProjectId());
         assertThat(repository.findBy(projectId))
@@ -44,11 +43,7 @@ class CreateProjectUseCaseImplTest {
 
     @Test
     void createProject_withoutName() {
-        CreateProjectTO projectWithoutName = new CreateProjectTO.Builder()
-            .withName(null)
-            .build();
-
-        assertThatThrownBy(() -> useCase.createProject(projectWithoutName))
+        assertThatThrownBy(() -> smd.send(new CreateProjectCommand(null)))
             .isValidationException()
             .containsMessage(PROJECT_NAME_SHOULD_NOT_BE_NULL);
     }

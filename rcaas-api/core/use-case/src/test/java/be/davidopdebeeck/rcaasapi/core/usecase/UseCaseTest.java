@@ -1,5 +1,7 @@
 package be.davidopdebeeck.rcaasapi.core.usecase;
 
+import app.dodb.smd.spring.EnableSMD;
+import app.dodb.smd.spring.test.EnableSMDStubs;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,5 +22,7 @@ import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER
 @SpringBootTest(classes = {UseCaseConfiguration.class, UseCaseTestConfiguration.class}, webEnvironment = NONE)
 @ExtendWith({SpringExtension.class})
 @DirtiesContext(classMode = AFTER_EACH_TEST_METHOD)
+@EnableSMD(packages = "be.davidopdebeeck")
+@EnableSMDStubs
 public @interface UseCaseTest {
 }
