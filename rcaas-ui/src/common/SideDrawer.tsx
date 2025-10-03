@@ -1,5 +1,5 @@
 import {ReactElement} from 'react'
-import {Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay} from "@chakra-ui/react";
+import {Button, CloseButton, Drawer} from "@chakra-ui/react";
 
 type Props = {
     title: string,
@@ -13,24 +13,30 @@ type Props = {
 
 export default function SideDrawer({title, submitLabel, closeLabel, open, onSubmit, onClose, children}: Props) {
     return (
-        <Drawer isOpen={open}
-                placement='right'
-                size="md"
-                onClose={onClose}>
-            <DrawerOverlay/>
-            <DrawerContent>
-                <DrawerCloseButton/>
-                <DrawerHeader>{title}</DrawerHeader>
-                <DrawerBody>
-                    <form>{children}</form>
-                </DrawerBody>
-                <DrawerFooter>
-                    <Button variant='outline' mr={3} onClick={onClose}>
-                        {closeLabel}
-                    </Button>
-                    {submitLabel && <Button onClick={onSubmit} colorScheme='blue'>{submitLabel}</Button>}
-                </DrawerFooter>
-            </DrawerContent>
-        </Drawer>
+        <Drawer.Root open={open}
+                     placement='end'
+                     size="md"
+                     onOpenChange={onClose}>
+            <Drawer.Backdrop/>
+            <Drawer.Trigger/>
+            <Drawer.Positioner p={4}>
+                <Drawer.Content rounded="md">
+                    <Drawer.CloseTrigger/>
+                    <Drawer.Header>
+                        <Drawer.Title>{title}</Drawer.Title>
+                    </Drawer.Header>
+                    <Drawer.Body>{children}</Drawer.Body>
+                    <Drawer.Footer gap={0}>
+                        <Button variant="subtle" mr={3} onClick={onClose}>
+                            {closeLabel}
+                        </Button>
+                        {submitLabel && <Button onClick={onSubmit} colorPalette='blue' variant="subtle">{submitLabel}</Button>}
+                    </Drawer.Footer>
+                    <Drawer.CloseTrigger asChild>
+                        <CloseButton size="sm"/>
+                    </Drawer.CloseTrigger>
+                </Drawer.Content>
+            </Drawer.Positioner>
+        </Drawer.Root>
     )
 }

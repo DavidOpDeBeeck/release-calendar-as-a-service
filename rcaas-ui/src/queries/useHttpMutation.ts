@@ -40,6 +40,6 @@ const translations = new Map([
     ["FROM_DATE_SHOULD_BE_BEFORE_TO_DATE", "From date should be before To date"],
 ])
 
-export function translateErrorMessages(errorMessages: { message: string }[]) : string[] {
+export function translateErrorMessages(errorMessages: { message: string }[]): string[] {
     return errorMessages.map(value => translations.get(value.message) || value.message)
 }

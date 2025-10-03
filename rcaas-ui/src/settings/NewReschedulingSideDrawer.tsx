@@ -4,7 +4,7 @@ import SideDrawer from "../common/SideDrawer.tsx";
 import {useProject} from "../queries/project/useProject.ts";
 import {useUpdateProjectMutation} from "../queries/project/useUpdateProjectMutation.ts";
 import {ErrorMessages} from "../common/ErrorMessages.tsx";
-import {FormControl, FormErrorMessage, FormLabel, Input, VStack} from "@chakra-ui/react";
+import {Field, Input, VStack} from "@chakra-ui/react";
 
 type NewRescheduling = {
     from: string;
@@ -63,22 +63,22 @@ export default function NewReschedulingSideDrawer({showModal, closeModal, specif
                     onClose={() => closeModal()}>
             <VStack>
                 <ErrorMessages messages={mutation.error}/>
-                <FormControl isInvalid={!!errors.from}>
-                    <FormLabel>From Date</FormLabel>
+                <Field.Root invalid={!!errors.from}>
+                    <Field.Label>From Date</Field.Label>
                     <Input type="date"
                            placeholder="From date"
                            {...register("from", {required: true})}
                     />
-                    <FormErrorMessage>From date is required.</FormErrorMessage>
-                </FormControl>
-                <FormControl isInvalid={!!errors.to}>
-                    <FormLabel>To Date</FormLabel>
+                    <Field.ErrorText>From date is required.</Field.ErrorText>
+                </Field.Root>
+                <Field.Root invalid={!!errors.to}>
+                    <Field.Label>To Date</Field.Label>
                     <Input type="date"
                            placeholder="To date"
                            {...register("to", {required: true})}
                     />
-                    <FormErrorMessage>To date is required.</FormErrorMessage>
-                </FormControl>
+                    <Field.ErrorText>To date is required.</Field.ErrorText>
+                </Field.Root>
             </VStack>
         </SideDrawer>
     )

@@ -1,10 +1,10 @@
 import {useEffect} from "react";
-import {FormControl, FormErrorMessage, HStack, IconButton, Input} from '@chakra-ui/react'
+import {Field, HStack, IconButton, Input} from '@chakra-ui/react'
 import {useNavigate} from "react-router-dom";
 import {useCreateProjectMutation} from "../queries/project/useCreateProjectMutation.ts";
 import {useForm} from "react-hook-form";
 import {CreateProjectTO} from "../domain/ProjectTO.ts";
-import {ArrowForwardIcon} from "@chakra-ui/icons";
+import {ArrowRight} from "lucide-react";
 
 export default function CreateProject() {
     const navigate = useNavigate();
@@ -22,27 +22,27 @@ export default function CreateProject() {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <HStack>
-                <FormControl isInvalid={!!errors.name}>
+            <HStack alignItems="start">
+                <Field.Root invalid={!!errors.name}>
                     <Input id="name"
                            type="text"
                            placeholder="Project Name"
-                           variant='filled'
+                           variant='subtle'
                            size={{base: "md", md: "lg"}}
                            {...register("name", {
                                required: 'Please enter a project name',
                            })}
                            autoComplete="off"/>
-                    <FormErrorMessage pos="absolute">
+                    <Field.ErrorText>
                         {errors.name && errors.name.message}
-                    </FormErrorMessage>
-                </FormControl>
+                    </Field.ErrorText>
+                </Field.Root>
                 <IconButton aria-label="Create Project"
-                            icon={<ArrowForwardIcon/>}
                             type="submit"
                             size={{base: "md", md: "lg"}}
-                            colorScheme='blue'
-                            isLoading={isSubmitting}>
+                            colorPalette='blue'
+                            loading={isSubmitting}>
+                    <ArrowRight/>
                 </IconButton>
             </HStack>
         </form>

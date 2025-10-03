@@ -6,8 +6,10 @@ import {QueryClient, QueryClientProvider,} from '@tanstack/react-query'
 import {useHydrateAtoms} from 'jotai/react/utils'
 import {queryClientAtom} from "jotai-tanstack-query";
 import {ReactElement} from "react";
-import {ChakraProvider, extendTheme, ThemeConfig} from "@chakra-ui/react";
+import {ChakraProvider} from "@chakra-ui/react";
+import {system} from './theme.ts'
 import '@fontsource/inter'
+import {ColorModeProvider} from "./components/ui/color-mode.tsx";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -20,38 +22,28 @@ const queryClient = new QueryClient({
     },
 })
 
-const HydrateAtoms = ({children}: {children: ReactElement}) => {
+const HydrateAtoms = ({children}: { children: ReactElement }) => {
     useHydrateAtoms([[queryClientAtom, queryClient]])
     return children
 }
 
-const config: ThemeConfig = {
-    initialColorMode: 'system',
-    useSystemColorMode: false,
-}
-
-const theme = extendTheme(config, {
-    fonts: {
-        heading: `'Inter', sans-serif`,
-        body: `'Inter', sans-serif`,
-    },
-})
-
 function App() {
     return (
-        <ChakraProvider theme={theme}>
-            <QueryClientProvider client={queryClient}>
-                <Provider>
-                    <HydrateAtoms>
-                        <Router>
-                            <Routes>
-                                <Route path="/" element={<HeroPage/>}/>
-                                <Route path="/:id" element={<ProjectPage/>}/>
-                            </Routes>
-                        </Router>
-                    </HydrateAtoms>
-                </Provider>
-            </QueryClientProvider>
+        <ChakraProvider value={system}>
+            <ColorModeProvider>
+                <QueryClientProvider client={queryClient}>
+                    <Provider>
+                        <HydrateAtoms>
+                            <Router>
+                                <Routes>
+                                    <Route path="/" element={<HeroPage/>}/>
+                                    <Route path="/:id" element={<ProjectPage/>}/>
+                                </Routes>
+                            </Router>
+                        </HydrateAtoms>
+                    </Provider>
+                </QueryClientProvider>
+            </ColorModeProvider>
         </ChakraProvider>
     )
 }

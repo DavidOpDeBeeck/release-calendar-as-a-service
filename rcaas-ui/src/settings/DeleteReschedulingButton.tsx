@@ -1,7 +1,7 @@
 import {useUpdateProjectMutation} from "../queries/project/useUpdateProjectMutation.ts";
 import {useProject} from "../queries/project/useProject.ts";
 import {IconButton} from "@chakra-ui/react";
-import {DeleteIcon} from "@chakra-ui/icons";
+import {Trash2} from "lucide-react";
 
 type Props = {
     specificationIndex: number;
@@ -32,10 +32,11 @@ export default function DeleteReschedulingButton({specificationIndex, rescheduli
 
     return (
         <IconButton aria-label="Delete specification"
-                    icon={<DeleteIcon/>}
-                    colorScheme="red"
+                    colorPalette="red"
+                    variant="subtle"
                     size="xs"
                     onClick={() => onDelete()}>
+            <Trash2/>
         </IconButton>
     )
 }

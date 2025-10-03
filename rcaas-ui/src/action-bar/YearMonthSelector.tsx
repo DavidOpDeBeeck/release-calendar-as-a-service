@@ -1,9 +1,9 @@
 import {useSetAtom} from "jotai";
 import {yearMonthAtom} from "../store.ts";
 import {useEffect} from "react";
-import {Button, ButtonGroup, HStack, IconButton, Text} from "@chakra-ui/react";
-import {ChevronLeftIcon, ChevronRightIcon} from "@chakra-ui/icons";
+import {HStack, IconButton, Text} from "@chakra-ui/react";
 import {useAtomValue} from "jotai/index";
+import {ChevronLeft, ChevronRight} from "lucide-react";
 
 export default function YearMonthSelector() {
     const setYearMonth = useSetAtom(yearMonthAtom);
@@ -27,21 +27,23 @@ export default function YearMonthSelector() {
     }, [setYearMonth]);
 
     return (
-        <ButtonGroup isAttached>
+        <HStack gap={0}
+                bgColor={{base: "blackAlpha.50", _dark: "whiteAlpha.100"}}
+                borderRadius={5}>
             <IconButton aria-label='Go to previous month'
-                        icon={<ChevronLeftIcon/>}
+                        variant='subtle'
                         onClick={() => setYearMonth(yearMonth => yearMonth.previous())}>
+                <ChevronLeft/>
             </IconButton>
-            <Button>
-                <HStack>
-                    <Text fontWeight="bold">{yearMonth.getMonthName()}</Text>
-                    <Text fontWeight="bold">{yearMonth.year}</Text>
-                </HStack>
-            </Button>
+            <HStack minWidth='6rem' alignItems='center' justifyContent='center'>
+                <Text fontWeight="semibold">{yearMonth.getMonthName()}</Text>
+            </HStack>
+            <Text fontWeight="semibold" px={2}>{yearMonth.year}</Text>
             <IconButton aria-label='Go to next month'
-                        icon={<ChevronRightIcon/>}
+                        variant='subtle'
                         onClick={() => setYearMonth(yearMonth => yearMonth.next())}>
+                <ChevronRight/>
             </IconButton>
-        </ButtonGroup>
+        </HStack>
     )
 }

@@ -7,7 +7,8 @@ export default function TodayButton() {
     const setYearMonth = useSetAtom(yearMonthAtom);
 
     return (
-        <Button colorScheme='gray'
+        <Button variant='subtle'
+                fontWeight="semibold"
                 onClick={() => setYearMonth(YearMonth.parseDate(new Date()))}>
             Today
         </Button>

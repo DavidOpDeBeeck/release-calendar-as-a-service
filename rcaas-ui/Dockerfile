@@ -1,4 +1,4 @@
-FROM node:20-alpine
+FROM node:24-alpine as build
 
 WORKDIR /app
 
@@ -10,11 +10,10 @@ RUN pnpm run build
 
 ENV NODE_ENV production
 
-FROM bitnami/nginx:1.23
+FROM nginx:stable-alpine
 
-USER 0
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-COPY nginx.conf /opt/bitnami/nginx/conf/server_blocks/nginx.conf
-COPY --from=0 /app/dist /app
+COPY --from=build /app/dist /app
 
-USER 0
+CMD ["nginx", "-g", "daemon off;"]

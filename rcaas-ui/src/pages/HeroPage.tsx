@@ -8,7 +8,7 @@ export default function HeroPage() {
     }, []);
 
     return (
-        <VStack height="100vh" justifyContent="center" spacing={4}>
+        <VStack height="100vh" justifyContent="center" gap={6}>
             <Heading fontSize={{base: "4xl", md: "6xl"}} fontWeight="extrabold">
                 releasecalendar<Text as='span' fontSize={{base: "4xl", md: "6xl"}} color="blue.600">.app</Text>
             </Heading>

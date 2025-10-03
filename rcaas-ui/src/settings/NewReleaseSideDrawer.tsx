@@ -4,7 +4,7 @@ import SideDrawer from "../common/SideDrawer.tsx";
 import {useProject} from "../queries/project/useProject.ts";
 import {useUpdateProjectMutation} from "../queries/project/useUpdateProjectMutation.ts";
 import {ErrorMessages} from "../common/ErrorMessages.tsx";
-import {FormControl, FormErrorMessage, FormLabel, Input, NumberInput, NumberInputField, Select, VStack} from "@chakra-ui/react";
+import {createListCollection, Field, Input, NumberInput, Select, VStack} from "@chakra-ui/react";
 
 interface NewRelease {
     version?: {
@@ -58,6 +58,19 @@ export default function NewReleaseSideDrawer({showModal, closeModal}: Props) {
             }
         });
     };
+    const colors = createListCollection({
+        items: [
+            {label: "Red", value: "red"},
+            {label: "Orange", value: "orange"},
+            {label: "Yellow", value: "yellow"},
+            {label: "Green", value: "green"},
+            {label: "Teal", value: "teal"},
+            {label: "Blue", value: "blue"},
+            {label: "Cyan", value: "cyan"},
+            {label: "Purple", value: "purple"},
+            {label: "Pink", value: "pink"}
+        ],
+    })
 
     return (
         <SideDrawer title={"New Release"}
@@ -68,52 +81,67 @@ export default function NewReleaseSideDrawer({showModal, closeModal}: Props) {
                     onClose={() => closeModal()}>
             <VStack>
                 <ErrorMessages messages={mutation.error}/>
-                <FormControl isInvalid={!!errors.version?.environment}>
-                    <FormLabel>Environment</FormLabel>
+                <Field.Root invalid={!!errors.version?.environment}>
+                    <Field.Label>Environment</Field.Label>
                     <Input placeholder="Environment"
                            {...register("version.environment", {required: true})}
                     />
-                    <FormErrorMessage>Environment is required.</FormErrorMessage>
-                </FormControl>
-                <FormControl isInvalid={!!errors.version?.value}>
-                    <FormLabel>Version</FormLabel>
-                    <NumberInput min={0}>
-                        <NumberInputField placeholder="Version"
-                                          {...register("version.value", {required: true})}/>
-                    </NumberInput>
-                    <FormErrorMessage>Version is required.</FormErrorMessage>
-                </FormControl>
-                <FormControl isInvalid={!!errors.startDate}>
-                    <FormLabel>Start Date</FormLabel>
+                    <Field.ErrorText>Environment is required.</Field.ErrorText>
+                </Field.Root>
+                <Field.Root invalid={!!errors.version?.value}>
+                    <Field.Label>Version</Field.Label>
+                    <NumberInput.Root min={0} width="full">
+                        <NumberInput.Control/>
+                        <NumberInput.Input placeholder="Version"
+                                           {...register("version.value", {required: true})}/>
+                    </NumberInput.Root>
+                    <Field.ErrorText>Version is required.</Field.ErrorText>
+                </Field.Root>
+                <Field.Root invalid={!!errors.startDate}>
+                    <Field.Label>Start Date</Field.Label>
                     <Input type="date"
                            placeholder="Start Date"
                            {...register("startDate", {required: true})}
                     />
-                    <FormErrorMessage>Start date is required.</FormErrorMessage>
-                </FormControl>
-                <FormControl isInvalid={!!errors.sprintLength}>
-                    <FormLabel>Sprint Length</FormLabel>
+                    <Field.ErrorText>Start date is required.</Field.ErrorText>
+                </Field.Root>
+                <Field.Root invalid={!!errors.sprintLength}>
+                    <Field.Label>Sprint Length</Field.Label>
                     <Input placeholder="Sprint Length"
                            {...register("sprintLength", {required: true})}
                     />
-                    <FormErrorMessage>Sprint length is required.</FormErrorMessage>
-                </FormControl>
-                <FormControl isInvalid={!!errors.version?.color}>
-                    <FormLabel>Color</FormLabel>
-                    <Select placeholder='Select color'
-                            {...register("version.color", {required: true})}>
-                        <option value="red">Red</option>
-                        <option value="orange">Orange</option>
-                        <option value="yellow">Yellow</option>
-                        <option value="green">Green</option>
-                        <option value="teal">Teal</option>
-                        <option value="blue">Blue</option>
-                        <option value="cyan">Cyan</option>
-                        <option value="purple">Purple</option>
-                        <option value="pink">Pink</option>
-                    </Select>
-                    <FormErrorMessage>Color is required.</FormErrorMessage>
-                </FormControl>
+                    <Field.ErrorText>Sprint length is required.</Field.ErrorText>
+                </Field.Root>
+                <Field.Root invalid={!!errors.version?.color}>
+                    <Field.Label>Color</Field.Label>
+                    <Select.Root collection={colors} size="sm"
+                                 {...register("version.color", {required: true})}>
+                        <Select.HiddenSelect/>
+                        <Select.Label/>
+
+                        <Select.Control>
+                            <Select.Trigger>
+                                <Select.ValueText/>
+                            </Select.Trigger>
+                            <Select.IndicatorGroup>
+                                <Select.Indicator/>
+                                <Select.ClearTrigger/>
+                            </Select.IndicatorGroup>
+                        </Select.Control>
+
+                        <Select.Positioner>
+                            <Select.Content>
+                                {colors.items.map((color) => (
+                                    <Select.Item item={color} key={color.value}>
+                                        {color.label}
+                                        <Select.ItemIndicator/>
+                                    </Select.Item>
+                                ))}
+                            </Select.Content>
+                        </Select.Positioner>
+                    </Select.Root>
+                    <Field.ErrorText>Color is required.</Field.ErrorText>
+                </Field.Root>
             </VStack>
         </SideDrawer>
     )

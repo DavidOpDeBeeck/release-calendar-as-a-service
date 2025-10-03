@@ -1,7 +1,7 @@
 import SettingsSideDrawer from "./SettingsSideDrawer.tsx";
 import {useState} from "react";
 import {IconButton} from "@chakra-ui/react";
-import {SettingsIcon} from "@chakra-ui/icons";
+import {Settings} from "lucide-react";
 
 export default function SettingsButton() {
     const [showModal, setShowModal] = useState(false);
@@ -9,8 +9,9 @@ export default function SettingsButton() {
     return (
         <>
             <IconButton aria-label="Show settings"
-                        onClick={() => setShowModal(prev => !prev)}
-                        icon={<SettingsIcon/>}>
+                        variant='subtle' size='sm'
+                        onClick={() => setShowModal(prev => !prev)}>
+                <Settings/>
             </IconButton>
             <SettingsSideDrawer showModal={showModal} closeModal={() => setShowModal(false)}/>
         </>

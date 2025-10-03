@@ -1,13 +1,13 @@
 import {useUpdateProjectMutation} from "../queries/project/useUpdateProjectMutation.ts";
 import {useProject} from "../queries/project/useProject.ts";
 import {IconButton} from "@chakra-ui/react";
-import {DeleteIcon} from "@chakra-ui/icons";
+import {Trash2} from "lucide-react";
 
 type Props = {
     specificationIndex: number;
 }
 
-export default function DeleteProjectButton({specificationIndex}: Props) {
+export default function DeleteReleaseButton({specificationIndex}: Props) {
     const {data: project} = useProject();
     const mutation = useUpdateProjectMutation();
     const onDelete = () => {
@@ -22,10 +22,11 @@ export default function DeleteProjectButton({specificationIndex}: Props) {
 
     return (
         <IconButton aria-label="Delete specification"
-                    icon={<DeleteIcon/>}
-                    colorScheme="red"
+                    colorPalette="red"
+                    variant="subtle"
                     size="sm"
                     onClick={() => onDelete()}>
+            <Trash2/>
         </IconButton>
     )
 }

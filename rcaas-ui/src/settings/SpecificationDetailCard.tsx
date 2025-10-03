@@ -1,27 +1,8 @@
 import NewReschedulingButton from "./NewReschedulingButton.tsx";
-import DeleteProjectButton from "./DeleteProjectButton.tsx";
+import DeleteReleaseButton from "./DeleteReleaseButton.tsx";
 import {ReleaseSpecificationTO} from "../domain/ReleaseTO.ts";
 import DeleteReschedulingButton from "./DeleteReschedulingButton.tsx";
-import {
-    Box,
-    Card,
-    CardBody,
-    CardHeader,
-    Flex,
-    Heading,
-    SimpleGrid,
-    Spacer,
-    Stack,
-    StackDivider,
-    Table,
-    TableContainer,
-    Tbody,
-    Td,
-    Text,
-    Th,
-    Thead,
-    Tr
-} from "@chakra-ui/react";
+import {Box, Card, Flex, Heading, HStack, SimpleGrid, Spacer, Stack, StackSeparator, Table, Text} from "@chakra-ui/react";
 
 type Props = {
     specification: ReleaseSpecificationTO;
@@ -30,25 +11,24 @@ type Props = {
 
 export default function SpecificationDetailCard({specification, specificationIndex}: Props) {
     return (
-        <Card key={specificationIndex}
-              w="100%"
-              variant="outline">
-            <CardHeader>
-                <Flex>
-                    <Heading size='md'>{specification.sprintBased.version.environment}</Heading>
+        <Card.Root key={specificationIndex}
+                   w="full"
+                   size="sm"
+                   variant="outline">
+            <Card.Header>
+                <HStack>
+                    <Heading>{specification.sprintBased.version.environment}</Heading>
                     <Spacer/>
-                    <Flex gap={2}>
+                    <Flex gap={1}>
                         <NewReschedulingButton specificationIndex={specificationIndex}/>
-                        <DeleteProjectButton specificationIndex={specificationIndex}/>
+                        <DeleteReleaseButton specificationIndex={specificationIndex}/>
                     </Flex>
-                </Flex>
-            </CardHeader>
-            <CardBody>
-                <Stack divider={<StackDivider/>} spacing='4'>
+                </HStack>
+            </Card.Header>
+            <Card.Body>
+                <Stack separator={<StackSeparator/>} gap='4'>
                     <Box>
-                        <Heading size='xs' textTransform='uppercase'>
-                            Configuration
-                        </Heading>
+                        <Heading size='sm' textTransform='uppercase'>Configuration</Heading>
                         <SimpleGrid fontSize='sm' pt={2} columns={2} columnGap={2} rowGap={2}>
                             <Flex>
                                 <Text>Version</Text>
@@ -73,39 +53,35 @@ export default function SpecificationDetailCard({specification, specificationInd
                         </SimpleGrid>
                     </Box>
                     <Box>
-                        <Heading size='xs' textTransform='uppercase'>
-                            Reschedulings
-                        </Heading>
+                        <Heading size='sm' textTransform='uppercase'>Reschedulings</Heading>
                         {specification?.sprintBased.reschedulings.length === 0 && (
                             <Text pt='2' fontSize='sm'>No reschedulings available</Text>)}
                         {specification?.sprintBased.reschedulings.length > 0 && (
-                            <TableContainer pt='2'>
-                                <Table variant='simple' size='sm'>
-                                    <Thead>
-                                        <Tr>
-                                            <Th>From Date</Th>
-                                            <Th>To Date</Th>
-                                            <Th></Th>
-                                        </Tr>
-                                    </Thead>
-                                    <Tbody>
-                                        {specification?.sprintBased.reschedulings.map((rescheduling, reschedulingIndex) => (
-                                            <Tr key={reschedulingIndex}>
-                                                <Td><Text fontSize='sm'>{rescheduling.from}</Text></Td>
-                                                <Td><Text fontSize='sm'>{rescheduling.to}</Text></Td>
-                                                <Td>
-                                                    <DeleteReschedulingButton
-                                                        specificationIndex={specificationIndex}
-                                                        reschedulingIndex={reschedulingIndex}/>
-                                                </Td>
-                                            </Tr>
-                                        ))}
-                                    </Tbody>
-                                </Table>
-                            </TableContainer>)}
+                            <Table.Root variant='line' size='sm'>
+                                <Table.Header>
+                                    <Table.Row>
+                                        <Table.ColumnHeader>From Date</Table.ColumnHeader>
+                                        <Table.ColumnHeader>To Date</Table.ColumnHeader>
+                                        <Table.ColumnHeader></Table.ColumnHeader>
+                                    </Table.Row>
+                                </Table.Header>
+                                <Table.Body>
+                                    {specification?.sprintBased.reschedulings.map((rescheduling, reschedulingIndex) => (
+                                        <Table.Row key={reschedulingIndex}>
+                                            <Table.Cell><Text fontSize='sm'>{rescheduling.from}</Text></Table.Cell>
+                                            <Table.Cell><Text fontSize='sm'>{rescheduling.to}</Text></Table.Cell>
+                                            <Table.Cell>
+                                                <DeleteReschedulingButton
+                                                    specificationIndex={specificationIndex}
+                                                    reschedulingIndex={reschedulingIndex}/>
+                                            </Table.Cell>
+                                        </Table.Row>
+                                    ))}
+                                </Table.Body>
+                            </Table.Root>)}
                     </Box>
                 </Stack>
-            </CardBody>
-        </Card>
+            </Card.Body>
+        </Card.Root>
     );
 }

@@ -5,29 +5,38 @@ import {showVersionsForEachDayAtom} from "../store.ts";
 import {useAtomValue} from "jotai";
 import Release from "./Release";
 import {Flex, GridItem, Spacer, Text, VStack} from "@chakra-ui/react";
+import {ColorMode, useColorMode, useColorModeValue} from "../components/ui/color-mode.tsx";
 
-function dayBg(day: DayTO): string {
+function dayBg(day: DayTO, colorMode: ColorMode): string {
     if (day.today) {
-        return singleColor("blue.500");
+        return singleColor("colors.blue.500");
     }
     if (day.weekend && day.otherMonth) {
-        return striped("blackAlpha.400", "whiteAlpha.50");
+        return colorMode === "light"
+            ? striped("colors.whiteAlpha.50", "colors.blackAlpha.300")
+            : striped("colors.blackAlpha.400", "colors.whiteAlpha.50");
     }
     if (day.weekend) {
-        return singleColor("blackAlpha.400");
+        return colorMode === "light"
+            ? singleColor("colors.blackAlpha.300")
+            : singleColor("colors.whiteAlpha.50");
     }
     if (day.otherMonth) {
-        return striped("blackAlpha.200", "whiteAlpha.50");
+        return colorMode === "light"
+            ? striped("colors.whiteAlpha.50", "colors.blackAlpha.200")
+            : striped("colors.blackAlpha.400", "colors.whiteAlpha.200");
     }
-    return singleColor("blackAlpha.200");
+    return colorMode === "light"
+        ? singleColor("colors.blackAlpha.200")
+        : singleColor("colors.whiteAlpha.200");
 }
 
 function singleColor(color: string) {
-    return `linear(to-r, ${color}, ${color})`;
+    return `linear-gradient(to right, {${color}}, {${color}})`;
 }
 
 function striped(color: string, stripes: string) {
-    return `linear-gradient(45deg, ${color} 25%, ${stripes} 25%, ${stripes} 50%, ${color} 50%, ${color} 75%, ${stripes} 75%, ${stripes} 100%)`;
+    return `linear-gradient(45deg, {${color}} 25%, {${stripes}} 25%, {${stripes}} 50%, {${color}} 50%, {${color}} 75%, {${stripes}} 75%, {${stripes}} 100%)`;
 }
 
 interface Props {
@@ -37,6 +46,7 @@ interface Props {
 }
 
 export default function Day({day, dayIndex, showDayName}: Props) {
+    const {colorMode} = useColorMode()
     const showVersionsForEachDay = useAtomValue(showVersionsForEachDayAtom);
     const [isHovering, setIsHovering] = useState(false);
     const daysOfTheWeek = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
@@ -50,14 +60,16 @@ export default function Day({day, dayIndex, showDayName}: Props) {
                 .map(value => ({version: value, visible: showVersionsForEachDay || isHovering}))),
         [showVersionsForEachDay, isHovering, releases, versions]);
 
+    const borderColor = useColorModeValue("whiteAlpha.50", "blackAlpha.50")
+
     return (
-        <GridItem w='100%'
-                  h="100%"
+        <GridItem w='full'
+                  h="full"
                   p={2}
-                  bgGradient={dayBg(day)}
+                  bgImage={dayBg(day, colorMode)}
                   bgSize='14.14px 14.14px'
-                  border="1px"
-                  borderColor="whiteAlpha.50"
+                  borderWidth="1px"
+                  borderColor={borderColor}
                   borderRadius={5}
                   onMouseOver={() => setIsHovering(true)}
                   onMouseOut={() => setIsHovering(false)}>
