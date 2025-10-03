@@ -117,18 +117,15 @@ export default function NewReleaseSideDrawer({showModal, closeModal}: Props) {
                     <Select.Root collection={colors} size="sm"
                                  {...register("version.color", {required: true})}>
                         <Select.HiddenSelect/>
-                        <Select.Label/>
-
                         <Select.Control>
                             <Select.Trigger>
-                                <Select.ValueText/>
+                                <Select.ValueText placeholder="Select color"/>
                             </Select.Trigger>
                             <Select.IndicatorGroup>
                                 <Select.Indicator/>
                                 <Select.ClearTrigger/>
                             </Select.IndicatorGroup>
                         </Select.Control>
-
                         <Select.Positioner>
                             <Select.Content>
                                 {colors.items.map((color) => (
