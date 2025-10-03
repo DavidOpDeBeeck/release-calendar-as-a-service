@@ -53,11 +53,11 @@ export default function SpecificationDetailCard({specification, specificationInd
                         </SimpleGrid>
                     </Box>
                     <Box>
-                        <Heading size='sm' textTransform='uppercase'>Reschedulings</Heading>
+                        <Heading size='sm' textTransform='uppercase' mb={2}>Reschedulings</Heading>
                         {specification?.sprintBased.reschedulings.length === 0 && (
-                            <Text pt='2' fontSize='sm'>No reschedulings available</Text>)}
+                            <Text fontSize='sm'>No reschedulings available</Text>)}
                         {specification?.sprintBased.reschedulings.length > 0 && (
-                            <Table.Root variant='line' size='sm'>
+                            <Table.Root variant='outline' size='sm' borderRadius={5}>
                                 <Table.Header>
                                     <Table.Row>
                                         <Table.ColumnHeader>From Date</Table.ColumnHeader>
