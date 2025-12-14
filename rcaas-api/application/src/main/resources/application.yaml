@@ -20,7 +20,14 @@ spring:
   jmx:
     enabled: false
 
+otel:
+  trace:
+    endpoint: http://tempo:4318/v1/traces
+
 management:
+  tracing:
+    sampling:
+      probability: 1
   server:
     port: 8081
   endpoints:

@@ -1,4 +1,4 @@
-package be.davidopdebeeck.rcaasapi.application.metrics;
+package be.davidopdebeeck.rcaasapi.application.observability.command;
 
 import app.dodb.smd.api.command.Command;
 import app.dodb.smd.api.command.CommandMessage;
@@ -6,10 +6,12 @@ import app.dodb.smd.api.command.bus.CommandBusInterceptor;
 import app.dodb.smd.api.command.bus.CommandBusInterceptorChain;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Timer;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import static app.dodb.smd.api.utils.ExceptionUtils.rethrow;
 
+@Order(2)
 @Component
 public class CommandBusMetricsInterceptor implements CommandBusInterceptor {
 

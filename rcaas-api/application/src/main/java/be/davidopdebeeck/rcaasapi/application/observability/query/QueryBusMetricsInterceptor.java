@@ -1,4 +1,4 @@
-package be.davidopdebeeck.rcaasapi.application.metrics;
+package be.davidopdebeeck.rcaasapi.application.observability.query;
 
 import app.dodb.smd.api.query.Query;
 import app.dodb.smd.api.query.QueryMessage;
@@ -6,10 +6,12 @@ import app.dodb.smd.api.query.bus.QueryBusInterceptor;
 import app.dodb.smd.api.query.bus.QueryBusInterceptorChain;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Timer;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import static app.dodb.smd.api.utils.ExceptionUtils.rethrow;
 
+@Order(2)
 @Component
 public class QueryBusMetricsInterceptor implements QueryBusInterceptor {
 
