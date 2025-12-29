@@ -38,4 +38,4 @@ services:
     environment:
       - "POSTGRES_USER=postgres"
       - "POSTGRES_PASSWORD=postgres"
-      - "POSTGRES_DB=apps"
+      - "POSTGRES_DB=rcaas"
