@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import static java.util.Objects.requireNonNull;
 
 @JsonDeserialize(builder = SprintBasedVersionTO.Builder.class)
+@tools.jackson.databind.annotation.JsonDeserialize(builder = SprintBasedVersionTO.Builder.class)
 public class SprintBasedVersionTO {
 
     private final long value;
@@ -32,6 +33,7 @@ public class SprintBasedVersionTO {
     }
 
     @JsonPOJOBuilder
+    @tools.jackson.databind.annotation.JsonPOJOBuilder
     public static final class Builder {
 
         private Long value;

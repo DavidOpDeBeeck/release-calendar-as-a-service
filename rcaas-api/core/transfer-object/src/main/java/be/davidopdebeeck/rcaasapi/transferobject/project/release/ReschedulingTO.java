@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import static java.util.Objects.requireNonNull;
 
 @JsonDeserialize(builder = ReschedulingTO.Builder.class)
+@tools.jackson.databind.annotation.JsonDeserialize(builder = ReschedulingTO.Builder.class)
 public class ReschedulingTO {
 
     private final LocalDate from;
@@ -28,6 +29,7 @@ public class ReschedulingTO {
     }
 
     @JsonPOJOBuilder
+    @tools.jackson.databind.annotation.JsonPOJOBuilder
     public static final class Builder {
 
         private LocalDate from;

@@ -3,9 +3,9 @@ package be.davidopdebeeck.rcaasapi.drivingadapter.project;
 import be.davidopdebeeck.rcaasapi.drivenadapter.project.ProjectJpaEntity;
 import be.davidopdebeeck.rcaasapi.drivenadapter.project.ProjectJpaRepository;
 import be.davidopdebeeck.rcaasapi.drivingadapter.IntegrationTest;
+import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
 import static be.davidopdebeeck.rcaasapi.testconstant.ProjectTestConstants.ANOTHER_PROJECT_ID_VALUE;
 import static be.davidopdebeeck.rcaasapi.testconstant.ProjectTestConstants.PROJECT_ID;
@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ProjectJpaRepositoryTest {
 
     @Autowired
-    private TestEntityManager entityManager;
+    private EntityManager entityManager;
     @Autowired
     private ProjectJpaRepository repository;
 

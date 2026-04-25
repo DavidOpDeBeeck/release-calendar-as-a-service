@@ -8,7 +8,6 @@ import be.davidopdebeeck.rcaasapi.transferobject.project.calendar.CalendarTO;
 import be.davidopdebeeck.rcaasapi.transferobject.project.release.ReleaseSpecificationTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
@@ -33,13 +32,13 @@ class ProjectAcceptanceTest {
 
     @LocalServerPort
     private int port;
-    @Autowired
     private WebTestClient client;
 
     @BeforeEach
     void setUp() {
-        client.mutate()
-            .baseUrl("http://localhost:" + port);
+        client = WebTestClient.bindToServer()
+            .baseUrl("http://localhost:" + port)
+            .build();
     }
 
     @Test

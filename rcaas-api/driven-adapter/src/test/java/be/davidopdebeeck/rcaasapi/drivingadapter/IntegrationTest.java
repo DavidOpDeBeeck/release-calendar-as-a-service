@@ -3,7 +3,6 @@ package be.davidopdebeeck.rcaasapi.drivingadapter;
 import be.davidopdebeeck.rcaasapi.drivenadapter.DrivenAdapterConfiguration;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestEntityManager;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -21,7 +20,6 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @Transactional
 @Rollback
 @EnableAutoConfiguration
-@AutoConfigureTestEntityManager
 @SpringBootTest(classes = DrivenAdapterConfiguration.class, webEnvironment = NONE)
 @ExtendWith({SpringExtension.class})
 public @interface IntegrationTest {

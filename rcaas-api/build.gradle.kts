@@ -15,26 +15,23 @@ subprojects {
     }
 
     dependencies {
-        implementation(platform("org.springframework.boot:spring-boot-dependencies"))
+        implementation(platform(rootProject.libs.spring.boot.dependencies))
 
-        implementation("app.dodb:smd-api")
-        implementation("org.apache.commons:commons-lang3")
-        implementation("org.springframework.boot:spring-boot-autoconfigure")
+        implementation(rootProject.libs.smd.api)
+        implementation(rootProject.libs.commons.lang3)
+        implementation(rootProject.libs.spring.boot.autoconfigure)
 
-        testImplementation("io.projectreactor:reactor-test")
-        testImplementation("org.springframework.boot:spring-boot-starter-test")
-        testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+        testImplementation(rootProject.libs.reactor.test)
+        testImplementation(rootProject.libs.spring.boot.starter.test)
+        testRuntimeOnly(rootProject.libs.junit.platform.launcher)
 
         constraints {
-            implementation("app.dodb:smd-api:0.0.6")
-            implementation("app.dodb:smd-spring-boot-starter:0.0.6")
-            implementation("org.springframework.boot:spring-boot-dependencies:3.5.6")
-            implementation("org.apache.commons:commons-lang3:3.19.0")
-            implementation("com.fasterxml.jackson.core:jackson-databind:2.20.0")
-            implementation("com.fasterxml.jackson.core:jackson-annotations:2.20")
-            testImplementation("app.dodb:smd-spring-boot-starter-test:0.0.6")
-            testImplementation("org.testcontainers:postgresql:1.21.3")
-            testImplementation("org.testcontainers:junit-jupiter:1.21.3")
+            implementation(rootProject.libs.smd.spring.boot.starter)
+            implementation(rootProject.libs.jackson.databind)
+            implementation(rootProject.libs.jackson.annotations)
+            testImplementation(rootProject.libs.smd.spring.boot.starter.test)
+            testImplementation(rootProject.libs.testcontainers.postgresql)
+            testImplementation(rootProject.libs.testcontainers.junit.jupiter)
         }
     }
 

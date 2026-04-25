@@ -8,6 +8,7 @@ import java.util.List;
 import static java.util.Objects.requireNonNull;
 
 @JsonDeserialize(builder = CalendarTO.Builder.class)
+@tools.jackson.databind.annotation.JsonDeserialize(builder = CalendarTO.Builder.class)
 public class CalendarTO {
 
     private final List<WeekTO> weeks;
@@ -21,6 +22,7 @@ public class CalendarTO {
     }
 
     @JsonPOJOBuilder
+    @tools.jackson.databind.annotation.JsonPOJOBuilder
     public static final class Builder {
 
         private List<WeekTO> weeks;

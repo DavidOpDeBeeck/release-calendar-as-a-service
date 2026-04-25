@@ -1,12 +1,15 @@
 dependencies {
     implementation(project(":core:driven-port"))
 
-    implementation("org.liquibase:liquibase-core")
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation(libs.spring.boot.starter.liquibase)
+    implementation(libs.spring.boot.starter.web)
+    implementation(libs.spring.boot.starter.data.jpa)
+    implementation(libs.jackson.databind)
+    implementation(libs.jackson.datatype.jdk8)
+    implementation(libs.jackson.datatype.jsr310)
 
-    testRuntimeOnly("org.postgresql:postgresql")
+    testRuntimeOnly(libs.postgresql)
     testImplementation(project(":core:test-constant"))
-    testImplementation("org.testcontainers:postgresql")
-    testImplementation("org.testcontainers:junit-jupiter")
+    testImplementation(libs.testcontainers.postgresql)
+    testImplementation(libs.testcontainers.junit.jupiter)
 }

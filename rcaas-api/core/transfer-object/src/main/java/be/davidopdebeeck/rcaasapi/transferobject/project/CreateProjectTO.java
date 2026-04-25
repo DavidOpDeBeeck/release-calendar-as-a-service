@@ -8,6 +8,7 @@ import java.util.Optional;
 import static java.util.Optional.ofNullable;
 
 @JsonDeserialize(builder = CreateProjectTO.Builder.class)
+@tools.jackson.databind.annotation.JsonDeserialize(builder = CreateProjectTO.Builder.class)
 public class CreateProjectTO {
 
     private final String name;
@@ -21,6 +22,7 @@ public class CreateProjectTO {
     }
 
     @JsonPOJOBuilder
+    @tools.jackson.databind.annotation.JsonPOJOBuilder
     public static final class Builder {
 
         private String name;

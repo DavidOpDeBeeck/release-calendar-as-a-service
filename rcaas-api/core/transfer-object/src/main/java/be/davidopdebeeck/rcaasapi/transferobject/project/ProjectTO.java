@@ -9,6 +9,7 @@ import java.util.List;
 import static java.util.Objects.requireNonNull;
 
 @JsonDeserialize(builder = ProjectTO.Builder.class)
+@tools.jackson.databind.annotation.JsonDeserialize(builder = ProjectTO.Builder.class)
 public class ProjectTO {
 
     private final String projectId;
@@ -34,6 +35,7 @@ public class ProjectTO {
     }
 
     @JsonPOJOBuilder
+    @tools.jackson.databind.annotation.JsonPOJOBuilder
     public static final class Builder {
 
         private String projectId;

@@ -8,6 +8,7 @@ import java.util.List;
 import static java.util.Objects.requireNonNull;
 
 @JsonDeserialize(builder = WeekTO.Builder.class)
+@tools.jackson.databind.annotation.JsonDeserialize(builder = WeekTO.Builder.class)
 public class WeekTO {
 
     private final List<DayTO> days;
@@ -21,6 +22,7 @@ public class WeekTO {
     }
 
     @JsonPOJOBuilder
+    @tools.jackson.databind.annotation.JsonPOJOBuilder
     public static final class Builder {
 
         private List<DayTO> days;

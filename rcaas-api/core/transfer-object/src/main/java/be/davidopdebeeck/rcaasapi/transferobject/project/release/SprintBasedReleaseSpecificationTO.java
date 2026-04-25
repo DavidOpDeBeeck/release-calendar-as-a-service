@@ -12,6 +12,7 @@ import java.util.List;
 import static java.util.Objects.requireNonNull;
 
 @JsonDeserialize(builder = SprintBasedReleaseSpecificationTO.Builder.class)
+@tools.jackson.databind.annotation.JsonDeserialize(builder = SprintBasedReleaseSpecificationTO.Builder.class)
 public class SprintBasedReleaseSpecificationTO {
 
     private final SprintBasedVersionTO version;
@@ -43,6 +44,7 @@ public class SprintBasedReleaseSpecificationTO {
     }
 
     @JsonPOJOBuilder
+    @tools.jackson.databind.annotation.JsonPOJOBuilder
     public static final class Builder {
 
         private SprintBasedVersionTO version;

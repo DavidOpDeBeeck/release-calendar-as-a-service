@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import static java.util.Objects.requireNonNull;
 
 @JsonDeserialize(builder = ProjectIdTO.Builder.class)
+@tools.jackson.databind.annotation.JsonDeserialize(builder = ProjectIdTO.Builder.class)
 public class ProjectIdTO {
 
     private final String projectId;
@@ -19,6 +20,7 @@ public class ProjectIdTO {
     }
 
     @JsonPOJOBuilder
+    @tools.jackson.databind.annotation.JsonPOJOBuilder
     public static final class Builder {
 
         private String projectId;

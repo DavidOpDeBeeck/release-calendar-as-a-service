@@ -1,5 +1,10 @@
 package be.davidopdebeeck.rcaasapi.application.observability;
 
+import io.micrometer.tracing.Tracer;
+import io.micrometer.tracing.otel.bridge.OtelBaggageManager;
+import io.micrometer.tracing.otel.bridge.OtelCurrentTraceContext;
+import io.micrometer.tracing.otel.bridge.OtelTracer;
+import io.opentelemetry.api.OpenTelemetry;
 import io.opentelemetry.api.common.Attributes;
 import io.opentelemetry.exporter.otlp.http.trace.OtlpHttpSpanExporter;
 import io.opentelemetry.sdk.OpenTelemetrySdk;
@@ -13,44 +18,42 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import static io.opentelemetry.semconv.ServiceAttributes.SERVICE_NAME;
+import static java.util.Collections.emptyList;
 
 @Configuration
 public class OpenTelemetryConfig {
 
-    private final String traceEndpoint;
-    private final String serviceName;
-
-    public OpenTelemetryConfig(@Value("${otel.trace.endpoint}") String traceEndpoint,
-                               @Value("${spring.application.name}") String serviceName) {
-        this.traceEndpoint = traceEndpoint;
-        this.serviceName = serviceName;
-    }
-
     @Bean
-    public SpanExporter spanExporter() {
-        return OtlpHttpSpanExporter.builder()
-            .setEndpoint(traceEndpoint)
-            .build();
-    }
+    public OpenTelemetry openTelemetry(
+        @Value("${otel.trace.endpoint}") String endpoint,
+        @Value("${spring.application.name}") String serviceName) {
 
-    @Bean
-    public SpanProcessor spanProcessor(SpanExporter spanExporter) {
-        return BatchSpanProcessor.builder(spanExporter).build();
-    }
+        var resource = Resource.create(Attributes.of(SERVICE_NAME, serviceName));
 
-    @Bean
-    public SdkTracerProvider sdkTracerProvider(SpanProcessor spanProcessor) {
-        Resource resource = Resource.create(Attributes.of(SERVICE_NAME, serviceName));
-        return SdkTracerProvider.builder()
+        var sdkTracerProvider = SdkTracerProvider.builder()
             .setResource(resource)
-            .addSpanProcessor(spanProcessor)
+            .addSpanProcessor(BatchSpanProcessor.builder(
+                OtlpHttpSpanExporter.builder()
+                    .setEndpoint(endpoint)
+                    .build()
+            ).build())
             .build();
-    }
 
-    @Bean
-    public OpenTelemetrySdk openTelemetrySdk(SdkTracerProvider sdkTracerProvider) {
         return OpenTelemetrySdk.builder()
             .setTracerProvider(sdkTracerProvider)
             .build();
+    }
+
+    @Bean
+    public Tracer tracer(OpenTelemetry openTelemetry, @Value("${spring.application.name}") String serviceName) {
+        var traceContext = new OtelCurrentTraceContext();
+        var otelTracer = openTelemetry.getTracer(serviceName);
+
+        return new OtelTracer(
+            otelTracer,
+            traceContext,
+            event -> {},
+            new OtelBaggageManager(traceContext, emptyList(), emptyList())
+        );
     }
 }
