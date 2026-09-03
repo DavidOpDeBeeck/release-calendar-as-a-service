@@ -1,13 +1,22 @@
+FROM amazoncorretto:25-alpine AS build
+
+WORKDIR /workspace
+
+COPY . .
+RUN chmod +x gradlew && ./gradlew :application:bootJar --no-daemon
+
 FROM amazoncorretto:25-alpine
+
+RUN apk add --no-cache curl \
+    && addgroup -S rcaas \
+    && adduser -S -G rcaas rcaas
 
 WORKDIR /app
 
-COPY . .
+COPY --from=build --chown=rcaas:rcaas /workspace/application/build/libs/*.jar app.jar
 
-RUN ./gradlew bootJar --no-daemon
+EXPOSE 8080 8081
 
-FROM amazoncorretto:25-alpine
-
-COPY --from=0 app/application/build/libs/application-1.0.0.jar app.jar
+USER rcaas
 
 ENTRYPOINT ["java", "-jar", "app.jar"]

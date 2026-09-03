@@ -10,10 +10,9 @@ import io.opentelemetry.exporter.otlp.http.trace.OtlpHttpSpanExporter;
 import io.opentelemetry.sdk.OpenTelemetrySdk;
 import io.opentelemetry.sdk.resources.Resource;
 import io.opentelemetry.sdk.trace.SdkTracerProvider;
-import io.opentelemetry.sdk.trace.SpanProcessor;
 import io.opentelemetry.sdk.trace.export.BatchSpanProcessor;
-import io.opentelemetry.sdk.trace.export.SpanExporter;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBooleanProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -21,6 +20,7 @@ import static io.opentelemetry.semconv.ServiceAttributes.SERVICE_NAME;
 import static java.util.Collections.emptyList;
 
 @Configuration
+@ConditionalOnBooleanProperty("otel.trace.enabled")
 public class OpenTelemetryConfig {
 
     @Bean
@@ -52,7 +52,8 @@ public class OpenTelemetryConfig {
         return new OtelTracer(
             otelTracer,
             traceContext,
-            event -> {},
+            event -> {
+            },
             new OtelBaggageManager(traceContext, emptyList(), emptyList())
         );
     }

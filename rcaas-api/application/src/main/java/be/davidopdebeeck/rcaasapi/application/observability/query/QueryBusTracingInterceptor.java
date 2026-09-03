@@ -6,6 +6,7 @@ import app.dodb.smd.api.query.bus.QueryBusInterceptor;
 import app.dodb.smd.api.query.bus.QueryBusInterceptorChain;
 import io.micrometer.tracing.Span;
 import io.micrometer.tracing.Tracer;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBooleanProperty;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +14,7 @@ import static app.dodb.smd.api.utils.ExceptionUtils.rethrow;
 
 @Order(1)
 @Component
+@ConditionalOnBooleanProperty("otel.trace.enabled")
 public class QueryBusTracingInterceptor implements QueryBusInterceptor {
 
     private final Tracer tracer;

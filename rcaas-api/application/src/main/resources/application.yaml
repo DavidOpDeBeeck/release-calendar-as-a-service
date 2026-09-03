@@ -6,9 +6,9 @@ spring:
       enabled: true
   datasource:
     name: rcaas
-    url: jdbc:postgresql://postgres:5432/rcaas
-    username: postgres
-    password: postgres
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://postgres:5432/rcaas}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:postgres}
     driver-class-name: org.postgresql.Driver
   jpa:
     open-in-view: false
@@ -22,7 +22,8 @@ spring:
 
 otel:
   trace:
-    endpoint: http://tempo:4318/v1/traces
+    enabled: ${OTEL_TRACE_ENABLED:false}
+    endpoint: ${OTEL_TRACE_ENDPOINT:}
 
 management:
   tracing:
