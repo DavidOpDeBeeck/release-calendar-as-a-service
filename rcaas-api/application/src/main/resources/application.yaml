@@ -1,6 +1,6 @@
 spring:
   application:
-    name: Rcaas API
+    name: rcaas-api
   threads:
     virtual:
       enabled: true
@@ -20,15 +20,20 @@ spring:
   jmx:
     enabled: false
 
-otel:
-  trace:
-    enabled: ${OTEL_TRACE_ENABLED:false}
-    endpoint: ${OTEL_TRACE_ENDPOINT:}
-
 management:
   tracing:
     sampling:
       probability: 1
+    export:
+      enabled: ${OTEL_TRACE_ENABLED:false}
+  opentelemetry:
+    resource-attributes:
+      "[host.name]": ${HOSTNAME:localhost}
+      "[service.instance.id]": ${random.uuid}
+    tracing:
+      export:
+        otlp:
+          endpoint: ${OTEL_TRACE_ENDPOINT:http://localhost:4318/v1/traces}
   server:
     port: 8081
   endpoints:

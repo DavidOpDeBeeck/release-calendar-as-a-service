@@ -11,10 +11,9 @@ dependencies {
     implementation(project(":driven-adapter"))
     implementation(libs.spring.boot.starter.actuator)
     implementation(libs.smd.spring.boot.starter)
-    implementation(libs.opentelemetry.api)
-    implementation(libs.opentelemetry.sdk)
-    implementation(libs.opentelemetry.exporter.otlp)
+    implementation(libs.spring.boot.micrometer.tracing.opentelemetry)
     implementation(libs.micrometer.tracing.bridge.otel)
+    implementation(libs.opentelemetry.exporter.otlp)
 
     testImplementation(project(":core:test-constant"))
     testImplementation(project(":core:transfer-object"))
